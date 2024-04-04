@@ -26,14 +26,19 @@ void draw() {
         shape.display();
     }
 
-    if shapeType == 0 {
-        ellipse(a + c/2, b + d/2, c, d);
+    if (shapeType == 0) {
+          centerX = a + c/2;
+        centerY = b + d/2;
+        // radius = (c ^ 2 + d ^ 2) ^ 0.5;
+        float radius = (float) Math.pow(Math.pow(c, 2) + Math.pow(d, 2), 0.5);
+       Circle circle = new Circle(centerX, centerY, radius);
+       circle.display();
     }
-    else if shapeType == 1 {
+    else if (shapeType == 1) {
         rect(a, b, c, d);
     }
-    else if shapeType == 2 {
-        triangle(a, b, a + c, b, a + c/2, b - d);
+    else if (shapeType == 2) {
+        // triangle(a, b, a + c, b, a + c/2, b - d);
     }
 }
 
@@ -102,8 +107,6 @@ void mouseReleased() {
 
    else if (shapeType == 2) { 
    }
-   Rectangle rect = new Rectangle(a, b, c, d);
-   shapes.add(rect);
   }
   println("Mouse released at: " + mouseX + ", " + mouseY);
 }
