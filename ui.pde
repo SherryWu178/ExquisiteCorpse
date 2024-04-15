@@ -3,12 +3,36 @@ void toolBar() {
     fill(150);
 
 	// color selection
- 
 	drawColorSelections();
 
-	drawThichnessSelection();
-    
+	// drawThichnessSelection(); 
 	drawShapeSelections();
+  drawNext();
+}
+
+void RightPanel() {
+    //Draw background of toolbar
+    stroke(255);
+    rect(1000, -1, 200, 750);
+
+    fill(150);
+
+    rect(1000, 0, 200, 150); // WINDOW1
+    rect(1000, 150, 200, 150); // WINDOW2
+    rect(1000, 300, 200, 150); // WINDOW3
+    rect(1000, 450, 200, 150); // WINDOW4
+}
+
+
+void drawNext() {
+  fill(150);
+  strokeWeight(1);
+  rect(35, 679, 50, 30);
+
+  fill(255);
+  textSize(20);
+  text("Next", 40, 700);
+
 }
 
 void drawThichnessSelection() {	    
@@ -17,7 +41,7 @@ void drawThichnessSelection() {
     rect( - 1, 249, 125, 251);
 
     //Drawline thickness selections
-	fill(0);
+	  fill(0);
     ellipse(60, 295, 5, 5);
     ellipse(60, 325, 10, 10);
     ellipse(60, 360, 15, 15);
@@ -28,8 +52,8 @@ void drawThichnessSelection() {
 void drawShapeSelections() {
 
 	fill(150);
-    strokeWeight(1);
-    rect( - 1, 499, 125, 251);
+  strokeWeight(1);
+  rect( - 1, 499, 125, 251);
 
 
 	stroke(0);
@@ -41,11 +65,14 @@ void drawShapeSelections() {
 	fill(255);
 	rect(45, 585, 30, 30); // Square
 
-	beginShape();
-	vertex(45, 625); // first point
-	bezierVertex(25, 25, 100, 50, 50, 100);
-	bezierVertex(20, 130, 75, 140, 120, 120);
-	endShape();
+  fill(0);
+	ellipse(60, 655, 5, 5); // Circle
+
+	// beginShape();
+	// vertex(45, 625); // first point
+	// bezierVertex(25, 25, 100, 50, 50, 100);
+	// bezierVertex(20, 130, 75, 140, 120, 120);
+	// endShape();
 	// fill(255);
 	// triangle(60, 640, 45, 665, 75, 665); // Triangle
 }
