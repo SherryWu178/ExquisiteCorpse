@@ -18,7 +18,7 @@ class Boundary extends Tool{
     }
 
     public Boundary() {
-        this.boundaryShape = new Torso1();
+        this.boundaryShape = new Torso2();
         this.boundaryLine = new StrightLine(color(255));  
     }    
 
@@ -76,6 +76,18 @@ abstract class BoundaryShape {
 
 import java.util.ArrayList;
 
+
+class Torso2 extends BoundaryShape {
+    public Torso2() {
+        super(new ArrayList<>() {{
+            add(new float[]{487, 0});
+            add(new float[]{487, 750});
+            add(new float[]{558, 750});
+            add(new float[]{558, 0});
+        }});
+    }
+}
+
 class Torso1 extends BoundaryShape {
     public Torso1() {
         super(new ArrayList<>() {{
@@ -97,6 +109,7 @@ class Torso1 extends BoundaryShape {
         }});
     }
 }
+
 
 abstract class BoundaryLine {
     private color lineColor;
