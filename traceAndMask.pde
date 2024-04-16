@@ -2,44 +2,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-
-class Boundary extends Tool{
-    private BoundaryShape boundaryShape;
-    private BoundaryLine boundaryLine;
-
-    public Boundary(BoundaryShape boundaryShape, BoundaryLine boundaryLine) {
-        this.boundaryShape = boundaryShape;
-        this.boundaryLine = boundaryLine;
-    }
-
-    public Boundary(BoundaryShape boundaryShape) {
-        this.boundaryShape = boundaryShape;
-        this.boundaryLine = new StrightLine(color(255));
-    }
-
-    public Boundary() {
-        this.boundaryShape = new Torso2();
-        this.boundaryLine = new StrightLine(color(255));  
-    }    
-
-    public void display(DisplayMode displayMode) {
-        List<float[]> coordinatesList = this.boundaryShape.getCoordinatesList();
-        // display the boundary
-        List<float[]> resizedCoordinatesList = new CoordinateTransformer().transformArray(displayMode, coordinatesList);
-        color o = this.boundaryLine.getLineColor();
-        stroke(o);
-        beginShape();
-        for (float[] coordinates : resizedCoordinatesList) {
-            vertex(coordinates[0], coordinates[1]);
-        }
-        endShape(CLOSE);
-    }
-}
-
-abstract class BoundaryShape {
+abstract class Boundary extends Tool {
     private List<float[]> coordinatesList = new ArrayList<>();
 
-    public BoundaryShape(List<float[]> coordinatesList) {
+
+    public Boundary(List<float[]> coordinatesList) {
         this.coordinatesList = coordinatesList;
     }
 
@@ -72,12 +39,20 @@ abstract class BoundaryShape {
     int sign(float value) {
         return value < 0 ? -1 : value > 0 ? 1 : 0;
     }
+
+    public void display(DisplayMode displayMode) {
+        List<float[]> coordinatesList = this.getCoordinatesList();
+        // display the boundary
+        List<float[]> resizedCoordinatesList = new CoordinateTransformer().transformArray(displayMode, coordinatesList);
+        beginShape();
+        for (float[] coordinates : resizedCoordinatesList) {
+            vertex(coordinates[0], coordinates[1]);
+        }
+        endShape(CLOSE);
+    }
 }
 
-import java.util.ArrayList;
-
-
-class Torso2 extends BoundaryShape {
+class Torso2 extends Boundary {
     public Torso2() {
         super(new ArrayList<>() {{
             add(new float[]{487, 0});
@@ -88,7 +63,7 @@ class Torso2 extends BoundaryShape {
     }
 }
 
-class Torso1 extends BoundaryShape {
+class Torso1 extends Boundary {
     public Torso1() {
         super(new ArrayList<>() {{
             add(new float[]{487, 0});
@@ -111,20 +86,3 @@ class Torso1 extends BoundaryShape {
 }
 
 
-abstract class BoundaryLine {
-    private color lineColor;
-
-    public BoundaryLine(color lineColor) {
-        this.lineColor = lineColor;
-    }
-
-    public color getLineColor() {
-        return this.lineColor;
-    }
-}
-
-class StrightLine extends BoundaryLine {
-    public StrightLine(color lineColor) {
-        super(lineColor);
-    }
-}

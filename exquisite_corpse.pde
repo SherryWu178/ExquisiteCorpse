@@ -55,7 +55,7 @@ void draw() {
             shape.display(DisplayMode.WINDOW1);
         }
 
-        Boundary torsoBoundary = new Boundary();
+        Boundary torsoBoundary = new Torso1();
         computerShapes.add(torsoBoundary);
         for (Boundary shape : computerShapes) {
             shape.display(DisplayMode.MAIN);

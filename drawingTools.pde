@@ -1,6 +1,5 @@
 
 abstract class Tool {
-
     public Tool() {
     }
 }

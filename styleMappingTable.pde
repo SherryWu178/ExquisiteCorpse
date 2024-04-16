@@ -17,7 +17,7 @@ class StyleMappingTable {
             style.put("pattern", new PatternTool2());
         }
 
-        style.put("mask", new Boundary());
+        style.put("mask", new Torso1());
         return style;
     }
 }
