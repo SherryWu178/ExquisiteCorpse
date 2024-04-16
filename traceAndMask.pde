@@ -14,6 +14,12 @@ abstract class Boundary extends Tool {
         return coordinatesList;
     }
 
+    boolean contains(int[] p) {
+        float[] newp = new float[]{p[0], p[1]};
+        return contains(newp);
+    }
+
+
     boolean contains(float[] p) {
         float[] rayEnd = new float[]{width * 10, height * 10}; 
         int intersections = 0;
@@ -57,8 +63,8 @@ class Torso2 extends Boundary {
         super(new ArrayList<>() {{
             add(new float[]{487, 0});
             add(new float[]{487, 750});
-            add(new float[]{558, 750});
-            add(new float[]{558, 0});
+            add(new float[]{730, 750});
+            add(new float[]{730, 0});
         }});
     }
 }
@@ -84,5 +90,3 @@ class Torso1 extends Boundary {
         }});
     }
 }
-
-

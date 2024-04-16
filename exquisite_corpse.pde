@@ -2,8 +2,9 @@
 
 int a, b, c, d;
 int centerX, centerY, radius;
-ArrayList<Shape> shapes = new ArrayList<>();
 List<float[]> currentCoordinatesList = new ArrayList<>();
+ArrayList<Shape> shapes = new ArrayList<>();
+
 color currentColor = color(255);
 int shapeType = 0;
 ArrayList<Boundary> computerShapes = new ArrayList<>();
@@ -32,6 +33,9 @@ void setup() {
     b = 0;
     c = 0;
     d = 0;
+
+    smooth();
+    seed = (int)random(100);
 }
 
 
@@ -55,11 +59,13 @@ void draw() {
             shape.display(DisplayMode.WINDOW1);
         }
 
-        Boundary torsoBoundary = new Torso1();
-        computerShapes.add(torsoBoundary);
-        for (Boundary shape : computerShapes) {
-            shape.display(DisplayMode.MAIN);
-        }  
+        // Boundary torsoBoundary = new Torso1();
+        // computerShapes.add(torsoBoundary);
+        // for (Boundary shape : computerShapes) {
+        //     shape.display(DisplayMode.MAIN);
+        // }  
+
+        computer_draw();
     }
 
     
