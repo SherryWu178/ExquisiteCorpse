@@ -8,6 +8,7 @@ color currentColor = color(0);
 int shapeType = 0;
 int brushType = 0;
 int brushHead = 2;
+int currentshapeCompleted = 0;
 ArrayList<Boundary> computerShapes = new ArrayList<>();
 GlobalStage globalStage = GlobalStage.HUMAN_DRAW_1;
 
@@ -77,6 +78,10 @@ void draw() {
         if (brushType == 1) brushHead = 5;
         if (brushType == 2) brushHead = 8;
         if (brushType == 3) brushHead = 2;
+
+        if (currentshapeCompleted == 1) {
+            return;
+        }
       
         if (shapeType == 0) {
             centerX = a + c / 2;
@@ -179,7 +184,8 @@ void mousePressed() {
     } else {
         a = mouseX;
         b = mouseY;
-    }    
+    } 
+
 }
 
 void mouseDragged() {
@@ -190,6 +196,8 @@ void mouseDragged() {
         //    Rectangle rect = new Rectangle(a, b, c, d);
         //    shapes.add(rect);
     }
+
+    currentshapeCompleted = 0;   
 }
 
 void mouseReleased() {
@@ -214,6 +222,7 @@ void mouseReleased() {
             Circle circle = new Circle(centerX, centerY, radius, currentColor, brushHead);
             shapes.add(circle);
         }
+        
         // Add rectangle
         else if (shapeType == 1) {
             Rectangle rect = new Rectangle(a, b, c, d, currentColor, brushHead);
@@ -225,6 +234,8 @@ void mouseReleased() {
             shapes.add(line);
             currentCoordinatesList = new ArrayList<>();
         }
+
+        currentshapeCompleted = 1;
     }
     // println("Mouse released at: " + mouseX + ", " + mouseY);
 }
