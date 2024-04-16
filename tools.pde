@@ -1,26 +1,14 @@
 class Line{
     private Boundary boundary;
-    private float[][] pos;
-    private float[] lengths;
-    private PVector[] vec;
-    private float min;
-    private float max;
     private int numPoints;
     private int factor;
     private int numColor;
 
     // kindly change to pls List<float[]> coordinatesList = new ArrayList<>();
 
-    public Line(Boundary boundary, float[][] pos, float[] lengths, PVector[] vec,
-                float min, float max, 
-                int numPoints, int factor, int numColor)
+    public Line(Boundary boundary, int numPoints, int factor, int numColor)
     {   
-        this.boundary = boundary;
-        this.pos = pos;
-        this.lengths = lengths;
-        this.vec = vec;
-        this.min = min;
-        this.max = max;   
+        this.boundary = boundary;   
         this.numPoints = numPoints;
         this.factor = factor;
         this.numColor = numColor;
@@ -37,13 +25,30 @@ class Line{
         if (numPoints > 50) numPoints %= 50;
 
         List<float[]> coordinatesList = boundary.getCoordinatesList();
+          float[] p1;
+          float[] p2;
+          float[] lengths = new float[coordinatesList.size()];
+          PVector[] vec = new PVector[coordinatesList.size()];
+          float min = width; 
+          float max = 0;
+        
+          for (int i = 0; i < coordinatesList.size(); i++){
+            p1 = coordinatesList.get(i);
+            if (i + 1 == coordinatesList.size()) {
+              p2 = coordinatesList.get(0);
+            } else {
+              p2 = coordinatesList.get(i+1);
+            } 
+            lengths[i] = dist(p1[0], p1[1], p2[0], p2[1]);
+          }
 
         for (int i = 0; i < coordinatesList.size() -1; i++){   
             stroke(colors[i % numColor]);
-            strokeWeight(factor * i % 5);
+            strokeWeight(factor * i % numColor);
 
             float r = lengths[i] / numPoints;
-            coil(coordinatesList.get(i)[0], coordinatesList.get(i)[1], coordinatesList.get(i + 1)[0], coordinatesList.get(i+1)[1], r/2, r);            
+            coil(coordinatesList.get(i)[0], coordinatesList.get(i)[1], coordinatesList.get(i + 1)[0], coordinatesList.get(i+1)[1], r/2, r);   
+            
         }
     }
 
@@ -61,7 +66,30 @@ class Line{
         
         //normalized vectors;
         List<float[]> coordinatesList = boundary.getCoordinatesList();
-
+        
+          /**test line Array for tracing. this will be included in class.**/
+          float[] p1;
+          float[] p2;
+          float[] lengths = new float[coordinatesList.size()];
+          PVector[] vec = new PVector[coordinatesList.size()];
+          float min = width; 
+          float max = 0;
+        
+          for (int i = 0; i < coordinatesList.size(); i++){
+            p1 = coordinatesList.get(i);
+            if (i + 1 == coordinatesList.size()) {
+              p2 = coordinatesList.get(0);
+            } else {
+              p2 = coordinatesList.get(i+1);
+            } 
+            PVector point1 = new PVector(p1[0], p1[1]);
+            PVector point2 = new PVector(p2[0], p2[1]);
+            vec[i] = PVector.sub(point2, point1).normalize();
+            lengths[i] = dist(p1[0], p1[1], p2[0], p2[1]);
+            if (min < lengths[i])  min = lengths[i]; 
+            if (max > lengths[i])  max = lengths[i]; 
+          }
+            
         for (int i = 0; i < lengths.length; i++){   
             stroke(colors[i % numColor]);
             strokeWeight(factor * i % 5);
@@ -124,8 +152,8 @@ class Pattern{
         
         // Position the points randomly, split by Sherry
         for (int i = 0; i < numPoints; i++) {
-            int x = (int)random(minX, width); 
-            int y = (int)random(minY, height); 
+            int x = (int)random(200, 1000); /****240415*******/
+            int y = (int)random(1, 750); /****240415*******/
             points[i][0] = x; 
             points[i][1] = y; 
         }
@@ -133,6 +161,7 @@ class Pattern{
         // Display the points 
         for (int i = 0; i < numPoints; i++) {
             fill(colors[i % numColor]);
+            noStroke();
             if (boundary.contains(points[i]) == isInside) {
                 ellipse(points[i][0], points[i][1], random(0, width/5), random(0, height/5)); 
             }
@@ -158,8 +187,8 @@ class Pattern{
         
         // Position the points randomly, split by Sherry
         for (int i = 0; i < numPoints; i++) {
-            int x = (int)random(minX, width); 
-            int y = (int)random(minY, height); 
+            int x = (int)random(200, 1000); /****240415*******/
+            int y = (int)random(1, 750);   /****240415*******/
             points[i][0] = x; 
             points[i][1] = y; 
         }
@@ -168,9 +197,12 @@ class Pattern{
         for (int i = 0; i < numPoints; i++) {
             if (boundary.contains(points[i]) == isInside) {
                 stroke(colors[i % numColor]);
-                int ang = ((int)(Math.random() * 13)) * 30;
+                
+                int ang = (int)random(360);
+                
                 a = points[i][0] + cos(radians(ang))*50;
                 b = points[i][1] + sin(radians(ang))*50;
+    
                 line(points[i][0], points[i][1], a, b);
             }
             

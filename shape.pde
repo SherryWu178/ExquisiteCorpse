@@ -18,19 +18,20 @@ interface Shape {
 class SohyunLine implements Shape {
     // Getter and setter methods for centerX and centerY
     private List<float[]> coordinatesList = new ArrayList<>();
-    private Integer brushHead;
+    private int brushHead;
     private color shapeColor;
 
-    public SohyunLine(List<float[]> coordinatesList, color shapeColor) {
+    public SohyunLine(List<float[]> coordinatesList, color shapeColor, int brushHead) {
         this.coordinatesList = coordinatesList;
         this.shapeColor = shapeColor;
+        this.brushHead = brushHead;
     }
 
     @Override
     public void display() {
         DisplayMode mode = DisplayMode.MAIN;
         stroke(shapeColor);
-        strokeWeight(2);
+        strokeWeight(brushHead);
         coordinatesList = new CoordinateTransformer().transformArray(mode, this.coordinatesList);
         for (int i = 0; i < coordinatesList.size() - 1; i++) {
             float[] start = coordinatesList.get(i);
@@ -41,7 +42,7 @@ class SohyunLine implements Shape {
 
     public void display(DisplayMode mode) {
         stroke(shapeColor);
-        strokeWeight(2);
+        strokeWeight(brushHead);
         coordinatesList = new CoordinateTransformer().transformArray(mode, this.coordinatesList);
         for (int i = 0; i < coordinatesList.size() - 1; i++) {
             float[] start = coordinatesList.get(i);
@@ -77,6 +78,7 @@ interface SherryPolygon extends Shape {
     float getCenterX();
     float getCenterY();
     float[] getPosition();
+    
 }
 
 
@@ -88,8 +90,9 @@ class Rectangle implements SherryPolygon {
     private color shapeColor; 
     private float centerX;
     private float centerY;
+    private int brushHead;
     
-    public Rectangle(float x, float y, float length, float width, color shapeColor) {
+    public Rectangle(float x, float y, float length, float width, color shapeColor, int brushHead) {
         this.x = x;
         this.y = y;
         this.centerX = x + length / 2;
@@ -97,11 +100,13 @@ class Rectangle implements SherryPolygon {
         this.length = length;
         this.width = width;
         this.shapeColor = shapeColor;
+        this.brushHead = brushHead;
     }
     
     @Override
     public void display() {
         stroke(shapeColor);
+        strokeWeight(brushHead);
         rect(x, y, length, width);
     }
 
@@ -143,17 +148,20 @@ class Circle implements SherryPolygon {
     private color shapeColor; 
     private float centerX;
     private float centerY;
+    private int brushHead;
 
-    public Circle(float centerX, float centerY, float radius, color shapeColor) {
+    public Circle(float centerX, float centerY, float radius, color shapeColor, int brushHead) {
         this.centerX = centerX;
         this.centerY = centerY;
         this.radius = radius;
         this.shapeColor = shapeColor;
+        this.brushHead = brushHead;
     }
     
     @Override
     public void display() {
         stroke(shapeColor);
+        strokeWeight(brushHead);
         circle(centerX, centerY, radius);
     }
     

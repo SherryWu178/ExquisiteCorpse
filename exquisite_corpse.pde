@@ -2,13 +2,15 @@
 
 int a, b, c, d;
 int centerX, centerY, radius;
-List<float[]> currentCoordinatesList = new ArrayList<>();
 ArrayList<Shape> shapes = new ArrayList<>();
-
-color currentColor = color(255);
+List<float[]> currentCoordinatesList = new ArrayList<>();
+color currentColor = color(0);
 int shapeType = 0;
+int brushType = 0;
+int brushHead = 2;
 ArrayList<Boundary> computerShapes = new ArrayList<>();
 GlobalStage globalStage = GlobalStage.HUMAN_DRAW_1;
+
 
 enum GlobalStage {
     HUMAN_DRAW_1,
@@ -40,10 +42,12 @@ void setup() {
 
 
 void draw() {
-    background(0);
-    toolBar();
+    background(255);
+    if (globalStage == GlobalStage.COMPUTER_DRAW_2) computer_draw();
     RightPanel();
-    stroke(255);
+    toolBar();
+   
+    stroke(0);
     strokeWeight(2);
     noFill();
     
@@ -63,55 +67,75 @@ void draw() {
         // computerShapes.add(torsoBoundary);
         // for (Boundary shape : computerShapes) {
         //     shape.display(DisplayMode.MAIN);
-        // }  
-
-        computer_draw();
+        // }       
     }
 
-    
     if (mouseX > -1 && mouseX < 125 && mouseY > -1 && mouseY < 750) {
             // println("Mouse click at toolbar");
     } else {
+        if (brushType == 0) brushHead = 2;
+        if (brushType == 1) brushHead = 5;
+        if (brushType == 2) brushHead = 8;
+        if (brushType == 3) brushHead = 2;
+      
         if (shapeType == 0) {
             centerX = a + c / 2;
             centerY = b + d / 2;
             // radius = (c ^ 2 + d ^ 2) ^ 0.5;
             float radius = (float) Math.pow(Math.pow(c, 2) + Math.pow(d, 2), 0.5);
-            Circle circle = new Circle(centerX, centerY, radius, currentColor);
+            Circle circle = new Circle(centerX, centerY, radius, currentColor, brushHead);
             stroke(currentColor);
             circle.display();
         }
 
         else if (shapeType == 1) {
-            Rectangle rectangle = new Rectangle(a, b, c, d, currentColor);
+            Rectangle rectangle = new Rectangle(a, b, c, d, currentColor, brushHead);
             rectangle.display();
         }
 
         else if (shapeType == 2) {
-            stroke(255);
+            stroke(0);
             strokeWeight(5);
+            float mx = constrain(mouseX, 120, 1000);
+            float my = constrain(mouseY, 0, 750);
             if(mousePressed) {
-                currentCoordinatesList.add(new float[] {mouseX, mouseY});
+                currentCoordinatesList.add(new float[] {mx, my});
                 // println(currentCoordinatesList);
-                SohyunLine line = new SohyunLine(currentCoordinatesList, currentColor);
+                SohyunLine line = new SohyunLine(currentCoordinatesList, currentColor, brushHead);
                 line.display();
             }        
         }
     }
 }
 
+void selectBrush() {
+    // Check if mouse click occurred within ellipse region
+    if (mouseX > 60 - 17.5 && mouseX < 60 + 17.5 && mouseY >290 - 17.5 && mouseY < 290  + 17.5) {
+        brushType = 0;  
+    }
+    // Check if mouse click occurred within rect region
+    else if (mouseX > 45 && mouseX < 45 + 30 && mouseY > 340 && mouseY <340 + 30) {
+        brushType = 1;  
+    }
+    // Check if mouse click occurred within triangle region
+    else if (mouseX > 45 && mouseX < 75 && mouseY > 380 && mouseY < 390 + 10) {
+        brushType = 2;  
+    }
+    
+    println("Brush type: " + brushType);
+}
 
 void selectShape() {
     // Check if mouse click occurred within ellipse region
-    if (mouseX > 60 - 17.5 && mouseX < 60 + 17.5 && mouseY > 545 - 17.5 && mouseY < 545 + 17.5) {
+    if (mouseX > 60 - 17.5 && mouseX < 60 + 17.5 && mouseY > 560 - 17.5 && mouseY < 560 + 17.5) {
         shapeType = 0; // Set shapeType to ellipse
     }
     // Check if mouse click occurred within rect region
-    else if (mouseX > 45 && mouseX < 45 + 30 && mouseY > 585 && mouseY < 585 + 30) {
+    else if (mouseX > 45 && mouseX < 45 + 30 && mouseY > 610 && mouseY < 610 + 30) {
         shapeType = 1; // Set shapeType to rect
     }
     // Check if mouse click occurred within triangle region
-    else if (mouseX > 45 && mouseX < 75 && mouseY > 640 && mouseY < 665) {
+    else if (mouseX > 45 && mouseX < 75 && mouseY > 670 && mouseY < 695) {
         shapeType = 2; // Set shapeType to triangle
     }
     
@@ -125,6 +149,7 @@ void mouseClicked() {
 	if (mouseX > -1 && mouseX < 125 && mouseY > 251 && mouseY < 499 + 251) {
 		println("Select Shape");
     	selectShape();
+      selectBrush();
 	}
 
 	if (mouseX > -1 && mouseX < 125 && mouseY > -1 && mouseY < 250) {
@@ -132,7 +157,7 @@ void mouseClicked() {
 		selectColor();
 	}
 
-    if (mouseX > 35 && mouseX < 85 && mouseY > 679 && mouseY < 719) {
+    if (mouseX > 1075 && mouseX < 1125 && mouseY > 659 && mouseY < 699) {
         println("Next");
         GlobalFeatureExtractor gfe = new GlobalFeatureExtractor();
         gfe.extract(shapes);
@@ -171,6 +196,12 @@ void mouseReleased() {
     if (mouseX > -1 && mouseX < 125 && mouseY > -1 && mouseY < 750) {
         // println("Mouse released at toolbar");
     } else {
+        if (brushType == 0) brushHead = 2;
+        if (brushType == 1) brushHead = 5;
+        if (brushType == 2) brushHead = 8;
+        if (brushType == 3) brushHead = 2;
+        println("brushHead" + brushHead);
+      
         c = mouseX - a;
         d = mouseY - b;
         
@@ -180,17 +211,17 @@ void mouseReleased() {
             centerY = b + d / 2;
             // radius = (c ^2 + d ^ 2) ^ 0.5;
             float radius = (float) Math.pow(Math.pow(c, 2) + Math.pow(d, 2), 0.5);
-            Circle circle = new Circle(centerX, centerY, radius, currentColor);
+            Circle circle = new Circle(centerX, centerY, radius, currentColor, brushHead);
             shapes.add(circle);
         }
         // Add rectangle
         else if (shapeType == 1) {
-            Rectangle rect = new Rectangle(a, b, c, d, currentColor);
+            Rectangle rect = new Rectangle(a, b, c, d, currentColor, brushHead);
             shapes.add(rect);
         }
         
         else if (shapeType == 2) { 
-            SohyunLine line = new SohyunLine(currentCoordinatesList, currentColor);
+            SohyunLine line = new SohyunLine(currentCoordinatesList, currentColor, brushHead);
             shapes.add(line);
             currentCoordinatesList = new ArrayList<>();
         }

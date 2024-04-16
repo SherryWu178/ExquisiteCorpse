@@ -2,7 +2,6 @@ class Description{
 
     private int[] results;
     private String[] names;
-    private float[][] testCase;
 
     public Description(){
 
@@ -17,7 +16,7 @@ class Description{
 
         if (json == null) {
             println("JSON Object could not be parsed");
-            return new DataResult(new int[] {0}, new String[] {"a"}, new float[1][1]);
+            return new DataResult(new int[] {0}, new String[] {"a"});
         }
 
         JSONObject densityOfHatch = json.getJSONObject("densityOfHatch");
@@ -48,11 +47,12 @@ class Description{
         }
          
 
-        int maxLength = (int)dist(max_size[0][0], max_size[0][1], max_size[1][0], max_size[1][1]);
-        int num_points = points.length/10;
+        int maxLength = (int)dist(max_size[0][0], max_size[0][1], max_size[1][0], max_size[1][1]) + 1;//insurance
+        int num_points = points.length/10 + 1;//insurance
         randomSeed(seed);
-        float random_posX = points[(int)random(1, points.length)][0];
-        float random_posY = points[(int)random(1, points.length)][1];
+        float random_posX = points[(int)random(points.length)][0]; //insurance
+        float random_posY = points[(int)random(points.length)][1]; //insurance
+        num_color += 12; //insurance
         //println("X, Y" +random_posX +"," +random_posY); 
 
         int[] result = {num_color, maxLength, num_points, 
@@ -61,9 +61,8 @@ class Description{
         String[] names = {"num_color", "maxLength", "num_points", 
                                 "random_posX", "random_posY"};
 
-        float[][] tests = points;
 
-        return new DataResult(result, names, tests);
+        return new DataResult(result, names);
         
     }  
 
@@ -86,11 +85,9 @@ class Description{
 class DataResult {
     int[] intResult;
     String[] stringResult;
-    float[][] testPointArray;
     
-    DataResult(int[] intResult, String[] stringResult, float[][] testPointArray){
+    DataResult(int[] intResult, String[] stringResult){
         this.intResult = intResult;
         this.stringResult = stringResult;
-        this.testPointArray = testPointArray;
     }
 }
