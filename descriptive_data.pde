@@ -3,7 +3,7 @@ class Description{
     private int[] results;
     private String[] names;
 
-    public Description(){
+    public Description() {
 
     }
 

@@ -9,6 +9,7 @@ void toolBar() {
     drawShapeSelections();
     drawbrush(); 
     drawNext();
+    drawCurrentStage();
 }
 
 void RightPanel() {
@@ -36,7 +37,9 @@ void drawNext() {
     fill(0);
     textSize(20);
     text("Next", 1080, 680);
-    
+}
+
+void drawCurrentStage() {
     String displayText = "";
     if (globalStage == GlobalStage.HUMAN_DRAW_1) {
         displayText = "Stage 1";
@@ -50,8 +53,8 @@ void drawNext() {
         displayText = "Final Display";
     }
 
-    fill(255);
-    text(displayText, 1080, 650);
+    fill(0);
+    text(displayText, 900, 20);
 }
     
 

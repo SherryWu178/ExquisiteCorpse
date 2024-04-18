@@ -28,10 +28,12 @@ class ShapeDatabase {
 
     public void addShape(Shape shape, GlobalStage stage) {
         if (stage == GlobalStage.HUMAN_DRAW_1) {
+            println("Adding shape to stage 1");
             this.shapes_1.add(shape);
         } else if (stage == GlobalStage.COMPUTER_DRAW_2) {
             this.shapes_2.add(shape);
         } else if (stage == GlobalStage.HUMAN_DRAW_3) {
+            println("Adding shape to stage 3");
             this.shapes_3.add(shape);
         } else if (stage == GlobalStage.COMPUTER_DRAW_4) {
             this.shapes_4.add(shape);

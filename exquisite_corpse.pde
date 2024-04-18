@@ -13,6 +13,7 @@ ArrayList<Boundary> computerShapes = new ArrayList<>();
 GlobalStage globalStage = GlobalStage.HUMAN_DRAW_1;
 ShapeDatabase shapeDatabase = new ShapeDatabase();
 GlobalFeature currentGlobalFeature;
+Computer computer = new Computer();
 
 enum GlobalStage {
     HUMAN_DRAW_1,
@@ -37,7 +38,7 @@ void setup() {
     b = 0;
     c = 0;
     d = 0;
-
+    
     smooth();
     seed = (int)random(100);
     frameRate(10);
@@ -48,25 +49,32 @@ void draw() {
     background(255);
     RightPanel();
     toolBar();
-   
     stroke(0);
     strokeWeight(2);
     noFill();
     
     shapeDatabase.displayShapes(globalStage);
     
-    if (mouseX > -1 && mouseX < 125 && mouseY > -1 && mouseY < 750) {
-            // println("Mouse click at toolbar");
+    if (globalStage == GlobalStage.COMPUTER_DRAW_2) {
+        computer.computer_draw(currentGlobalFeature);
+    }
+    
+    if (globalStage == GlobalStage.COMPUTER_DRAW_4) {
+        computer.computer_draw(currentGlobalFeature);
+    }
+    
+    if (mouseX > - 1 && mouseX < 125 && mouseY > - 1 && mouseY < 750) {
+        // println("Mouse click at toolbar");
     } else {
         if (brushType == 0) brushHead = 2;
         if (brushType == 1) brushHead = 5;
         if (brushType == 2) brushHead = 8;
         if (brushType == 3) brushHead = 2;
-
+        
         if (currentshapeCompleted == 1) {
             return;
         }
-      
+        
         if (shapeType == 0) {
             centerX = a + c / 2;
             centerY = b + d / 2;
@@ -76,18 +84,18 @@ void draw() {
             stroke(currentColor);
             circle.display();
         }
-
+        
         else if (shapeType == 1) {
             Rectangle rectangle = new Rectangle(a, b, c, d, currentColor, brushHead);
             rectangle.display();
         }
-
+        
         else if (shapeType == 2) {
             stroke(0);
             strokeWeight(5);
             float mx = constrain(mouseX, 120, 1000);
             float my = constrain(mouseY, 0, 750);
-            if(mousePressed) {
+            if (mousePressed) {
                 currentCoordinatesList.add(new float[] {mx, my});
                 // println(currentCoordinatesList);
                 SohyunLine line = new SohyunLine(currentCoordinatesList, currentColor, brushHead);
@@ -99,11 +107,11 @@ void draw() {
 
 void selectBrush() {
     // Check if mouse click occurred within ellipse region
-    if (mouseX > 60 - 17.5 && mouseX < 60 + 17.5 && mouseY >290 - 17.5 && mouseY < 290  + 17.5) {
+    if (mouseX > 60 - 17.5 && mouseX < 60 + 17.5 && mouseY > 290 - 17.5 && mouseY < 290  + 17.5) {
         brushType = 0;  
     }
     // Check if mouse click occurred within rect region
-    else if (mouseX > 45 && mouseX < 45 + 30 && mouseY > 340 && mouseY <340 + 30) {
+    else if (mouseX > 45 && mouseX < 45 + 30 && mouseY > 340 && mouseY < 340 + 30) {
         brushType = 1;  
     }
     // Check if mouse click occurred within triangle region
@@ -137,15 +145,13 @@ void next() {
     
     if (globalStage == GlobalStage.HUMAN_DRAW_1) {
         currentGlobalFeature = gfe.extract(shapeDatabase, globalStage);;
-        computer_draw(currentGlobalFeature);
         globalStage = GlobalStage.COMPUTER_DRAW_2;
-
+        
     } else if (globalStage == GlobalStage.COMPUTER_DRAW_2) {
         globalStage = GlobalStage.HUMAN_DRAW_3;
-
+        
     } else if (globalStage == GlobalStage.HUMAN_DRAW_3) {
         currentGlobalFeature = gfe.extract(shapeDatabase, globalStage);
-        computer_draw(currentGlobalFeature);
         globalStage = GlobalStage.COMPUTER_DRAW_4;
         
     } else if (globalStage == GlobalStage.COMPUTER_DRAW_4) {
@@ -156,18 +162,18 @@ void next() {
 
 
 void mouseClicked() {
-	println("Mouse clicked at: " + mouseX + ", " + mouseY);
-	if (mouseX > -1 && mouseX < 125 && mouseY > 251 && mouseY < 499 + 251) {
-		println("Select Shape");
-    	selectShape();
-      selectBrush();
-	}
-
-	if (mouseX > -1 && mouseX < 125 && mouseY > -1 && mouseY < 250) {
-		println("Select Color");
-		selectColor();
-	}
-
+    println("Mouse clicked at: " + mouseX + ", " + mouseY);
+    if (mouseX > - 1 && mouseX < 125 && mouseY > 251 && mouseY < 499 + 251) {
+        println("Select Shape");
+        selectShape();
+        selectBrush();
+        }
+    
+    if (mouseX > - 1 && mouseX < 125 && mouseY > - 1 && mouseY < 250) {
+        println("Select Color");
+        selectColor();
+        }
+    
     if (mouseX > 1075 && mouseX < 1125 && mouseY > 659 && mouseY < 699) {
         println("Next");
         next();
@@ -175,13 +181,13 @@ void mouseClicked() {
 }
 
 void mousePressed() {
-    if (mouseX > -1 && mouseX < 125 && mouseY > -1 && mouseY < 750) {
+    if (mouseX > - 1 && mouseX < 125 && mouseY > - 1 && mouseY < 750) {
         // println("Mouse click at toolbar");
     } else {
         a = mouseX;
         b = mouseY;
     } 
-
+    
 }
 
 void mouseDragged() {
@@ -192,12 +198,12 @@ void mouseDragged() {
         //    Rectangle rect = new Rectangle(a, b, c, d);
         //    shapes.add(rect);
     }
-
+    
     currentshapeCompleted = 0;   
 }
 
 void mouseReleased() {
-    if (mouseX > -1 && mouseX < 125 && mouseY > -1 && mouseY < 750) {
+    if (mouseX > - 1 && mouseX < 125 && mouseY > - 1 && mouseY < 750) {
         // println("Mouse released at toolbar");
     } else {
         if (brushType == 0) brushHead = 2;
@@ -205,7 +211,7 @@ void mouseReleased() {
         if (brushType == 2) brushHead = 8;
         if (brushType == 3) brushHead = 2;
         println("brushHead" + brushHead);
-      
+        
         c = mouseX - a;
         d = mouseY - b;
         
@@ -230,7 +236,7 @@ void mouseReleased() {
             shapeDatabase.addShape(line, globalStage);
             currentCoordinatesList = new ArrayList<>();
         }
-
+        
         currentshapeCompleted = 1;
     }
     // println("Mouse released at: " + mouseX + ", " + mouseY);

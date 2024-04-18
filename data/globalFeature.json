@@ -1,26 +1,30 @@
 {
   "densityOfHatch": {
     "bottomRight": [
-      1094,
-      671
+      1097,
+      676
     ],
     "topLeft": [
-      533,
-      313
+      602,
+      227
     ],
     "centerOfMass": [
-      813.5,
-      492
+      813,
+      411
     ]
   },
   "positionOfPoints": [
     [
-      533,
-      313
+      602,
+      227
     ],
     [
-      1094,
-      671
+      740,
+      330
+    ],
+    [
+      1097,
+      676
     ]
   ],
   "numberOfColor": 1
