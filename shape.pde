@@ -21,7 +21,7 @@ class SohyunLine implements Shape {
     private Integer brushHead;
     private color shapeColor;
 
-    public SohyunLine(List<float[]> coordinatesList, color shapeColor) {
+    public SohyunLine(List<float[]> coordinatesList, color shapeColor, int brushHead) {
         print("SohyunLine constructor", coordinatesList.size() );
         this.coordinatesList = coordinatesList;
         this.shapeColor = shapeColor;
