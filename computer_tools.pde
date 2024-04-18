@@ -9,10 +9,8 @@ void computer_draw() {
   DataResult dataResult = descriptive.read_data(seed); 
   int[] styles = dataResult.intResult;
   String[] names = dataResult.stringResult;
-
   int[] shuffledIndices = shuffleArray(styles.length);
   
-
   
   /**allocation**/
   int numPoints = styles[shuffledIndices[0]];

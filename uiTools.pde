@@ -57,6 +57,15 @@ class CoordinateTransformer {
         return transformedPoints;
     }
 
+    public void transformSohyunLine(List<float[]> points, DisplayMode displayMode){
+        ArrayList<float[]> transformedPoints = transformArray(displayMode, points);
+        for (int i = 0; i < transformedPoints.size() - 1; i++) {
+            float[] point1 = transformedPoints.get(i);
+            float[] point2 = transformedPoints.get(i + 1);
+            line(point1[0], point1[1], point2[0], point2[1]);
+        }
+    }
+
     public void transformRectangle(float x, float y, float length, float width, DisplayMode displayMode){
         float[] point1 = {x, y};
         float[] point2 = {x + length, y};
