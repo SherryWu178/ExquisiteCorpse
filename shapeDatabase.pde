@@ -48,23 +48,23 @@ class ShapeDatabase {
                 shape.display(DisplayMode.WINDOW1);
             }
 
-            computer_draw();
-
             // for (Shape shape : this.shapes_2) {
             //     shape.display();
             // }
+
         } else if (stage == GlobalStage.HUMAN_DRAW_3) {
             for (Shape shape : this.shapes_1) {
                 shape.display(DisplayMode.WINDOW1);
             }
 
-            for (Shape shape : this.shapes_2) {
-                shape.display(DisplayMode.WINDOW2);
-            }
+            // for (Shape shape : this.shapes_2) {
+            //     shape.display(DisplayMode.WINDOW2);
+            // }
 
             for (Shape shape : this.shapes_3) {
                 shape.display();
             }
+
         } else if (stage == GlobalStage.COMPUTER_DRAW_4) {
             for (Shape shape : this.shapes_1) {
                 shape.display(DisplayMode.WINDOW1);
@@ -77,8 +77,6 @@ class ShapeDatabase {
             for (Shape shape : this.shapes_3) {
                 shape.display(DisplayMode.WINDOW3);
             }
-
-            computer_draw();
             
             // for (Shape shape : this.shapes_4) {
             //     shape.display();

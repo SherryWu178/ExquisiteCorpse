@@ -12,6 +12,7 @@ int currentshapeCompleted = 0;
 ArrayList<Boundary> computerShapes = new ArrayList<>();
 GlobalStage globalStage = GlobalStage.HUMAN_DRAW_1;
 ShapeDatabase shapeDatabase = new ShapeDatabase();
+GlobalFeature currentGlobalFeature;
 
 enum GlobalStage {
     HUMAN_DRAW_1,
@@ -45,7 +46,6 @@ void setup() {
 
 void draw() {
     background(255);
-    if (globalStage == GlobalStage.COMPUTER_DRAW_2) computer_draw();
     RightPanel();
     toolBar();
    
@@ -136,13 +136,18 @@ void next() {
     GlobalFeatureExtractor gfe = new GlobalFeatureExtractor();
     
     if (globalStage == GlobalStage.HUMAN_DRAW_1) {
-        gfe.extract(shapeDatabase, globalStage);
+        currentGlobalFeature = gfe.extract(shapeDatabase, globalStage);;
+        computer_draw(currentGlobalFeature);
         globalStage = GlobalStage.COMPUTER_DRAW_2;
+
     } else if (globalStage == GlobalStage.COMPUTER_DRAW_2) {
         globalStage = GlobalStage.HUMAN_DRAW_3;
+
     } else if (globalStage == GlobalStage.HUMAN_DRAW_3) {
-        gfe.extract(shapeDatabase, globalStage);
+        currentGlobalFeature = gfe.extract(shapeDatabase, globalStage);
+        computer_draw(currentGlobalFeature);
         globalStage = GlobalStage.COMPUTER_DRAW_4;
+        
     } else if (globalStage == GlobalStage.COMPUTER_DRAW_4) {
         globalStage = GlobalStage.FINAL_STAGE;
     }

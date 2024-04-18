@@ -6,14 +6,6 @@ interface Shape {
     float[] getPosition();
 }
 
-// enum DisplayMode {
-//     MAIN,
-//     WINDOW1,
-//     WINDOW2,
-//     WINDOW3,
-//     WINDOW4,
-//     FINAL_DISPLAY
-// }
 
 class SohyunLine implements Shape {
     // Getter and setter methods for centerX and centerY
@@ -47,15 +39,6 @@ class SohyunLine implements Shape {
         strokeWeight(brushHead);
         CoordinateTransformer transformer = new CoordinateTransformer();
         transformer.transformSohyunLine(this.coordinatesList, mode);
-        // for (int i = 0; i < new_coordinatesList.size() - 1; i++) {
-        //     float[] start = new_coordinatesList.get(i);
-        //     float[] end = new_coordinatesList.get(i + 1);
-        //     if (start[0] == end[0] && start[1] == end[1]) {
-        //         continue;
-        //     }
-        //     print("start: ", i, "end: ", i+1);
-        //     line(start[0], start[1], end[0], end[1]);
-        // }
     }
 
     @Override
@@ -87,7 +70,6 @@ interface SherryPolygon extends Shape {
     float[] getPosition();
     
 }
-
 
 class Rectangle implements SherryPolygon {
     private float x;
@@ -179,8 +161,6 @@ class Circle implements SherryPolygon {
         CoordinateTransformer transformer = new CoordinateTransformer();
         transformer.transformCircle(centerX, centerY, radius, mode);
     }
-    
-    
 
     @Override
     public color getColor() {
