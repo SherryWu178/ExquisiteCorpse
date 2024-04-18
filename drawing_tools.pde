@@ -18,6 +18,7 @@ class LineTool implements Tool {
     }
 
     public void display() {
+        randomSeed(seed);
         // Method implementation
     }
 }
@@ -29,6 +30,7 @@ class CoilLineTool extends LineTool {
     }
 
     public void display(DisplayMode mode) {
+        randomSeed(seed);
         //color random generator
         Color colorC = new Color(numColor);
         color[] colors = colorC.colorBySize(numColor, factor/5 + 1);
@@ -66,6 +68,7 @@ class CoilLineTool extends LineTool {
 
     @Override
     public void display() {
+        randomSeed(seed);
         //color random generator
         Color colorC = new Color(numColor);
         color[] colors = colorC.colorBySize(numColor, factor/5 + 1);
@@ -109,6 +112,7 @@ class ChainLineTool extends LineTool {
 
     @Override
     public void display() {
+        randomSeed(seed);
         //color random generator
         Color colorC = new Color(numColor);
         color[] colors = colorC.colorBySize(numColor, factor/5 + 1);
@@ -185,6 +189,7 @@ class PatternTool implements Tool {
     }
 
     public void display() {
+        randomSeed(seed);
     }
 }
 
@@ -196,6 +201,7 @@ class EllipsePatternTool extends PatternTool {
 
     @Override
     public void display() {
+        randomSeed(seed);
         if (numPoints < 10) numPoints *= 2;
         if (numPoints > 500) numPoints %= 300;
         int[][] points = new int[numPoints][2]; 
@@ -234,6 +240,7 @@ class DiagonalPatternTool extends PatternTool {
 
     @Override
     public void display() {
+        randomSeed(seed);
         if (numPoints < 10) numPoints *= 10;
         int[][] points = new int[numPoints][2]; 
         
