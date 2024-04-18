@@ -34,7 +34,6 @@ class SohyunLine implements Shape {
     }
 
     public void display(DisplayMode mode) {
-        print("display line..");
         stroke(255);
         strokeWeight(brushHead);
         CoordinateTransformer transformer = new CoordinateTransformer();
@@ -156,7 +155,6 @@ class Circle implements SherryPolygon {
     
     @Override
     public void display(DisplayMode mode) {
-        print("display circle..");
         stroke(shapeColor);
         CoordinateTransformer transformer = new CoordinateTransformer();
         transformer.transformCircle(centerX, centerY, radius, mode);

@@ -66,7 +66,7 @@ class Description{
         
     }  
 
-    public static float[][] convertTo2DArray(List<float[]> listOfArrays) {
+    public float[][] convertTo2DArray(List<float[]> listOfArrays) {
         int numRows = listOfArrays.size();
         int numCols = listOfArrays.get(0).length;
 
@@ -88,7 +88,7 @@ class Description{
         float[][] points; 
         int num_color; 
 
-        DensityOfHatch densityOfHatch = currentGlobalFeature.getDensityOfHatch();
+        HatchDensity densityOfHatch = currentGlobalFeature.getDensityOfHatch();
         float[] bottomRight = densityOfHatch.getBottomRight();
         float[] topLeft = densityOfHatch.getTopLeft();
         float[] centerOfMass = densityOfHatch.getCenterOfMass();
@@ -100,7 +100,7 @@ class Description{
         // JSONArray centerOfMass = densityOfHatch.getJSONArray("centerOfMass");
         // JSONArray positionOfPoints = json.getJSONArray("positionOfPoints");
                 
-        num_color = json.getInt("numberOfColor");
+        num_color = currentGlobalFeature.getNumberOfColor();
         //println("num of color :" + num_color); 
         
         max_size = new float[][] {
@@ -111,15 +111,7 @@ class Description{
         // println("max_size");    
         // print_array(max_size);
                 
-        points = new float[positionOfPoints.size()][2];
-        
-        for (int i = 0; i < positionOfPoints.size(); i++) {
-            JSONArray point = positionOfPoints.getJSONArray(i);
-            points[i][0] = point[0];
-            points[i][1] = point[1];
-        //println("points"); 
-        //print_array(points);
-        }
+        points = positionOfPoints;
          
 
         int maxLength = (int)dist(max_size[0][0], max_size[0][1], max_size[1][0], max_size[1][1]) + 1;//insurance
