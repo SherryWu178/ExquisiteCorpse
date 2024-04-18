@@ -1,42 +1,45 @@
 class ShapeDatabase {
     ArrayList<Shape> shapes_1;
-    ArrayList<Shape> shapes_2;
+    Style style_2;
     ArrayList<Shape> shapes_3;
-    ArrayList<Shape> shapes_4;
-    PGraphics pg2;
-    PGraphics pg4;
+    Style style_4;
 
     public ShapeDatabase() {
         this.shapes_1 = new ArrayList<Shape>();
-        this.shapes_2 = new ArrayList<Shape>();
         this.shapes_3 = new ArrayList<Shape>();
-        this.shapes_4 = new ArrayList<Shape>();
     }
 
     public ArrayList<Shape> getShapes(GlobalStage stage) {
         if (stage == GlobalStage.HUMAN_DRAW_1) {
             return this.shapes_1;
         } else if (stage == GlobalStage.COMPUTER_DRAW_2) {
-            return this.shapes_2;
+            throw new RuntimeException("Cannot get shapes for stage 2");
         } else if (stage == GlobalStage.HUMAN_DRAW_3) {
             return this.shapes_3;
         } else if (stage == GlobalStage.COMPUTER_DRAW_4) {
-            return this.shapes_4;
+            throw new RuntimeException("Cannot get shapes for stage 4");
+        } else {
+            throw new RuntimeException("Cannot get shapes for final stage");
         }
-        return null;
     }
 
     public void addShape(Shape shape, GlobalStage stage) {
         if (stage == GlobalStage.HUMAN_DRAW_1) {
             println("Adding shape to stage 1");
             this.shapes_1.add(shape);
-        } else if (stage == GlobalStage.COMPUTER_DRAW_2) {
-            this.shapes_2.add(shape);
         } else if (stage == GlobalStage.HUMAN_DRAW_3) {
             println("Adding shape to stage 3");
             this.shapes_3.add(shape);
+        }
+    }
+
+    public void addStyle(Style style, GlobalStage stage) {
+        if (stage == GlobalStage.COMPUTER_DRAW_2) {
+            println("Adding style to stage 2");
+            this.style_2 = style;
         } else if (stage == GlobalStage.COMPUTER_DRAW_4) {
-            this.shapes_4.add(shape);
+            println("Adding style to stage 4");
+            this.style_4 = style;
         }
     }
 
@@ -50,18 +53,14 @@ class ShapeDatabase {
                 shape.display(DisplayMode.WINDOW1);
             }
 
-            // for (Shape shape : this.shapes_2) {
-            //     shape.display();
-            // }
+            style_2.display();
 
         } else if (stage == GlobalStage.HUMAN_DRAW_3) {
             for (Shape shape : this.shapes_1) {
                 shape.display(DisplayMode.WINDOW1);
             }
 
-            // for (Shape shape : this.shapes_2) {
-            //     shape.display(DisplayMode.WINDOW2);
-            // }
+            // style_2.display();
 
             for (Shape shape : this.shapes_3) {
                 shape.display();
@@ -72,34 +71,27 @@ class ShapeDatabase {
                 shape.display(DisplayMode.WINDOW1);
             }
 
-            // for (Shape shape : this.shapes_2) {
-            //     shape.display(DisplayMode.WINDOW2);
-            // }
+            // style_2.display();
 
             for (Shape shape : this.shapes_3) {
                 shape.display(DisplayMode.WINDOW3);
             }
             
-            // for (Shape shape : this.shapes_4) {
-            //     shape.display();
-            // }
+            style_4.display();
             
         } else if (stage == GlobalStage.FINAL_STAGE) {
             for (Shape shape : this.shapes_1) {
                 shape.display(DisplayMode.FINAL_DISPLAY);
             }
 
-            for (Shape shape : this.shapes_2) {
-                shape.display(DisplayMode.FINAL_DISPLAY);
-            }
+            // style_2.display(DisplayMode.FINAL_DISPLAY);
+
 
             for (Shape shape : this.shapes_3) {
                 shape.display(DisplayMode.FINAL_DISPLAY);
             }
             
-            for (Shape shape : this.shapes_4) {
-                shape.display(DisplayMode.FINAL_DISPLAY);
-            }
+            // style_4.display(DisplayMode.FINAL_DISPLAY);
         }
     }
 }

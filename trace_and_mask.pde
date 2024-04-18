@@ -2,9 +2,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-abstract class Boundary extends Tool {
+abstract class Boundary implements Tool {
     private List<float[]> coordinatesList = new ArrayList<>();
-
 
     public Boundary(List<float[]> coordinatesList) {
         this.coordinatesList = coordinatesList;

@@ -12,7 +12,7 @@ void toolBar() {
     drawCurrentStage();
 }
 
-void RightPanel() {
+void rightPanel() {
     //Draw background of toolbar
     stroke(0);
     strokeWeight(1);

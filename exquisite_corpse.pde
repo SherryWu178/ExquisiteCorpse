@@ -12,7 +12,7 @@ int currentshapeCompleted = 0;
 ArrayList<Boundary> computerShapes = new ArrayList<>();
 GlobalStage globalStage = GlobalStage.HUMAN_DRAW_1;
 ShapeDatabase shapeDatabase = new ShapeDatabase();
-GlobalFeature currentGlobalFeature;
+PretransformParameters currentPretransformParameters;
 Computer computer = new Computer();
 
 enum GlobalStage {
@@ -47,7 +47,7 @@ void setup() {
 
 void draw() {
     background(255);
-    RightPanel();
+    rightPanel();
     toolBar();
     stroke(0);
     strokeWeight(2);
@@ -55,13 +55,13 @@ void draw() {
     
     shapeDatabase.displayShapes(globalStage);
     
-    if (globalStage == GlobalStage.COMPUTER_DRAW_2) {
-        computer.computer_draw(currentGlobalFeature);
-    }
+    // if (globalStage == GlobalStage.COMPUTER_DRAW_2) {
+    //     computer.computer_draw(currentGlobalFeature);
+    // }
     
-    if (globalStage == GlobalStage.COMPUTER_DRAW_4) {
-        computer.computer_draw(currentGlobalFeature);
-    }
+    // if (globalStage == GlobalStage.COMPUTER_DRAW_4) {
+    //     computer.computer_draw(currentGlobalFeature);
+    // }
     
     if (mouseX > - 1 && mouseX < 125 && mouseY > - 1 && mouseY < 750) {
         // println("Mouse click at toolbar");
@@ -141,18 +141,22 @@ void selectShape() {
 
 void next() {
     
-    GlobalFeatureExtractor gfe = new GlobalFeatureExtractor();
+    PretransformParametersExtractor ppe = new PretransformParametersExtractor();
     
     if (globalStage == GlobalStage.HUMAN_DRAW_1) {
-        currentGlobalFeature = gfe.extract(shapeDatabase, globalStage);;
+        currentPretransformParameters = ppe.extract(shapeDatabase, globalStage);
+        
         globalStage = GlobalStage.COMPUTER_DRAW_2;
+        computer.computer_create_style(currentPretransformParameters);
         
     } else if (globalStage == GlobalStage.COMPUTER_DRAW_2) {
         globalStage = GlobalStage.HUMAN_DRAW_3;
         
     } else if (globalStage == GlobalStage.HUMAN_DRAW_3) {
-        currentGlobalFeature = gfe.extract(shapeDatabase, globalStage);
+        currentPretransformParameters = ppe.extract(shapeDatabase, globalStage);
+        
         globalStage = GlobalStage.COMPUTER_DRAW_4;
+        computer.computer_create_style(currentPretransformParameters);
         
     } else if (globalStage == GlobalStage.COMPUTER_DRAW_4) {
         globalStage = GlobalStage.FINAL_STAGE;

@@ -47,8 +47,8 @@ class Line{
             strokeWeight(factor * i % numColor);
 
             float r = lengths[i] / numPoints;
-            coil(coordinatesList.get(i)[0], coordinatesList.get(i)[1], coordinatesList.get(i + 1)[0], coordinatesList.get(i+1)[1], r/2, r);   
-            
+            Coil coil = new Coil(coordinatesList.get(i)[0], coordinatesList.get(i)[1], coordinatesList.get(i + 1)[0], coordinatesList.get(i+1)[1], r/2, r);   
+            coil.display();
         }
     }
 
@@ -216,26 +216,25 @@ class FunEffect{
 }
 
 // will be more generators
-class Color{
+class Color {
 
     private int numColor;
 
-    public Color(int numColor)
-    {
+    public Color(int numColor) {
         this.numColor = numColor;
     }
 
-    public color[] colorBySize(int numColor, int factor){
+    public color[] colorBySize(int numColor, int factor) {
         color[] colors = new color[numColor]; 
         
         int minSize = 5/factor; 
         int maxSize = 255/factor;
         
         for (int i = 0; i < numColor; i++) {
-        int r = (int)random(minSize, maxSize); 
-        int g = (int)random(minSize, maxSize); 
-        int b = (int)random(minSize, maxSize); 
-        colors[i] = color(r, g, b);
+            int r = (int)random(minSize, maxSize); 
+            int g = (int)random(minSize, maxSize); 
+            int b = (int)random(minSize, maxSize); 
+            colors[i] = color(r, g, b);
         }
         return colors;
     }

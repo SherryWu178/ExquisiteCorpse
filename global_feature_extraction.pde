@@ -4,12 +4,13 @@ import java.util.List;
 import java.util.Set;
 import java.util.HashSet;
 
-class GlobalFeatureExtractor {
-    public GlobalFeatureExtractor() {}
+class PretransformParametersExtractor {
+    public PretransformParametersExtractor() {}
 
-    public GlobalFeature extract(ShapeDatabase shapeDatabase, GlobalStage globalStage) {
+    public PretransformParameters extract(ShapeDatabase shapeDatabase, GlobalStage globalStage) {
+
         ArrayList<Shape> shapes = shapeDatabase.getShapes(globalStage);
-
+        
         float meanX = 0, meanY = 0;
         float maxX = Float.MIN_VALUE, maxY = Float.MIN_VALUE;
         float minX = Float.MAX_VALUE, minY = Float.MAX_VALUE;
@@ -58,20 +59,20 @@ class GlobalFeatureExtractor {
         // Create HatchDensity instance
         HatchDensity hatchDensity = new HatchDensity(topLeft, bottomRight, centerOfMass);
         int numberOfUniqueColors = uniqueColors.size();
-        GlobalFeature globalFeature = new GlobalFeature(hatchDensity, numberOfUniqueColors, positionOfPoints);
-        globalFeature.saveToJsonFile("data/globalFeature.json");
+        PretransformParameters pretransformParameters = new PretransformParameters(hatchDensity, numberOfUniqueColors, positionOfPoints);
+        pretransformParameters.saveToJsonFile("data/pretransformParameters.json");
 
-        return globalFeature;
+        return pretransformParameters;
      }
 };
 
 
-class GlobalFeature {
+class PretransformParameters {
     private HatchDensity densityOfHatch;
     private int numberOfColor;
     private List<float[]> positionOfPoints;
 
-    public GlobalFeature(HatchDensity densityOfHatch, int numberOfColor, List<float[]> positionOfPoints) {
+    public PretransformParameters(HatchDensity densityOfHatch, int numberOfColor, List<float[]> positionOfPoints) {
         this.densityOfHatch = densityOfHatch;
         this.numberOfColor = numberOfColor;
         this.positionOfPoints = positionOfPoints;

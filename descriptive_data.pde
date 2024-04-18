@@ -9,7 +9,7 @@ class Description{
 
     DataResult read_data(int seed){  //read json although this is not necessary in future
  
-        JSONObject json = loadJSONObject("data/globalFeature.json");
+        JSONObject json = loadJSONObject("data/pretransformParameters.json");
         float[][] max_size;
         float[][] points; 
         int num_color; 
@@ -82,7 +82,7 @@ class Description{
     }
 
 
-    DataResult read_global_feature(int seed, GlobalFeature currentGlobalFeature) {  
+    DataResult read_global_feature(int seed, PretransformParameters currentGlobalFeature) {  
  
         float[][] max_size;
         float[][] points; 
