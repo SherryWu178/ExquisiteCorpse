@@ -39,7 +39,7 @@ void setup() {
 
     smooth();
     seed = (int)random(100);
-    // frameRate(4);
+    frameRate(10);
 }
 
 
