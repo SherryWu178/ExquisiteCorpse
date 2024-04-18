@@ -7,7 +7,9 @@ import java.util.HashSet;
 class GlobalFeatureExtractor {
     public GlobalFeatureExtractor() {}
 
-    public GlobalFeature extract(ArrayList<Shape> shapes) {
+    public GlobalFeature extract(ShapeDatabase shapeDatabase, GlobalStage globalStage) {
+
+        ArrayList<Shape> shapes = shapeDatabase.getShapes(globalStage);
         float meanX = 0, meanY = 0;
         float maxX = Float.MIN_VALUE, maxY = Float.MIN_VALUE;
         float minX = Float.MAX_VALUE, minY = Float.MAX_VALUE;

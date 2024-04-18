@@ -9,6 +9,7 @@ color currentColor = color(255);
 int shapeType = 0;
 ArrayList<Boundary> computerShapes = new ArrayList<>();
 GlobalStage globalStage = GlobalStage.HUMAN_DRAW_1;
+ShapeDatabase shapeDatabase = new ShapeDatabase();
 
 enum GlobalStage {
     HUMAN_DRAW_1,
@@ -36,6 +37,7 @@ void setup() {
 
     smooth();
     seed = (int)random(100);
+    // frameRate(4);
 }
 
 
@@ -47,27 +49,7 @@ void draw() {
     strokeWeight(2);
     noFill();
     
-    if (globalStage == GlobalStage.HUMAN_DRAW_1) {
-        for (Shape shape : shapes) {
-            shape.display();
-        }    
-    }
-
-    else if (globalStage == GlobalStage.COMPUTER_DRAW_2) {
-
-        for (Shape shape : shapes) {
-            shape.display(DisplayMode.WINDOW1);
-        }
-
-        // Boundary torsoBoundary = new Torso1();
-        // computerShapes.add(torsoBoundary);
-        // for (Boundary shape : computerShapes) {
-        //     shape.display(DisplayMode.MAIN);
-        // }  
-
-        computer_draw();
-    }
-
+    shapeDatabase.displayShapes(globalStage);
     
     if (mouseX > -1 && mouseX < 125 && mouseY > -1 && mouseY < 750) {
             // println("Mouse click at toolbar");
@@ -118,6 +100,23 @@ void selectShape() {
     println("Shape type: " + shapeType);
 }
 
+void next() {
+    
+    GlobalFeatureExtractor gfe = new GlobalFeatureExtractor();
+    
+    if (globalStage == GlobalStage.HUMAN_DRAW_1) {
+        gfe.extract(shapeDatabase, globalStage);
+        globalStage = GlobalStage.COMPUTER_DRAW_2;
+    } else if (globalStage == GlobalStage.COMPUTER_DRAW_2) {
+        globalStage = GlobalStage.HUMAN_DRAW_3;
+    } else if (globalStage == GlobalStage.HUMAN_DRAW_3) {
+        gfe.extract(shapeDatabase, globalStage);
+        globalStage = GlobalStage.COMPUTER_DRAW_4;
+    } else if (globalStage == GlobalStage.COMPUTER_DRAW_4) {
+        globalStage = GlobalStage.FINAL_STAGE;
+    }
+}
+
 
 
 void mouseClicked() {
@@ -134,17 +133,7 @@ void mouseClicked() {
 
     if (mouseX > 35 && mouseX < 85 && mouseY > 679 && mouseY < 719) {
         println("Next");
-        GlobalFeatureExtractor gfe = new GlobalFeatureExtractor();
-        gfe.extract(shapes);
-        if (globalStage == GlobalStage.HUMAN_DRAW_1) {
-            globalStage = GlobalStage.COMPUTER_DRAW_2;
-        } else if (globalStage == GlobalStage.COMPUTER_DRAW_2) {
-            globalStage = GlobalStage.HUMAN_DRAW_3;
-        } else if (globalStage == GlobalStage.HUMAN_DRAW_3) {
-            globalStage = GlobalStage.COMPUTER_DRAW_4;
-        } else if (globalStage == GlobalStage.COMPUTER_DRAW_4) {
-            globalStage = GlobalStage.FINAL_STAGE;
-        }
+        next();
     }
 }
 
@@ -181,17 +170,17 @@ void mouseReleased() {
             // radius = (c ^2 + d ^ 2) ^ 0.5;
             float radius = (float) Math.pow(Math.pow(c, 2) + Math.pow(d, 2), 0.5);
             Circle circle = new Circle(centerX, centerY, radius, currentColor);
-            shapes.add(circle);
+            shapeDatabase.addShape(circle, globalStage);
         }
         // Add rectangle
         else if (shapeType == 1) {
             Rectangle rect = new Rectangle(a, b, c, d, currentColor);
-            shapes.add(rect);
+            shapeDatabase.addShape(rect, globalStage);
         }
         
         else if (shapeType == 2) { 
             SohyunLine line = new SohyunLine(currentCoordinatesList, currentColor);
-            shapes.add(line);
+            shapeDatabase.addShape(line, globalStage);
             currentCoordinatesList = new ArrayList<>();
         }
     }

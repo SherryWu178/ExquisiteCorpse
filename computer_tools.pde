@@ -14,14 +14,11 @@ void computer_draw() {
 
   /**data will be realocated. This is pretransformed. **/
   Description descriptive = new Description(); 
-
   DataResult dataResult = descriptive.read_data(seed); /**********************************/
   int[] styles = dataResult.intResult;
   String[] names = dataResult.stringResult;
-
   int[] shuffledIndices = shuffleArray(styles.length);
   
-
   
   /**allocation**/
   int numPoints = styles[shuffledIndices[0]];

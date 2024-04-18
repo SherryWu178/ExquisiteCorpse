@@ -17,11 +17,12 @@ interface Shape {
 
 class SohyunLine implements Shape {
     // Getter and setter methods for centerX and centerY
-    private List<float[]> coordinatesList = new ArrayList<>();
+    private List<float[]> coordinatesList;
     private Integer brushHead;
     private color shapeColor;
 
     public SohyunLine(List<float[]> coordinatesList, color shapeColor) {
+        print("SohyunLine constructor", coordinatesList.size() );
         this.coordinatesList = coordinatesList;
         this.shapeColor = shapeColor;
     }
@@ -31,23 +32,29 @@ class SohyunLine implements Shape {
         DisplayMode mode = DisplayMode.MAIN;
         stroke(shapeColor);
         strokeWeight(2);
-        coordinatesList = new CoordinateTransformer().transformArray(mode, this.coordinatesList);
-        for (int i = 0; i < coordinatesList.size() - 1; i++) {
-            float[] start = coordinatesList.get(i);
-            float[] end = coordinatesList.get(i + 1);
+        List<float[]> transformedCoordinates = new CoordinateTransformer().transformArray(mode, this.coordinatesList);
+        for (int i = 0; i < transformedCoordinates.size() - 1; i++) {
+            float[] start = transformedCoordinates.get(i);
+            float[] end = transformedCoordinates.get(i + 1);
             line(start[0], start[1], end[0], end[1]);
         }
     }
 
     public void display(DisplayMode mode) {
-        stroke(shapeColor);
+        print("display line..");
+        stroke(255);
         strokeWeight(2);
-        coordinatesList = new CoordinateTransformer().transformArray(mode, this.coordinatesList);
-        for (int i = 0; i < coordinatesList.size() - 1; i++) {
-            float[] start = coordinatesList.get(i);
-            float[] end = coordinatesList.get(i + 1);
-            line(start[0], start[1], end[0], end[1]);
-        }
+        CoordinateTransformer transformer = new CoordinateTransformer();
+        transformer.transformSohyunLine(this.coordinatesList, mode);
+        // for (int i = 0; i < new_coordinatesList.size() - 1; i++) {
+        //     float[] start = new_coordinatesList.get(i);
+        //     float[] end = new_coordinatesList.get(i + 1);
+        //     if (start[0] == end[0] && start[1] == end[1]) {
+        //         continue;
+        //     }
+        //     print("start: ", i, "end: ", i+1);
+        //     line(start[0], start[1], end[0], end[1]);
+        // }
     }
 
     @Override
@@ -159,6 +166,7 @@ class Circle implements SherryPolygon {
     
     @Override
     public void display(DisplayMode mode) {
+        print("display circle..");
         stroke(shapeColor);
         CoordinateTransformer transformer = new CoordinateTransformer();
         transformer.transformCircle(centerX, centerY, radius, mode);
