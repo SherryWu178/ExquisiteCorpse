@@ -162,6 +162,7 @@ void next() {
     } else if (globalStage == GlobalStage.HUMAN_DRAW_3) {
         currentPretransformParameters = ppe.extract(shapeDatabase, globalStage);
         globalStage = GlobalStage.COMPUTER_DRAW_4;
+        seed = (int)random(100);
         computer.computer_create_style(currentPretransformParameters);
         
     } else if (globalStage == GlobalStage.COMPUTER_DRAW_4) {
@@ -171,7 +172,10 @@ void next() {
     }
 }
 
-
+void save() {
+    PImage img = get(400, 0, 200, 600);
+    img.save("final.png");
+}
 
 void mouseClicked() {
     println("Mouse clicked at: " + mouseX + ", " + mouseY);
@@ -189,6 +193,13 @@ void mouseClicked() {
     if (mouseX > 1075 && mouseX < 1125 && mouseY > 659 && mouseY < 699) {
         println("Next");
         next();
+    }
+
+    if (mouseX > 1075 && mouseX < 1125 && mouseY > 710 && mouseY < 750) {
+        if (globalStage == GlobalStage.FINAL_STAGE) {
+            println("Save");
+            save();
+        }
     }
 }
 

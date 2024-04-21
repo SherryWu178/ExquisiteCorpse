@@ -9,7 +9,7 @@ class ShapeDatabase {
     public void display_img2(DisplayMode mode) {
         this.img_2 = loadImage("COMPUTER_DRAW_2.png");
         if (mode == DisplayMode.WINDOW2) {
-            image(this.img_2, 1000, 150, 200, 150);
+            image(this.img_2, 1001, 151, 199, 149);
         } else if (mode == DisplayMode.FINAL_DISPLAY2) {
             image(this.img_2, 400, 150, 200, 150);
         }        
