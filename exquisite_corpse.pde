@@ -30,7 +30,10 @@ enum DisplayMode {
     WINDOW2,
     WINDOW3,
     WINDOW4,
-    FINAL_DISPLAY
+    FINAL_DISPLAY1,
+    FINAL_DISPLAY2,
+    FINAL_DISPLAY3,
+    FINAL_DISPLAY4
 }
 
 void setup() {
@@ -48,13 +51,14 @@ void setup() {
 
 void draw() {
     background(255);
+    shapeDatabase.displayMainCanvas(globalStage);
     rightPanel();
     toolBar();
     stroke(0);
     strokeWeight(2);
     noFill();
     
-    shapeDatabase.displayShapes(globalStage);
+    shapeDatabase.displaySidePanel(globalStage);
     
     // if (globalStage == GlobalStage.COMPUTER_DRAW_2) {
     //     computer.computer_draw(currentGlobalFeature);

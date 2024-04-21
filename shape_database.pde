@@ -43,52 +43,56 @@ class ShapeDatabase {
         }
     }
 
-    public void displayShapes(GlobalStage stage) {
+    public void displaySidePanel(GlobalStage stage) {
         if (stage == GlobalStage.HUMAN_DRAW_1) {
-            for (Shape shape : this.shapes_1) {
-                shape.display();
-            }
+            return;
+
         } else if (stage == GlobalStage.COMPUTER_DRAW_2) {
             for (Shape shape : this.shapes_1) {
                 shape.display(DisplayMode.WINDOW1);
             }
-
-            style_2.display();
-
         } else if (stage == GlobalStage.HUMAN_DRAW_3) {
             for (Shape shape : this.shapes_1) {
                 shape.display(DisplayMode.WINDOW1);
             }
-
-            // style_2.display();
-
-            for (Shape shape : this.shapes_3) {
-                shape.display();
-            }
-
         } else if (stage == GlobalStage.COMPUTER_DRAW_4) {
             for (Shape shape : this.shapes_1) {
                 shape.display(DisplayMode.WINDOW1);
             }
 
-            // style_2.display();
-
             for (Shape shape : this.shapes_3) {
                 shape.display(DisplayMode.WINDOW3);
+            }            
+        } else if (stage == GlobalStage.FINAL_STAGE) {
+            return;
+        }
+    }
+
+    public void displayMainCanvas(GlobalStage stage) {
+        if (stage == GlobalStage.HUMAN_DRAW_1) {
+            for (Shape shape : this.shapes_1) {
+                shape.display();
             }
-            
+        } else if (stage == GlobalStage.COMPUTER_DRAW_2) {
+            style_2.display();
+
+        } else if (stage == GlobalStage.HUMAN_DRAW_3) {
+            for (Shape shape : this.shapes_3) {
+                shape.display();
+            }
+        } else if (stage == GlobalStage.COMPUTER_DRAW_4) {
             style_4.display();
             
         } else if (stage == GlobalStage.FINAL_STAGE) {
             for (Shape shape : this.shapes_1) {
-                shape.display(DisplayMode.FINAL_DISPLAY);
+                shape.display(DisplayMode.FINAL_DISPLAY1);
             }
 
             // style_2.display(DisplayMode.FINAL_DISPLAY);
 
 
             for (Shape shape : this.shapes_3) {
-                shape.display(DisplayMode.FINAL_DISPLAY);
+                shape.display(DisplayMode.FINAL_DISPLAY3);
             }
             
             // style_4.display(DisplayMode.FINAL_DISPLAY);
