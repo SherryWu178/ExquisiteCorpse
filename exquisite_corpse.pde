@@ -5,7 +5,7 @@ int centerX, centerY, radius;
 ArrayList<Shape> shapes = new ArrayList<>();
 List<float[]> currentCoordinatesList = new ArrayList<>();
 color currentColor = color(0);
-int shapeType = 0;
+int shapeType = 2;
 int brushType = 0;
 int brushHead = 2;
 int currentshapeCompleted = 0;

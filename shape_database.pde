@@ -3,6 +3,8 @@ class ShapeDatabase {
     ArrayList<Shape> shapes_3;
     PImage img_2;
     PImage img_4;
+    Style style_2;
+    Style style_4;
 
     public void display_img2(DisplayMode mode) {
         this.img_2 = loadImage("COMPUTER_DRAW_2.png");
