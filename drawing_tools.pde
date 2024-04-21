@@ -468,3 +468,27 @@ class DefaultFunTool extends FunTool {
     public void display() {
     }
 }
+
+class Color {
+
+    private int numColor;
+
+    public Color(int numColor) {
+        this.numColor = numColor;
+    }
+
+    public color[] colorBySize(int numColor, int factor) {
+        color[] colors = new color[numColor]; 
+        
+        int minSize = 5/factor; 
+        int maxSize = 255/factor;
+        
+        for (int i = 0; i < numColor; i++) {
+            int r = (int)random(minSize, maxSize); 
+            int g = (int)random(minSize, maxSize); 
+            int b = (int)random(minSize, maxSize); 
+            colors[i] = color(r, g, b);
+        }
+        return colors;
+    }
+}
