@@ -60,7 +60,6 @@ class PretransformParametersExtractor {
         HatchDensity hatchDensity = new HatchDensity(topLeft, bottomRight, centerOfMass);
         int numberOfUniqueColors = uniqueColors.size();
         PretransformParameters pretransformParameters = new PretransformParameters(hatchDensity, numberOfUniqueColors, positionOfPoints);
-        pretransformParameters.saveToJsonFile("data/pretransformParameters.json");
 
         return pretransformParameters;
      }
@@ -107,45 +106,6 @@ class PretransformParameters {
         return positionOfPoints.size();
     }
 
-    public JSONObject toJSON() {
-        JSONObject json = new JSONObject();
-        
-        // Add densityOfHatch
-        JSONObject densityOfHatchJSON = new JSONObject();
-        densityOfHatchJSON.setJSONArray("topLeft", toJSONArray(densityOfHatch.getTopLeft()));
-        densityOfHatchJSON.setJSONArray("bottomRight", toJSONArray(densityOfHatch.getBottomRight()));
-        densityOfHatchJSON.setJSONArray("centerOfMass", toJSONArray(densityOfHatch.getCenterOfMass()));
-        json.setJSONObject("densityOfHatch", densityOfHatchJSON);
-        
-        // Add numberOfColor
-        json.setInt("numberOfColor", numberOfColor);
-        
-        // Add positionOfPoints
-        JSONArray positionOfPointsJSON = new JSONArray();
-        for (float[] point : positionOfPoints) {
-            positionOfPointsJSON.append(toJSONArray(point));
-        }
-        json.setJSONArray("positionOfPoints", positionOfPointsJSON);
-        
-        return json;
-    }
-    
-    private JSONArray toJSONArray(float[] array) {
-        JSONArray jsonArray = new JSONArray();
-        for (float value : array) {
-            jsonArray.append(value);
-        }
-        return jsonArray;
-    }
-
-    // Method to serialize to JSON
-    public void saveToJsonFile(String fileName) {
-        // Convert to JSON
-        JSONObject json = toJSON();
-
-        // Save to file
-        saveJSONObject(json, fileName);
-    }
 }
 
 class HatchDensity {

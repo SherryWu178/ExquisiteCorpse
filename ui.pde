@@ -37,6 +37,18 @@ void drawNext() {
     fill(0);
     textSize(20);
     text("Next", 1080, 680);
+
+
+    
+    if (globalStage == GlobalStage.FINAL_STAGE) {
+        fill(255);
+        strokeWeight(1);
+        rect(1075, 700, 50, 30);
+
+        fill(0);
+        textSize(20);
+        text("Save", 1080, 720);
+    }
 }
 
 void drawCurrentStage() {
@@ -52,9 +64,8 @@ void drawCurrentStage() {
     } else if (globalStage == GlobalStage.FINAL_STAGE) {
         displayText = "Final Display";
     }
-
     fill(0);
-    text(displayText, 900, 20);
+    text(displayText, 10, 730);
 }
     
 

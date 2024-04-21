@@ -1,6 +1,4 @@
 
-int seed;     
-
 class Computer {
     boolean isFirst = true;
 

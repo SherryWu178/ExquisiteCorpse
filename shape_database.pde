@@ -3,6 +3,25 @@ class ShapeDatabase {
     Style style_2;
     ArrayList<Shape> shapes_3;
     Style style_4;
+    PImage img_2;
+    PImage img_4;
+
+    public void display_img2(DisplayMode mode) {
+        this.img_2 = loadImage("COMPUTER_DRAW_2.png");
+        if (mode == DisplayMode.WINDOW2) {
+            image(this.img_2, 1001, 151, 199, 149);
+        } else if (mode == DisplayMode.FINAL_DISPLAY2) {
+            image(this.img_2, 400, 150, 200, 150);
+        }        
+    }
+
+
+    public void display_img4(DisplayMode mode) {
+        this.img_4 = loadImage("COMPUTER_DRAW_4.png");
+        if (mode == DisplayMode.FINAL_DISPLAY4) {
+            image(this.img_4, 400, 450, 200, 150);
+        }
+    }
 
     public ShapeDatabase() {
         this.shapes_1 = new ArrayList<Shape>();
@@ -43,52 +62,62 @@ class ShapeDatabase {
         }
     }
 
-    public void displayShapes(GlobalStage stage) {
+    public void displaySidePanel(GlobalStage stage) {
         if (stage == GlobalStage.HUMAN_DRAW_1) {
-            for (Shape shape : this.shapes_1) {
-                shape.display();
-            }
+            return;
+
         } else if (stage == GlobalStage.COMPUTER_DRAW_2) {
             for (Shape shape : this.shapes_1) {
                 shape.display(DisplayMode.WINDOW1);
             }
-
-            style_2.display();
-
         } else if (stage == GlobalStage.HUMAN_DRAW_3) {
             for (Shape shape : this.shapes_1) {
                 shape.display(DisplayMode.WINDOW1);
             }
 
-            // style_2.display();
-
-            for (Shape shape : this.shapes_3) {
-                shape.display();
-            }
+            display_img2(DisplayMode.WINDOW2);
 
         } else if (stage == GlobalStage.COMPUTER_DRAW_4) {
             for (Shape shape : this.shapes_1) {
                 shape.display(DisplayMode.WINDOW1);
             }
 
-            // style_2.display();
+            display_img2(DisplayMode.WINDOW2);
 
             for (Shape shape : this.shapes_3) {
                 shape.display(DisplayMode.WINDOW3);
+            }          
+
+        } else if (stage == GlobalStage.FINAL_STAGE) {
+            display_img2(DisplayMode.FINAL_DISPLAY2);
+            display_img4(DisplayMode.FINAL_DISPLAY4);
+        }
+    }
+
+    public void displayMainCanvas(GlobalStage stage) {
+        if (stage == GlobalStage.HUMAN_DRAW_1) {
+            for (Shape shape : this.shapes_1) {
+                shape.display();
             }
-            
+        } else if (stage == GlobalStage.COMPUTER_DRAW_2) {
+            style_2.display();
+
+        } else if (stage == GlobalStage.HUMAN_DRAW_3) {
+            for (Shape shape : this.shapes_3) {
+                shape.display();
+            }
+        } else if (stage == GlobalStage.COMPUTER_DRAW_4) {
             style_4.display();
             
         } else if (stage == GlobalStage.FINAL_STAGE) {
             for (Shape shape : this.shapes_1) {
-                shape.display(DisplayMode.FINAL_DISPLAY);
+                shape.display(DisplayMode.FINAL_DISPLAY1);
             }
 
             // style_2.display(DisplayMode.FINAL_DISPLAY);
 
-
             for (Shape shape : this.shapes_3) {
-                shape.display(DisplayMode.FINAL_DISPLAY);
+                shape.display(DisplayMode.FINAL_DISPLAY3);
             }
             
             // style_4.display(DisplayMode.FINAL_DISPLAY);

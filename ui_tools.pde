@@ -11,7 +11,10 @@ class CoordinateTransformer {
         put(DisplayMode.WINDOW2, new float[]{1000, 150, 1200, 300});
         put(DisplayMode.WINDOW3, new float[]{1000, 300, 1200, 450});
         put(DisplayMode.WINDOW4, new float[]{1000, 450, 1200, 600});
-        put(DisplayMode.FINAL_DISPLAY, new float[]{400, 0, 600, 600});
+        put(DisplayMode.FINAL_DISPLAY1, new float[]{400, 0, 600, 150});
+        put(DisplayMode.FINAL_DISPLAY2, new float[]{400, 150, 600, 300});
+        put(DisplayMode.FINAL_DISPLAY3, new float[]{400, 300, 600, 450});
+        put(DisplayMode.FINAL_DISPLAY4, new float[]{400, 450, 600, 600});
     }};
 
     // Function to transform a point from one rectangle coordinate system to another

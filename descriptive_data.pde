@@ -7,64 +7,7 @@ class Description{
 
     }
 
-    // DataResult read_data(int seed){  //read json although this is not necessary in future
- 
-    //     JSONObject json = loadJSONObject("data/pretransformParameters.json");
-    //     float[][] max_size;
-    //     float[][] points; 
-    //     int num_color; 
 
-    //     if (json == null) {
-    //         println("JSON Object could not be parsed");
-    //         return new DataResult(new int[] {0}, new String[] {"a"});
-    //     }
-
-    //     JSONObject densityOfHatch = json.getJSONObject("densityOfHatch");
-    //     JSONArray bottomRight = densityOfHatch.getJSONArray("bottomRight");
-    //     JSONArray topLeft = densityOfHatch.getJSONArray("topLeft");
-    //     JSONArray centerOfMass = densityOfHatch.getJSONArray("centerOfMass");
-    //     JSONArray positionOfPoints = json.getJSONArray("positionOfPoints");
-                
-    //     num_color = json.getInt("numberOfColor");
-    //     //println("num of color :" + num_color); 
-        
-    //     max_size = new float[][] {
-    //             {bottomRight.getFloat(0), bottomRight.getFloat(1)},
-    //             {topLeft.getFloat(0), topLeft.getFloat(1)},
-    //             {centerOfMass.getFloat(0), centerOfMass.getFloat(1)}
-    //     };
-    //     // println("max_size");    
-    //     // print_array(max_size);
-                
-    //     points = new float[positionOfPoints.size()][2];
-        
-    //     for (int i = 0; i < positionOfPoints.size(); i++) {
-    //         JSONArray point = positionOfPoints.getJSONArray(i);
-    //         points[i][0] = point.getFloat(0);
-    //         points[i][1] = point.getFloat(1);
-    //     //println("points"); 
-    //     //print_array(points);
-    //     }
-         
-
-    //     int maxLength = (int)dist(max_size[0][0], max_size[0][1], max_size[1][0], max_size[1][1]) + 1;//insurance
-    //     int num_points = points.length/10 + 1;//insurance
-    //     randomSeed(seed);
-    //     float random_posX = points[(int)random(points.length)][0]; //insurance
-    //     float random_posY = points[(int)random(points.length)][1]; //insurance
-    //     num_color += 12; //insurance
-    //     //println("X, Y" +random_posX +"," +random_posY); 
-
-    //     int[] result = {num_color, maxLength, num_points, 
-    //                     (int)random_posX, (int)random_posY};
-
-    //     String[] names = {"num_color", "maxLength", "num_points", 
-    //                             "random_posX", "random_posY"};
-
-
-    //     return new DataResult(result, names);
-        
-    // }  
 
     public float[][] convertTo2DArray(List<float[]> listOfArrays) {
         int numRows = listOfArrays.size();
@@ -93,12 +36,6 @@ class Description{
         float[] topLeft = densityOfHatch.getTopLeft();
         float[] centerOfMass = densityOfHatch.getCenterOfMass();
         float[][] positionOfPoints = this.convertTo2DArray(currentGlobalFeature.getPositionOfPoints());
-
-        // JSONObject densityOfHatch = json.getJSONObject("densityOfHatch");
-        // JSONArray bottomRight = densityOfHatch.getJSONArray("bottomRight");
-        // JSONArray topLeft = densityOfHatch.getJSONArray("topLeft");
-        // JSONArray centerOfMass = densityOfHatch.getJSONArray("centerOfMass");
-        // JSONArray positionOfPoints = json.getJSONArray("positionOfPoints");
                 
         num_color = currentGlobalFeature.getNumberOfColor();
         //println("num of color :" + num_color); 

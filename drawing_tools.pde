@@ -18,6 +18,7 @@ class LineTool implements Tool {
     }
 
     public void display() {
+        randomSeed(seed);
         // Method implementation
     }
 }
@@ -27,41 +28,7 @@ class CoilLineTool extends LineTool {
         super(numPoints, factor, numColor, boundary);
     }
 
-    // public void display(DisplayMode mode) {
-    //     //color random generator
-    //     Color colorC = new Color(numColor);
-    //     color[] colors = colorC.colorBySize(numColor, factor/5 + 1);
-
-    //     //r size 
-    //     if (numPoints > 50) numPoints %= 50;
-
-    //     List<float[]> coordinatesList = boundary.getCoordinatesList();
-    //       float[] p1;
-    //       float[] p2;
-    //       float[] lengths = new float[coordinatesList.size()];
-        
-    //       for (int i = 0; i < coordinatesList.size(); i++){
-    //         p1 = coordinatesList.get(i);
-    //         if (i + 1 == coordinatesList.size()) {
-    //           p2 = coordinatesList.get(0);
-    //         } else {
-    //           p2 = coordinatesList.get(i+1);
-    //         } 
-    //         lengths[i] = dist(p1[0], p1[1], p2[0], p2[1]);
-    //       }
-
-    //     for (int i = 0; i < coordinatesList.size() -1; i++){   
-    //         stroke(colors[i % numColor]);
-    //         strokeWeight(factor * i % numColor);
-
-    //         float r = lengths[i] / numPoints;
-    //         Coil coil = new Coil(coordinatesList.get(i)[0], coordinatesList.get(i)[1], coordinatesList.get(i + 1)[0], coordinatesList.get(i+1)[1], r/2, r);   
-    //         // coil.display(mode);
-    //     }
-    // }
-
-    @Override
-    public void display() {
+    public void display(DisplayMode mode) {
         randomSeed(seed);
         //color random generator
         Color colorC = new Color(numColor);
@@ -149,6 +116,7 @@ class ChainLineTool extends LineTool {
 
     @Override
     public void display() {
+        randomSeed(seed);
         //color random generator
         Color colorC = new Color(numColor);
         color[] colors = colorC.colorBySize(numColor, factor/5 + 1);
@@ -282,6 +250,7 @@ class PatternTool implements Tool {
     }
 
     public void display() {
+        randomSeed(seed);
     }
 }
 

@@ -14,6 +14,7 @@ GlobalStage globalStage = GlobalStage.HUMAN_DRAW_1;
 ShapeDatabase shapeDatabase = new ShapeDatabase();
 PretransformParameters currentPretransformParameters;
 Computer computer = new Computer();
+int seed;
 
 enum GlobalStage {
     HUMAN_DRAW_1,
@@ -29,7 +30,10 @@ enum DisplayMode {
     WINDOW2,
     WINDOW3,
     WINDOW4,
-    FINAL_DISPLAY
+    FINAL_DISPLAY1,
+    FINAL_DISPLAY2,
+    FINAL_DISPLAY3,
+    FINAL_DISPLAY4
 }
 
 void setup() {
@@ -47,13 +51,14 @@ void setup() {
 
 void draw() {
     background(255);
+    shapeDatabase.displayMainCanvas(globalStage);
     rightPanel();
     toolBar();
     stroke(0);
     strokeWeight(2);
     noFill();
     
-    shapeDatabase.displayShapes(globalStage);
+    shapeDatabase.displaySidePanel(globalStage);
     
     // if (globalStage == GlobalStage.COMPUTER_DRAW_2) {
     //     computer.computer_draw(currentGlobalFeature);
@@ -145,25 +150,32 @@ void next() {
     
     if (globalStage == GlobalStage.HUMAN_DRAW_1) {
         currentPretransformParameters = ppe.extract(shapeDatabase, globalStage);
-        
         globalStage = GlobalStage.COMPUTER_DRAW_2;
-        computer.computer_create_style(currentPretransformParameters);
-        
+        computer.computer_create_style(currentPretransformParameters); 
+
     } else if (globalStage == GlobalStage.COMPUTER_DRAW_2) {
+        // saveFrame("COMPUTER_DRAW_2.png");
+        PImage img_2 = get(125, 0, 875, 750);
+        img_2.save("COMPUTER_DRAW_2.png");
         globalStage = GlobalStage.HUMAN_DRAW_3;
-        
+
     } else if (globalStage == GlobalStage.HUMAN_DRAW_3) {
         currentPretransformParameters = ppe.extract(shapeDatabase, globalStage);
-        
         globalStage = GlobalStage.COMPUTER_DRAW_4;
+        seed = (int)random(100);
         computer.computer_create_style(currentPretransformParameters);
         
     } else if (globalStage == GlobalStage.COMPUTER_DRAW_4) {
+        PImage img_4 = get(125, 0, 875, 750);
+        img_4.save("COMPUTER_DRAW_4.png");
         globalStage = GlobalStage.FINAL_STAGE;
     }
 }
 
-
+void save() {
+    PImage img = get(400, 0, 200, 600);
+    img.save("final.png");
+}
 
 void mouseClicked() {
     println("Mouse clicked at: " + mouseX + ", " + mouseY);
@@ -181,6 +193,13 @@ void mouseClicked() {
     if (mouseX > 1075 && mouseX < 1125 && mouseY > 659 && mouseY < 699) {
         println("Next");
         next();
+    }
+
+    if (mouseX > 1075 && mouseX < 1125 && mouseY > 710 && mouseY < 750) {
+        if (globalStage == GlobalStage.FINAL_STAGE) {
+            println("Save");
+            save();
+        }
     }
 }
 
