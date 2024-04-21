@@ -1,6 +1,8 @@
 class ShapeDatabase {
     ArrayList<Shape> shapes_1;
     ArrayList<Shape> shapes_3;
+    Style style_2;
+    Style style_4;
     PImage img_2;
     PImage img_4;
 

@@ -10,6 +10,7 @@ class Computer {
         DataResult dataResult = descriptive.read_global_feature(seed, currentPretransformParameters);
         
         /**style allocation is required. Should be predesignated by conditions**/
+        
         Style style = new StyleMappingTable(dataResult).generateStyle(currentPretransformParameters);
         shapeDatabase.addStyle(style, globalStage);
     }
