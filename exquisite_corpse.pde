@@ -14,6 +14,7 @@ GlobalStage globalStage = GlobalStage.HUMAN_DRAW_1;
 ShapeDatabase shapeDatabase = new ShapeDatabase();
 PretransformParameters currentPretransformParameters;
 Computer computer = new Computer();
+int seed;
 
 enum GlobalStage {
     HUMAN_DRAW_1,
