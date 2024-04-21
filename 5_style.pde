@@ -20,10 +20,4 @@ class Style {
         funTool.display();
     }
 
-    // public void display(DisplayMode displayMode) {
-    //     insidePatternTool.display(displayMode);
-    //     outsidePatternTool.display(displayMode);
-    //     lineTool.display(displayMode);
-    // }
-
 }
