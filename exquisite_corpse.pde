@@ -150,20 +150,23 @@ void next() {
     
     if (globalStage == GlobalStage.HUMAN_DRAW_1) {
         currentPretransformParameters = ppe.extract(shapeDatabase, globalStage);
-        
         globalStage = GlobalStage.COMPUTER_DRAW_2;
-        computer.computer_create_style(currentPretransformParameters);
-        
+        computer.computer_create_style(currentPretransformParameters); 
+
     } else if (globalStage == GlobalStage.COMPUTER_DRAW_2) {
+        // saveFrame("COMPUTER_DRAW_2.png");
+        PImage img_2 = get(125, 0, 875, 750);
+        img_2.save("COMPUTER_DRAW_2.png");
         globalStage = GlobalStage.HUMAN_DRAW_3;
-        
+
     } else if (globalStage == GlobalStage.HUMAN_DRAW_3) {
         currentPretransformParameters = ppe.extract(shapeDatabase, globalStage);
-        
         globalStage = GlobalStage.COMPUTER_DRAW_4;
         computer.computer_create_style(currentPretransformParameters);
         
     } else if (globalStage == GlobalStage.COMPUTER_DRAW_4) {
+        PImage img_4 = get(125, 0, 875, 750);
+        img_4.save("COMPUTER_DRAW_4.png");
         globalStage = GlobalStage.FINAL_STAGE;
     }
 }

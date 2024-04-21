@@ -3,6 +3,25 @@ class ShapeDatabase {
     Style style_2;
     ArrayList<Shape> shapes_3;
     Style style_4;
+    PImage img_2;
+    PImage img_4;
+
+    public void display_img2(DisplayMode mode) {
+        this.img_2 = loadImage("COMPUTER_DRAW_2.png");
+        if (mode == DisplayMode.WINDOW2) {
+            image(this.img_2, 1000, 150, 200, 150);
+        } else if (mode == DisplayMode.FINAL_DISPLAY2) {
+            image(this.img_2, 400, 150, 200, 150);
+        }        
+    }
+
+
+    public void display_img4(DisplayMode mode) {
+        this.img_4 = loadImage("COMPUTER_DRAW_4.png");
+        if (mode == DisplayMode.FINAL_DISPLAY4) {
+            image(this.img_4, 400, 450, 200, 150);
+        }
+    }
 
     public ShapeDatabase() {
         this.shapes_1 = new ArrayList<Shape>();
@@ -55,16 +74,23 @@ class ShapeDatabase {
             for (Shape shape : this.shapes_1) {
                 shape.display(DisplayMode.WINDOW1);
             }
+
+            display_img2(DisplayMode.WINDOW2);
+
         } else if (stage == GlobalStage.COMPUTER_DRAW_4) {
             for (Shape shape : this.shapes_1) {
                 shape.display(DisplayMode.WINDOW1);
             }
 
+            display_img2(DisplayMode.WINDOW2);
+
             for (Shape shape : this.shapes_3) {
                 shape.display(DisplayMode.WINDOW3);
-            }            
+            }          
+
         } else if (stage == GlobalStage.FINAL_STAGE) {
-            return;
+            display_img2(DisplayMode.FINAL_DISPLAY2);
+            display_img4(DisplayMode.FINAL_DISPLAY4);
         }
     }
 
@@ -89,7 +115,6 @@ class ShapeDatabase {
             }
 
             // style_2.display(DisplayMode.FINAL_DISPLAY);
-
 
             for (Shape shape : this.shapes_3) {
                 shape.display(DisplayMode.FINAL_DISPLAY3);

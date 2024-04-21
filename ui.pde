@@ -52,9 +52,8 @@ void drawCurrentStage() {
     } else if (globalStage == GlobalStage.FINAL_STAGE) {
         displayText = "Final Display";
     }
-
     fill(0);
-    text(displayText, 900, 20);
+    text(displayText, 10, 730);
 }
     
 
