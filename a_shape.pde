@@ -4,6 +4,7 @@ interface Shape {
     color getColor();
     void setColor(color c);
     float[] getPosition();
+    float getLength();
 }
 
 
@@ -60,6 +61,21 @@ class SohyunLine implements Shape {
         }
         return new float[] {sumX / coordinatesList.size(), sumY / coordinatesList.size()};
     }
+
+    @Override
+    public float getLength() {
+        if (coordinatesList.isEmpty()) {
+            return 0; // If there are no points, the length is zero
+        }
+
+        float[] startPoint = coordinatesList.get(0);
+        float[] endPoint = coordinatesList.get(coordinatesList.size() - 1);
+
+        float dx = endPoint[0] - startPoint[0];
+        float dy = endPoint[1] - startPoint[1];
+
+        return sqrt(dx * dx + dy * dy);
+    }
 }
 
 interface SherryPolygon extends Shape {
@@ -67,7 +83,7 @@ interface SherryPolygon extends Shape {
     float getCenterX();
     float getCenterY();
     float[] getPosition();
-    
+    float getLength();
 }
 
 class Rectangle implements SherryPolygon {
@@ -129,6 +145,12 @@ class Rectangle implements SherryPolygon {
     public float[] getPosition() {
         return new float[] {centerX, centerY};
     }
+
+    @Override
+    public float getLength() {
+        return max(length, width);
+    }
+
 }
 
 class Circle implements SherryPolygon {
@@ -183,5 +205,10 @@ class Circle implements SherryPolygon {
     @Override
     public float[] getPosition() {
         return new float[] {centerX, centerY};
+    }
+
+    @Override  
+    public float getLength() {
+        return radius*2;
     }
 }

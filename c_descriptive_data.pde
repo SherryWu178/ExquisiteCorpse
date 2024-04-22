@@ -4,10 +4,7 @@ class Description{
     private String[] names;
 
     public Description() {
-
     }
-
-
 
     public float[][] convertTo2DArray(List<float[]> listOfArrays) {
         int numRows = listOfArrays.size();
@@ -35,35 +32,46 @@ class Description{
         float[] bottomRight = densityOfHatch.getBottomRight();
         float[] topLeft = densityOfHatch.getTopLeft();
         float[] centerOfMass = densityOfHatch.getCenterOfMass();
+        float[] stdDev = densityOfHatch.getStdDev();
+
         float[][] positionOfPoints = this.convertTo2DArray(currentGlobalFeature.getPositionOfPoints());
                 
         num_color = currentGlobalFeature.getNumberOfColor();
-        //println("num of color :" + num_color); 
-        
+        float[] curvatures = currentGlobalFeature.getCurvatures();
+        float[] shapeLengths = currentGlobalFeature.getShapeLengths();
+
         max_size = new float[][] {
                 {bottomRight[0], bottomRight[1]},
                 {topLeft[0], topLeft[1]},
                 {centerOfMass[0], centerOfMass[1]}
         };
-        // println("max_size");    
-        // print_array(max_size);
-                
+
         points = positionOfPoints;
-         
 
-        int maxLength = (int)dist(max_size[0][0], max_size[0][1], max_size[1][0], max_size[1][1]) + 1;//insurance
-        int num_points = points.length/10 + 1;//insurance
-        randomSeed(seed);
-        float random_posX = points[(int)random(points.length)][0]; //insurance
-        float random_posY = points[(int)random(points.length)][1]; //insurance
+        // no random 
+        int minX = (int)bottomRight[0] + 1;
+        int minY = (int)bottomRight[1] + 1;
+        int maxX = (int)topLeft[0];
+        int maxY = (int)topLeft[1];
+        int meanX = (int)centerOfMass[0] + 1;
+        int meanY = (int)centerOfMass[1];
+        int stdX = (int)stdDev[0];
+        int stdY = (int)stdDev[1];
+        int minLength = (int)shapeLengths[0] + 1;
+        int maxLength = (int)shapeLengths[1] + 1;
+        int minCurvature = (int)curvatures[0] + 2;
+        int maxCurvature = (int)curvatures[1] + 2;
         num_color += 12; //insurance
-        //println("X, Y" +random_posX +"," +random_posY); 
+        int coverage = (int)dist(max_size[0][0], max_size[0][1], max_size[1][0], max_size[1][1]) + 1;//insurance
+        int num_points = points.length + 1; //insurance
 
-        int[] result = {num_color, maxLength, num_points, 
-                        (int)random_posX, (int)random_posY};
+        int[] result = {minX, minY, maxX, maxY, meanX, meanY, 
+                        stdX, stdY, minLength, maxLength, minCurvature, 
+                        maxCurvature, num_color, coverage, num_points};
 
-        String[] names = {"num_color", "maxLength", "num_points", 
-                                "random_posX", "random_posY"};
+        String[] names = {"minX", "minY", "maxX", "maxY", "meanX", "meanY", 
+                        "stdX", "stdY", "minLength", "maxLength", "minCurvature", 
+                        "maxCurvature", "num_color", "coverage", "num_points"};
                                 
         for (int i = 0; i < result.length; i++) {
             println(names[i] + " : " + result[i]);
