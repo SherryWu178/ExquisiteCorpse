@@ -1,5 +1,9 @@
 import java.util.HashMap;
 
+4 pattern toll
+(number_c + number_P + number ) mod (4)
+
+
 class StyleMappingTable {
     int numPoints;
     int factor;
@@ -21,8 +25,10 @@ class StyleMappingTable {
         
         this.factor = styles[shuffledIndices[1]];
         String factorNames = names[shuffledIndices[1]];
-   
-        this.numColor = styles[shuffledIndices[2]];
+        
+        if (this.numColor == 0) {
+            this.numColor = styles[shuffledIndices[2]] + 1;
+        }
         String colorNames = names[shuffledIndices[2]];
 
         println("numPoints  :" + pointNames + ", " + numPoints); 

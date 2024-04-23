@@ -1,4 +1,5 @@
 // import ui.*;
+import java.util.Random;
 
 int a, b, c, d;
 int centerX, centerY, radius;
@@ -9,7 +10,7 @@ int shapeType = 2;
 int brushType = 0;
 int brushHead = 2;
 int currentshapeCompleted = 0;
-ArrayList<Boundary> computerShapes = new ArrayList<>();
+int needPrompt = 1;
 GlobalStage globalStage = GlobalStage.HUMAN_DRAW_1;
 ShapeDatabase shapeDatabase = new ShapeDatabase();
 PretransformParameters currentPretransformParameters;
@@ -44,8 +45,9 @@ void setup() {
     d = 0;
     
     smooth();
-    seed = (int)random(100);
-    frameRate(10);
+    Random r = new Random(); 
+    seed = (int) r.nextGaussian();  // (int)random(100);
+    frameRate(30);
 }
 
 
@@ -62,20 +64,20 @@ void draw() {
     
     // if (globalStage == GlobalStage.COMPUTER_DRAW_2) {
     //     computer.computer_draw(currentGlobalFeature);
-    // }
+// }
     
     // if (globalStage == GlobalStage.COMPUTER_DRAW_4) {
     //     computer.computer_draw(currentGlobalFeature);
-    // }
+// }
     
     if (mouseX > - 1 && mouseX < 125 && mouseY > - 1 && mouseY < 750) {
         // println("Mouse click at toolbar");
     } else {
-        if (brushType == 0) brushHead = 2;
-        if (brushType == 1) brushHead = 5;
-        if (brushType == 2) brushHead = 8;
-        if (brushType == 3) brushHead = 2;
-        
+        if (brushType == 0) brushHead = 5;
+        if (brushType == 1) brushHead = 10;
+        if (brushType == 2) brushHead = 16;
+        if (brushType == 3) brushHead = 5;
+
         if (currentshapeCompleted == 1) {
             return;
         }
@@ -150,20 +152,27 @@ void next() {
     
     if (globalStage == GlobalStage.HUMAN_DRAW_1) {
         currentPretransformParameters = ppe.extract(shapeDatabase, globalStage);
+        PImage img_1 = get(125, 0, 875, 750);
+        img_1.save("HUMAN_DRAW_1.png");
         globalStage = GlobalStage.COMPUTER_DRAW_2;
         computer.computer_create_style(currentPretransformParameters); 
-
+        needPrompt = 1;
+        
     } else if (globalStage == GlobalStage.COMPUTER_DRAW_2) {
         // saveFrame("COMPUTER_DRAW_2.png");
         PImage img_2 = get(125, 0, 875, 750);
         img_2.save("COMPUTER_DRAW_2.png");
         globalStage = GlobalStage.HUMAN_DRAW_3;
-
+        needPrompt = 1;
+        
     } else if (globalStage == GlobalStage.HUMAN_DRAW_3) {
         currentPretransformParameters = ppe.extract(shapeDatabase, globalStage);
+        PImage img_3 = get(125, 0, 875, 750);
+        img_3.save("HUMAN_DRAW_3.png");
         globalStage = GlobalStage.COMPUTER_DRAW_4;
         seed = (int)random(100);
         computer.computer_create_style(currentPretransformParameters);
+        needPrompt = 1;
         
     } else if (globalStage == GlobalStage.COMPUTER_DRAW_4) {
         PImage img_4 = get(125, 0, 875, 750);
@@ -177,24 +186,51 @@ void save() {
     img.save("final.png");
 }
 
+void reset() {
+    shapes = new ArrayList<>();
+    currentCoordinatesList = new ArrayList<>();
+    globalStage = GlobalStage.HUMAN_DRAW_1;
+    shapeDatabase = new ShapeDatabase();
+    currentPretransformParameters = null;
+    shapeType = 2; 
+    seed = (int)random(100);
+}
+
+void deletePrevious() {
+    shapeDatabase.deletePreviousShape(globalStage);
+} 
+
+void keyPressed() {
+    int keyIndex = -1;
+    if (key == 'R' || key == 'r') {
+        println("Reset");  
+        reset();
+    }
+
+    if (key == 'D' || key == 'd') {
+        println("Delete previous shape");
+        deletePrevious();
+    }
+}
+
 void mouseClicked() {
     println("Mouse clicked at: " + mouseX + ", " + mouseY);
     if (mouseX > - 1 && mouseX < 125 && mouseY > 251 && mouseY < 499 + 251) {
         println("Select Shape");
         selectShape();
         selectBrush();
-        }
+    }
     
     if (mouseX > - 1 && mouseX < 125 && mouseY > - 1 && mouseY < 250) {
         println("Select Color");
         selectColor();
-        }
+    }
     
     if (mouseX > 1075 && mouseX < 1125 && mouseY > 659 && mouseY < 699) {
         println("Next");
         next();
     }
-
+    
     if (mouseX > 1075 && mouseX < 1125 && mouseY > 710 && mouseY < 750) {
         if (globalStage == GlobalStage.FINAL_STAGE) {
             println("Save");
@@ -223,16 +259,18 @@ void mouseDragged() {
     }
     
     currentshapeCompleted = 0;   
+    needPrompt = 0;
 }
 
 void mouseReleased() {
     if (mouseX > - 1 && mouseX < 125 && mouseY > - 1 && mouseY < 750) {
         // println("Mouse released at toolbar");
     } else {
-        if (brushType == 0) brushHead = 2;
-        if (brushType == 1) brushHead = 5;
-        if (brushType == 2) brushHead = 8;
-        if (brushType == 3) brushHead = 2;
+        if (brushType == 0) brushHead = 5;
+        if (brushType == 1) brushHead = 10;
+        if (brushType == 2) brushHead = 16;
+        if (brushType == 3) brushHead = 5;
+
         println("brushHead" + brushHead);
         
         c = mouseX - a;

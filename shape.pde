@@ -34,10 +34,11 @@ class SohyunLine implements Shape {
     }
 
     public void display(DisplayMode mode) {
-        stroke(255);
+        stroke(shapeColor);
         strokeWeight(brushHead);
         CoordinateTransformer transformer = new CoordinateTransformer();
         transformer.transformSohyunLine(this.coordinatesList, mode);
+        print("I am displaying line\n");
     }
 
     @Override
@@ -101,6 +102,7 @@ class Rectangle implements SherryPolygon {
     @Override
     public void display(DisplayMode mode) {
         stroke(shapeColor);
+        strokeWeight(brushHead);
         CoordinateTransformer transformer = new CoordinateTransformer();
         transformer.transformRectangle(x, y, length, width, mode);
     }
@@ -156,6 +158,7 @@ class Circle implements SherryPolygon {
     @Override
     public void display(DisplayMode mode) {
         stroke(shapeColor);
+        strokeWeight(brushHead);
         CoordinateTransformer transformer = new CoordinateTransformer();
         transformer.transformCircle(centerX, centerY, radius, mode);
     }

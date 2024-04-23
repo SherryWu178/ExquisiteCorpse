@@ -1,25 +1,44 @@
 class ShapeDatabase {
     ArrayList<Shape> shapes_1;
     ArrayList<Shape> shapes_3;
+    PImage img_1;
     PImage img_2;
+    PImage img_3;
     PImage img_4;
     Style style_2;
     Style style_4;
 
+    public void display_img1(DisplayMode mode) {
+        this.img_1 = loadImage("HUMAN_DRAW_1.png");
+        if (mode == DisplayMode.WINDOW1) {
+            image(this.img_1, 1001, 1, 199, 149);
+        } else if (mode == DisplayMode.FINAL_DISPLAY1) {
+            image(this.img_1, 400, 1, 250, 187);
+        }        
+    }
+    
     public void display_img2(DisplayMode mode) {
         this.img_2 = loadImage("COMPUTER_DRAW_2.png");
         if (mode == DisplayMode.WINDOW2) {
             image(this.img_2, 1001, 151, 199, 149);
         } else if (mode == DisplayMode.FINAL_DISPLAY2) {
-            image(this.img_2, 400, 150, 200, 150);
+            image(this.img_2, 400, 187, 250, 187);
         }        
     }
 
+    public void display_img3(DisplayMode mode) {
+        this.img_3 = loadImage("HUMAN_DRAW_3.png");
+        if (mode == DisplayMode.WINDOW3) {
+            image(this.img_3, 1001, 301, 199, 149);
+        } else if (mode == DisplayMode.FINAL_DISPLAY3) {
+            image(this.img_3, 400, 375, 250, 187);
+        }        
+    }
 
     public void display_img4(DisplayMode mode) {
         this.img_4 = loadImage("COMPUTER_DRAW_4.png");
         if (mode == DisplayMode.FINAL_DISPLAY4) {
-            image(this.img_4, 400, 450, 200, 150);
+            image(this.img_4, 400, 563, 250, 187);
         }
     }
 
@@ -52,6 +71,21 @@ class ShapeDatabase {
         }
     }
 
+    public void deletePreviousShape(GlobalStage stage) {
+        if (stage == GlobalStage.HUMAN_DRAW_1) {
+            if (this.shapes_1.size() == 0) {
+                return;
+            }
+
+            this.shapes_1.remove(this.shapes_1.size() - 1);
+        } else if (stage == GlobalStage.HUMAN_DRAW_3) {
+            if (this.shapes_3.size() == 0) {
+                return;
+            }
+            this.shapes_3.remove(this.shapes_3.size() - 1);
+        }
+    }
+
     public void addStyle(Style style, GlobalStage stage) {
         if (stage == GlobalStage.COMPUTER_DRAW_2) {
             println("Adding style to stage 2");
@@ -67,29 +101,39 @@ class ShapeDatabase {
             return;
 
         } else if (stage == GlobalStage.COMPUTER_DRAW_2) {
-            for (Shape shape : this.shapes_1) {
-                shape.display(DisplayMode.WINDOW1);
-            }
-        } else if (stage == GlobalStage.HUMAN_DRAW_3) {
-            for (Shape shape : this.shapes_1) {
-                shape.display(DisplayMode.WINDOW1);
-            }
+            // for (Shape shape : this.shapes_1) {
+            //     shape.display(DisplayMode.WINDOW1);
+            // }
 
+            display_img1(DisplayMode.WINDOW1);
+
+        } else if (stage == GlobalStage.HUMAN_DRAW_3) {
+            // for (Shape shape : this.shapes_1) {
+            //     shape.display(DisplayMode.WINDOW1);
+            // }
+
+            display_img1(DisplayMode.WINDOW1);
             display_img2(DisplayMode.WINDOW2);
 
         } else if (stage == GlobalStage.COMPUTER_DRAW_4) {
-            for (Shape shape : this.shapes_1) {
-                shape.display(DisplayMode.WINDOW1);
-            }
+            // for (Shape shape : this.shapes_1) {
+            //     shape.display(DisplayMode.WINDOW1);
+            // }
+
+            display_img1(DisplayMode.WINDOW1);
 
             display_img2(DisplayMode.WINDOW2);
 
-            for (Shape shape : this.shapes_3) {
-                shape.display(DisplayMode.WINDOW3);
-            }          
+            // for (Shape shape : this.shapes_3) {
+            //     shape.display(DisplayMode.WINDOW3);
+            // }  
+
+            display_img3(DisplayMode.WINDOW3);        
 
         } else if (stage == GlobalStage.FINAL_STAGE) {
+            display_img1(DisplayMode.FINAL_DISPLAY1);
             display_img2(DisplayMode.FINAL_DISPLAY2);
+            display_img3(DisplayMode.FINAL_DISPLAY3);
             display_img4(DisplayMode.FINAL_DISPLAY4);
         }
     }

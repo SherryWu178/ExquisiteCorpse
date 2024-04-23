@@ -54,8 +54,8 @@ class Description{
         int maxLength = (int)dist(max_size[0][0], max_size[0][1], max_size[1][0], max_size[1][1]) + 1;//insurance
         int num_points = points.length/10 + 1;//insurance
         randomSeed(seed);
-        float random_posX = points[(int)random(points.length)][0]; //insurance
-        float random_posY = points[(int)random(points.length)][1]; //insurance
+        float random_posX = points[(int)random(points.length)][0] + 1; //insurance
+        float random_posY = points[(int)random(points.length)][1] + 1; //insurance
         num_color += 12; //insurance
         //println("X, Y" +random_posX +"," +random_posY); 
 
