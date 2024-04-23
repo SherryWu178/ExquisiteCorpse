@@ -6,7 +6,7 @@ int centerX, centerY, radius;
 ArrayList<Shape> shapes = new ArrayList<>();
 List<float[]> currentCoordinatesList = new ArrayList<>();
 color currentColor = color(0);
-int shapeType = 2;
+int shapeType = 0;
 int brushType = 0;
 int brushHead = 2;
 int currentshapeCompleted = 0;
@@ -45,9 +45,9 @@ void setup() {
     d = 0;
     
     smooth();
-    Random r = new Random(); 
-    seed = (int) r.nextGaussian();  // (int)random(100);
-    frameRate(30);
+    seed = (int)random(100);
+    frameRate(10);
+    ellipseMode(CENTER);
 }
 
 

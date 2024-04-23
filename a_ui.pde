@@ -9,10 +9,7 @@ void toolBar() {
     drawShapeSelections();
     drawbrush(); 
     drawNext();
-    if (needPrompt == 1) {
-        drawPrompt();
-    }
-    drawCurrentStage(); 
+    drawCurrentStage();
 }
 
 void rightPanel() {
@@ -69,24 +66,6 @@ void drawCurrentStage() {
     }
     fill(0);
     text(displayText, 10, 730);
-}
-
-void drawPrompt() {
-    String displayText = "";
-    if (globalStage == GlobalStage.HUMAN_DRAW_1) {
-        displayText = "It is your turn now! Draw a shape and click Next to proceed.";
-    } else if (globalStage == GlobalStage.COMPUTER_DRAW_2) {
-        // displayText = "Computer has drawn this. Click Next to proceed.";
-    } else if (globalStage == GlobalStage.HUMAN_DRAW_3) {
-        displayText = "It is your turn again! Draw a shape and click Next to proceed.";
-    } else if (globalStage == GlobalStage.COMPUTER_DRAW_4) {
-        // displayText = "And now we are done! Click Next to see the final display.";
-    } else if (globalStage == GlobalStage.FINAL_STAGE) {
-        // displayText = "Final Display";
-    }
-    fill(0);
-    textSize(15);  
-    text(displayText, 600, 20); 
 }
     
 
@@ -204,42 +183,40 @@ void drawColorSelections() {
 void selectColor() {
     //Check mouse click position and set currentColor accordingly
     if(mouseX >= 5 && mouseX <= 35 && mouseY >= 5 && mouseY <= 35) {
-            currentColor = color(183, 24, 24); // Red
-    } else if (mouseX >= 45 && mouseX <= 75 && mouseY >= 5 && mouseY <= 35) {
-            currentColor = color(255, 13, 13); // Light Red
-    } else if (mouseX >= 85 && mouseX <= 115 && mouseY >= 5 && mouseY <= 35) {
-            currentColor = color(240, 41, 157); // Pink
-    } else if (mouseX >= 5 && mouseX <= 35 && mouseY >= 45 && mouseY <= 75) {
-            currentColor = color(236, 41, 240); // Light Purple
-    } else if (mouseX >= 45 && mouseX <= 75 && mouseY >= 45 && mouseY <= 75) {
-            currentColor = color(169, 41, 240); // Purple
-    } else if (mouseX >= 85 && mouseX <= 115 && mouseY >= 45 && mouseY <= 75) {
-            currentColor = color(116, 41, 240); // Dark Purple
-    } else if (mouseX >= 5 && mouseX <= 35 && mouseY >= 85 && mouseY <= 115) {
-            currentColor = color(24, 22, 240); // Blue
-    } else if (mouseX >= 45 && mouseX <= 75 && mouseY >= 85 && mouseY <= 115) {
-            currentColor = color(22, 194, 240); // Light Blue
-    } else if (mouseX >= 85 && mouseX <= 115 && mouseY >= 85 && mouseY <= 115) {
-            currentColor = color(22, 240, 187); // Cyan
-    } else if (mouseX >= 5 && mouseX <= 35 && mouseY >= 125 && mouseY <= 155) {
-            currentColor = color(51, 229, 52); // Green
-    } else if (mouseX >= 45 && mouseX <= 75 && mouseY >= 125 && mouseY <= 155) {
-            currentColor = color(225, 245, 79); // Yellow Green
-    } else if (mouseX >= 85 && mouseX <= 115 && mouseY >= 125 && mouseY <= 155) {
-            currentColor = color(255, 244, 31); // Yellow
-    } else if (mouseX >= 5 && mouseX <= 35 && mouseY >= 165 && mouseY <= 195) {
-            currentColor = color(255, 157, 52); // Orange
-    } else if (mouseX >= 45 && mouseX <= 75 && mouseY >= 165 && mouseY <= 195) {
-            currentColor = color(234, 210, 147); // Light Brown
-    } else if (mouseX >= 85 && mouseX <= 115 && mouseY >= 165 && mouseY <= 195) {
-            currentColor = color(131, 114, 70); // Dark Brown
-    } else if (mouseX >= 5 && mouseX <= 35 && mouseY >= 205 && mouseY <= 235) {
-            currentColor = color(255); // White
-    } else if (mouseX >= 45 && mouseX <= 75 && mouseY >= 205 && mouseY <= 235) {
-            currentColor = color(175); // Light Gray
-    } else if (mouseX >= 85 && mouseX <= 115 && mouseY >= 205 && mouseY <= 235) {
-            currentColor = color(0); // Black
-    }
+        currentColor = color(183, 24, 24); // Red
+} else if (mouseX >= 45 && mouseX <= 75 && mouseY >= 5 && mouseY <= 35) {
+        currentColor = color(255, 13, 13); // Light Red
+} else if (mouseX >= 85 && mouseX <= 115 && mouseY >= 5 && mouseY <= 35) {
+        currentColor = color(240, 41, 157); // Pink
+} else if (mouseX >= 5 && mouseX <= 35 && mouseY >= 45 && mouseY <= 75) {
+        currentColor = color(236, 41, 240); // Light Purple
+} else if (mouseX >= 45 && mouseX <= 75 && mouseY >= 45 && mouseY <= 75) {
+        currentColor = color(169, 41, 240); // Purple
+} else if (mouseX >= 85 && mouseX <= 115 && mouseY >= 45 && mouseY <= 75) {
+        currentColor = color(116, 41, 240); // Dark Purple
+} else if (mouseX >= 5 && mouseX <= 35 && mouseY >= 85 && mouseY <= 115) {
+        currentColor = color(24, 22, 240); // Blue
+} else if (mouseX >= 45 && mouseX <= 75 && mouseY >= 85 && mouseY <= 115) {
+        currentColor = color(22, 194, 240); // Light Blue
+} else if (mouseX >= 85 && mouseX <= 115 && mouseY >= 85 && mouseY <= 115) {
+        currentColor = color(22, 240, 187); // Cyan
+} else if (mouseX >= 5 && mouseX <= 35 && mouseY >= 125 && mouseY <= 155) {
+        currentColor = color(51, 229, 52); // Green
+} else if (mouseX >= 45 && mouseX <= 75 && mouseY >= 125 && mouseY <= 155) {
+        currentColor = color(225, 245, 79); // Yellow Green
+} else if (mouseX >= 85 && mouseX <= 115 && mouseY >= 125 && mouseY <= 155) {
+        currentColor = color(255, 244, 31); // Yellow
+} else if (mouseX >= 5 && mouseX <= 35 && mouseY >= 165 && mouseY <= 195) {
+        currentColor = color(255, 157, 52); // Orange
+} else if (mouseX >= 45 && mouseX <= 75 && mouseY >= 165 && mouseY <= 195) {
+        currentColor = color(234, 210, 147); // Light Brown
+} else if (mouseX >= 85 && mouseX <= 115 && mouseY >= 165 && mouseY <= 195) {
+        currentColor = color(131, 114, 70); // Dark Brown
+} else if (mouseX >= 5 && mouseX <= 35 && mouseY >= 205 && mouseY <= 235) {
+        currentColor = color(255); // White
+} else if (mouseX >= 45 && mouseX <= 75 && mouseY >= 205 && mouseY <= 235) {
+        currentColor = color(175); // Light Gray
+} else if (mouseX >= 85 && mouseX <= 115 && mouseY >= 205 && mouseY <= 235) {
+        currentColor = color(0); // Black
 }
-
-
+}

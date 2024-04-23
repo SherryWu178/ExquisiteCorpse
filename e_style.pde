@@ -14,16 +14,11 @@ class Style {
     }
 
     public void display() {
-        insidePatternTool.display();
         outsidePatternTool.display();
-        lineTool.display();
+        insidePatternTool.display();
         funTool.display();
+        lineTool.display();
+        
     }
-
-    // public void display(DisplayMode displayMode) {
-    //     insidePatternTool.display(displayMode);
-    //     outsidePatternTool.display(displayMode);
-    //     lineTool.display(displayMode);
-    // }
 
 }

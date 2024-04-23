@@ -5,34 +5,38 @@ class LineTool implements Tool {
     // Fields declaration
     public Boundary boundary;
     public int numPoints;
-    public int factor;
+    public int factor1;
+    public int factor2;
     public int numColor;
 
+
     // Constructor
-    public LineTool(int numPoints, int factor, int numColor, Boundary boundary) {
+    public LineTool(int numPoints, int factor1, int factor2, 
+                        int numColor, Boundary boundary) {
         // Assign values to fields
         this.numPoints = numPoints;
-        this.factor = factor;
+        this.factor1 = factor1;
+        this.factor2 = factor2;
         this.numColor = numColor;
         this.boundary = boundary;
     }
 
     public void display() {
         randomSeed(seed);
-        // Method implementation
     }
 }
 
 class CoilLineTool extends LineTool {
-    public CoilLineTool(int numPoints, int factor, int numColor, Boundary boundary) {
-        super(numPoints, factor, numColor, boundary);
+    public CoilLineTool(int numPoints, int factor1, int factor2, 
+                        int numColor, Boundary boundary) {
+        super(numPoints, factor1, factor2, numColor, boundary);
     }
 
     public void display(DisplayMode mode) {
         randomSeed(seed);
         //color random generator
         Color colorC = new Color(numColor);
-        color[] colors = colorC.colorBySize(numColor, factor/5 + 1);
+        color[] colors = colorC.colorBySize(numColor, 1, factor1/5 + 1);
 
         //r size 
         if (numPoints > 50) numPoints %= 50;
@@ -55,21 +59,23 @@ class CoilLineTool extends LineTool {
             lengths[i] = dist(p1[0], p1[1], p2[0], p2[1]);
           }
 
-        for (int i = 0; i < coordinatesList.size() -1; i++){   
+        for (int i = 0; i < coordinatesList.size() -1; i++){  
+            float r = lengths[i] / numPoints; 
             stroke(colors[i % numColor]);
-            strokeWeight(factor * i % numColor);
+            if (r > 10) strokeWeight(1);
+            else strokeWeight(i % 5);   
 
-            float r = lengths[i] / numPoints;
-            Coil coil = new Coil(coordinatesList.get(i)[0], coordinatesList.get(i)[1], coordinatesList.get(i + 1)[0], coordinatesList.get(i+1)[1], r/2, r);   
+            Coil coil = new Coil(coordinatesList.get(i)[0], coordinatesList.get(i)[1], 
+                                coordinatesList.get(i + 1)[0], coordinatesList.get(i+1)[1], r/2, r);   
             coil.display();
         }
     }
 }
 
 class SpringLineTool extends LineTool{
-
-    public SpringLineTool(int numPoints, int factor, int numColor, Boundary boundary) {
-        super(numPoints, factor, numColor, boundary);
+    public SpringLineTool(int numPoints, int factor1, int factor2, 
+                        int numColor, Boundary boundary){
+        super(numPoints, factor1, factor2, numColor, boundary);
     }
 
     @Override
@@ -77,7 +83,7 @@ class SpringLineTool extends LineTool{
         randomSeed(seed);
         //color random generator
         Color colorC = new Color(numColor);
-        color[] colors = colorC.colorBySize(numColor, factor/5 + 1);
+        color[] colors = colorC.colorBySize(numColor, 1, factor1/5 + 1);
 
         //r size 
         if (numPoints > 50) numPoints %= 50;
@@ -97,11 +103,11 @@ class SpringLineTool extends LineTool{
             lengths[i] = dist(p1[0], p1[1], p2[0], p2[1]);
           }
 
-        for (int i = 0; i < coordinatesList.size() -1; i++){   
+        for (int i = 0; i < coordinatesList.size() -1; i++){ 
+            float r = lengths[i]/random(1, 10);
             stroke(colors[i % numColor]);
-            strokeWeight(0);
+            strokeWeight(1); 
 
-            float r = lengths[i] / numPoints;
             Coil coil = new Coil(coordinatesList.get(i)[0], coordinatesList.get(i)[1], 
                                 coordinatesList.get(i + 1)[0], coordinatesList.get(i+1)[1], r * 2 / 3, r / 2);   
             coil.display();
@@ -110,8 +116,16 @@ class SpringLineTool extends LineTool{
 }
 
 class ChainLineTool extends LineTool {
-    public ChainLineTool(int numPoints, int factor, int numColor, Boundary boundary) {
-        super(numPoints, factor, numColor, boundary);
+    private int stroke;
+    private int transp;
+    private int radius;
+
+    public ChainLineTool(int numPoints, int factor1, int factor2, 
+                        int numColor, Boundary boundary, int stroke, int transp, int radius) {
+        super(numPoints, factor1, factor2, numColor, boundary);
+        this.stroke = stroke;
+        this.transp = transp;
+        this.radius = radius;
     }
 
     @Override
@@ -119,14 +133,12 @@ class ChainLineTool extends LineTool {
         randomSeed(seed);
         //color random generator
         Color colorC = new Color(numColor);
-        color[] colors = colorC.colorBySize(numColor, factor/5 + 1);
+        color[] colors = colorC.colorBySize(numColor, 1, factor1/5 + 1);
 
         //unit size 
         if (numPoints > 50) numPoints %= 50;
-         
-        // if (min / 3 > max/numPoints || min < max/numPoints) unit = (int)min / 3;
-        // unit = (int)max / numPoints; 
-        
+        if (numPoints < 10) numPoints *= 100;    
+
         //normalized vectors;
         List<float[]> coordinatesList = boundary.getCoordinatesList();
         
@@ -152,36 +164,75 @@ class ChainLineTool extends LineTool {
         if (min < lengths[i])  min = lengths[i]; 
         if (max > lengths[i])  max = lengths[i]; 
         }
-            
-        for (int i = 0; i < lengths.length; i++){   
+
+        //chain generator
+        for (int i = 0; i < lengths.length; i++){  
             stroke(colors[i % numColor]);
-            strokeWeight(factor * i % 5);
+            
+            if (stroke % 2 == 0) strokeWeight(1);
+            else strokeWeight(i % 3);
 
             float unit = lengths[i] / numPoints;
             PVector position = new PVector(coordinatesList.get(i)[0], coordinatesList.get(i)[1]);
             PVector direction = vec[i];
             
             for (int j = 0; j < numPoints; j++) {
+                //opacity 
+                int opa;
+                if (transp % 3 == 0) opa = 0;
+                else opa = 1;
+                fill(colors[j % numColor], opa);
+
+                //factor2
+                if (factor2 % 3 == 0) { //divide by point number
+                    PVector currentPoint = PVector.add(position, 
+                                                        PVector.mult(direction, j * unit));
+                    
+                    ellipse(currentPoint.x, currentPoint.y, 
+                            radius * j % 50 , radius * j % 50);
+                } else if (factor2 % 3 == 1) { //divide by point number
+                    unit = lengths[i] % numPoints; 
+                    PVector currentPoint = PVector.add(position, 
+                                                        PVector.mult(direction, j * unit));
+                    
+                    ellipse(currentPoint.x, currentPoint.y, 
+                            radius * j % 50 , radius * j % 50);
                 
-                PVector currentPoint = PVector.add(position, PVector.mult(direction, j * unit));
-                
-                ellipse(currentPoint.x, currentPoint.y, numColor * j % 50 , numColor * j % 50 );
-            } 
+                } else { //divide by length
+                    unit = radius % 50;
+                    float overlap = 0.5;
+        
+                    PVector currentPoint = PVector.add(position, 
+                                                        PVector.mult(direction, overlap * j * unit));
+                    float distanceFromStart = PVector.dist(position, currentPoint); 
+                    if(distanceFromStart > lengths[i]) break; 
+                    
+                    ellipse(currentPoint.x, currentPoint.y, radius % 300, radius % 300 );
+                } 
+            }
         }
     }
 }  
 
 class HornLineTool extends LineTool{
-    public HornLineTool(int numPoints, int factor, int numColor, Boundary boundary) {
-        super(numPoints, factor, numColor, boundary);
+    public int stroke;
+    public int angle;
+    
+    public HornLineTool(int numPoints, int factor1, int factor2, 
+                        int numColor, Boundary boundary, 
+                        int stroke, int angle) {
+        super(numPoints, factor1, factor2, numColor, boundary);
+        this.stroke = stroke;
+        this.angle = angle;
     }
 
     @Override
     public void display() {
         randomSeed(seed);
+
         //color random generator
         Color colorC = new Color(numColor);
-        color[] colors = colorC.colorBySize(numColor, factor/5 + 1);
+        color[] colors = colorC.colorBySize(numColor, 1, factor1/5 + 1);
 
         //unit size 
         if (numPoints > 50) numPoints %= 50;
@@ -207,25 +258,39 @@ class HornLineTool extends LineTool{
         vec[i] = PVector.sub(point2, point1).normalize();
         lengths[i] = dist(p1[0], p1[1], p2[0], p2[1]);
         }
-            
+
+        //draw base
+        for (int i = 0; i < lengths.length - 1; i++) {
+            strokeWeight(1);
+            stroke(colors[i % numColor], 128); //transparency 128
+            line(coordinatesList.get(i)[0], coordinatesList.get(i)[1], 
+                coordinatesList.get(i + 1)[0], coordinatesList.get(i + 1)[1]);
+        } 
+
+        //draw horn
         for (int i = 0; i < lengths.length; i++){   
+            int count;
+            if (stroke % 2 == 0) strokeWeight(0);
+            else strokeWeight(i % 5);
 
-            strokeWeight(0);
+            if (stroke % 2 == 0) count = numPoints % 50;
+            else count = numPoints % 25;
+            float unit = lengths[i] / count;
 
-            float unit = lengths[i] / numPoints;
             PVector position = new PVector(coordinatesList.get(i)[0], coordinatesList.get(i)[1]);
             PVector direction = vec[i];
             
-            for (int j = 0; j < numPoints; j++) {
+            for (int j = 0; j < count; j++) {
                 stroke(colors[j % numColor]);
                 PVector currentPoint = PVector.add(position, PVector.mult(direction, j * unit));
                 float ang = PVector.angleBetween(direction, currentPoint);
-
-                PVector v = direction.copy();
-                if (j % 2 == 0) v.rotate(100);
-                else v.rotate(-100);
                 
-                PVector nextPoint = PVector.add(currentPoint, PVector.mult(v, unit*3));
+                int rotation = angle % 360;
+                PVector v = direction.copy();
+                if (j % 2 == 0) v.rotate(rotation);
+                else v.rotate(-rotation);
+                
+                PVector nextPoint = PVector.add(currentPoint, PVector.mult(v, factor2 * unit % 200));
                 line(currentPoint.x, currentPoint.y, nextPoint.x, nextPoint.y);
             } 
         }
@@ -236,15 +301,21 @@ class HornLineTool extends LineTool{
 class PatternTool implements Tool {
     public Boundary boundary;
     public int numPoints;
-    public int factor;
+    public int factor1;
+    public int factor2;
     public int numColor;
     public boolean isInside;
+    public int angle;
+    public int stroke;
+    public int transp;
 
-    public PatternTool(int numPoints, int factor, int numColor, Boundary boundary, boolean isInside) {
+    public PatternTool(int numPoints, int factor1, int factor2, int numColor, 
+                        Boundary boundary, boolean isInside) {
         super();
         this.boundary = boundary;
         this.numPoints = numPoints;
-        this.factor = factor;
+        this.factor1 = factor1;
+        this.factor2 = factor1;
         this.numColor = numColor;
         this.isInside = isInside;
     }
@@ -256,8 +327,13 @@ class PatternTool implements Tool {
 
 class EllipsePatternTool extends PatternTool {
 
-    public EllipsePatternTool(int numPoints, int factor, int numColor, Boundary boundary, boolean isInside) {
-        super(numPoints, factor, numColor, boundary, isInside);
+    public EllipsePatternTool(int numPoints, int factor1, int factor2, int numColor, 
+                            Boundary boundary, boolean isInside, 
+                            int angle, int stroke, int transp) {
+        super(numPoints, factor1, factor2, numColor, boundary, isInside);
+        this.angle = angle;
+        this.stroke = stroke;
+        this.transp = transp;
     }
 
     @Override
@@ -272,12 +348,12 @@ class EllipsePatternTool extends PatternTool {
 
         //color random generator
         Color colorC = new Color(numColor);
-        color[] colors = colorC.colorBySize(numColor, 1);
+        color[] colors = colorC.colorBySize(numColor, 1, 2);
         
         // Position the points randomly, split by Sherry
         for (int i = 0; i < numPoints; i++) {
-            int x = (int)random(200, 1000); /****240415*******/
-            int y = (int)random(1, 750); /****240415*******/
+            int x = (int)random(minX, width); 
+            int y = (int)random(minY, height); 
             points[i][0] = x; 
             points[i][1] = y; 
         }
@@ -289,36 +365,69 @@ class EllipsePatternTool extends PatternTool {
             if (boundary.contains(points[i]) == isInside) {
                 ellipse(points[i][0], points[i][1], random(0, width/5), random(0, height/5)); 
             }
-            //println(numPoints);
+
+        }
+
+        for (int i = 0; i < numPoints; i++) {
+            pushMatrix();
+            int opa;
+            float radiusW;
+            float radiusH;
+            if (transp % 3 == 0) opa = 0;
+            else opa = 1;
+            fill(colors[i % numColor], opa);
+
+            if (stroke % 3 == 0) strokeWeight(i % 3);
+            else strokeWeight(0);
+
+            if (factor1 % 4 == 0) {
+                rotate(0);
+            } else {
+                rotate(radians(angle * i % 360));
+            }
+
+            if (factor2 % 2 == 0) {
+                radiusW = random(0, width/5);
+                radiusH = random(0, height/5);
+            } else {
+                radiusW = 20;
+                radiusH = 50;
+            }
+
+            ellipse(points[i][0], points[i][1], radiusW, radiusH); 
+            popMatrix();
         }
     }
 }
 
 class DiagonalPatternTool extends PatternTool {
-    public DiagonalPatternTool(int numPoints, int factor, int numColor, Boundary boundary, boolean isInside) {
-        super(numPoints, factor, numColor, boundary, isInside);
+    public DiagonalPatternTool(int numPoints, int factor1, int factor2, int numColor, 
+                                Boundary boundary, boolean isInside) {
+        super(numPoints, factor1, factor2, numColor, boundary, isInside);
     }
 
     @Override
     public void display() {
         randomSeed(seed);
-        if (numPoints < 10) numPoints *= 10;
+        if (numPoints % 2 == 0) numPoints *= 100;
+        else if (numPoints < 50) numPoints *= 100;
+
         int[][] points = new int[numPoints][2]; 
         
-        int minX = 0; 
-        int minY = 0; 
         float a;
         float b;
+        int minX = 0; 
+        int minY = 0; 
 
         //color random generator
         Color colorC = new Color(numColor);
-        color[] colors = colorC.colorBySize(numColor, factor/30 + 1);
+        color[] colors = colorC.colorBySize(numColor, 1, factor1/30 + 1);
 
         
         // Position the points randomly, split by Sherry
         for (int i = 0; i < numPoints; i++) {
-            int x = (int)random(200, 1000); /****240415*******/
-            int y = (int)random(1, 750);   /****240415*******/
+            int x = (int)random(minX, width);
+            int y = (int)random(minY, height);   
             points[i][0] = x; 
             points[i][1] = y; 
         }
@@ -326,12 +435,17 @@ class DiagonalPatternTool extends PatternTool {
         // Display the points 
         for (int i = 0; i < numPoints; i++) {
             if (boundary.contains(points[i]) == isInside) {
-                stroke(colors[i % numColor]);
+                int length;
+                if (factor2 % 2 == 0) strokeWeight(0);
+                else strokeWeight(i/10);
                 
                 int ang = (int)random(360);
+
+                if (factor2 % 5 == 0) length = (int)random(10, factor2);
+                else length = i % factor2 + 10;
                 
-                a = points[i][0] + cos(radians(ang))*50;
-                b = points[i][1] + sin(radians(ang))*50;
+                a = points[i][0] + cos(radians(ang))*length;
+                b = points[i][1] + sin(radians(ang))*length;
     
                 line(points[i][0], points[i][1], a, b);
             }
@@ -341,14 +455,16 @@ class DiagonalPatternTool extends PatternTool {
 }
 
 class DotsPatternTool extends PatternTool {
-    public DotsPatternTool(int numPoints, int factor, int numColor, Boundary boundary, boolean isInside) {
-        super(numPoints, factor, numColor, boundary, isInside);
+    public DotsPatternTool(int numPoints, int factor1, int factor2, int numColor, 
+                            Boundary boundary, boolean isInside) {
+        super(numPoints, factor1, factor2, numColor, boundary, isInside);
     }
 
     @Override
     public void display() {
         randomSeed(seed);
-        if (numPoints < 500) numPoints *= 1000;
+        if (numPoints % 2 == 0) numPoints *= 400;
+        else if (numPoints < 100) numPoints *= 100;
         int[][] points = new int[numPoints][2]; 
         
         int minX = 0; 
@@ -356,7 +472,7 @@ class DotsPatternTool extends PatternTool {
 
         //color random generator
         Color colorC = new Color(numColor);
-        color[] colors = colorC.colorBySize(numColor, 1);
+        color[] colors = colorC.colorBySize(numColor, 1, 1);
 
         // Position the points randomly, split by Sherry
         for (int i = 0; i < numPoints; i++) {
@@ -383,7 +499,8 @@ class FunTool implements Tool {
     public int numColor;
     public boolean isInside;
 
-    public FunTool(int numPoints, int numColor, Boundary boundary, boolean isInside) {
+    public FunTool(int numPoints, int numColor, Boundary boundary, 
+                    boolean isInside) {
         super();
         this.boundary = boundary;
         this.numPoints = numPoints;
@@ -396,7 +513,8 @@ class FunTool implements Tool {
 }
 
 class Noise1FunTool extends FunTool {
-    public Noise1FunTool(int numPoints, int numColor, Boundary boundary, boolean isInside) {
+    public Noise1FunTool(int numPoints, int numColor, Boundary boundary,   
+                        boolean isInside) {
             super(numPoints, numColor, boundary, isInside);
         }
 
@@ -420,7 +538,7 @@ class Noise1FunTool extends FunTool {
         
         // Display the points 
         for (int i = 0; i < numPoints; i++) {
-            fill(200);
+            fill(200, 3);
             noStroke();
             ellipse(points[i][0], points[i][1], 3, 3); 
         }
@@ -428,7 +546,8 @@ class Noise1FunTool extends FunTool {
 }
 
 class Noise2FunTool extends FunTool {
-    public Noise2FunTool(int numPoints, int numColor, Boundary boundary, boolean isInside) {
+    public Noise2FunTool(int numPoints, int numColor, Boundary boundary, 
+                        boolean isInside) {
             super(numPoints, numColor, boundary, isInside);
         }
 
@@ -452,7 +571,7 @@ class Noise2FunTool extends FunTool {
         
         // Display the points 
         for (int i = 0; i < numPoints; i++) {
-            fill(50);
+            fill(50, 3);
             noStroke();
             ellipse(points[i][0], points[i][1], 3, 3); 
         }
@@ -460,7 +579,8 @@ class Noise2FunTool extends FunTool {
 }
 
 class DefaultFunTool extends FunTool {
-    public DefaultFunTool(int numPoints, int numColor, Boundary boundary, boolean isInside) {
+    public DefaultFunTool(int numPoints, int numColor, Boundary boundary, 
+                        boolean isInside) {
             super(numPoints, numColor, boundary, isInside);
         }
 
@@ -477,11 +597,11 @@ class Color {
         this.numColor = numColor;
     }
 
-    public color[] colorBySize(int numColor, int factor) {
+    public color[] colorBySize(int numColor, int factor1, int factor2) {
         color[] colors = new color[numColor]; 
         
-        int minSize = 5/factor; 
-        int maxSize = 255/factor;
+        int minSize = 5/factor1; 
+        int maxSize = 255/factor2;
         
         for (int i = 0; i < numColor; i++) {
             int r = (int)random(minSize, maxSize); 
