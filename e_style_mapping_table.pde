@@ -80,7 +80,7 @@ class StyleMappingTable {
         println("inside  :" + cal4);
         println("line  :" + cal5);
 
-
+        //torso, feet
         if (globalStage == GlobalStage.COMPUTER_DRAW_2) {
             if (cal1 % 4 == 0) { // Corrected method call
                 boundary = new Torso1();
@@ -107,25 +107,25 @@ class StyleMappingTable {
         //01. outside
         if (cal2 % 3 == 0) { // Corrected method call
             outsidePatternTool = new DiagonalPatternTool(this.numPoints, this.factor1, this.factor2, this.numColor, boundary, false);
-            println("outside  :   DiagonalPatternTool");
+            println("outside  :   DiagonalPatternTool" + cal2 % 3);
         } else if(cal2 % 3 == 1) {
             outsidePatternTool = new EllipsePatternTool(this.numPoints, this.factor1, 
                                                         this.factor2, this.numColor, 
-                                                        boundary, true, this.angle, 
+                                                        boundary, false, this.angle, 
                                                         this.stroke, this.transp);
-            println("outside  :   EllipsePatternTool");
+            println("outside  :   EllipsePatternTool" + cal2 %3);
         } else {
            outsidePatternTool = new DotsPatternTool(this.numPoints, this.factor1, this.factor2, this.numColor, boundary, false);
-            println("outside  :   DotsPatternTool");
+            println("outside  :   DotsPatternTool" + cal2 % 3);
         }
 
         //02. effect
         if (cal3 % 5 == 1) { // Corrected method call
             funTool = new Noise1FunTool(this.numPoints, this.numColor, boundary, true);
-            println("Noise1, white");
+            println("Noise1, white" + cal3 % 5);
         } else if (cal3 % 5 == 2) {
             funTool = new Noise2FunTool(this.numPoints, this.numColor, boundary, true);
-            println("Noise2, dark");
+            println("Noise2, dark" + cal3 % 5);
         } else {
             funTool = new DefaultFunTool(this.numPoints, this.numColor, boundary, true);
             println("no Noise");   
@@ -138,34 +138,34 @@ class StyleMappingTable {
                                                         this.factor2, this.numColor, 
                                                         boundary, true, this.angle, 
                                                         this.stroke, this.transp);
-            println("inside  :   EllipsePatternTool");
+            println("inside  :   EllipsePatternTool" + cal4 % 3);
         } else if (cal4 % 3 == 1) {
             insidePatternTool = new DiagonalPatternTool(this.numPoints, this.factor1, this.factor2, this.numColor, boundary, true);
-            println("inside  :   DiagonalPatternTool");
+            println("inside  :   DiagonalPatternTool" + cal4 % 3);
         } else {
-            insidePatternTool = new DotsPatternTool(this.numPoints, this.factor1, this.factor2, this.numColor, boundary, false);
-            println("inside  :   DotsPatternTool");
+            insidePatternTool = new DotsPatternTool(this.numPoints, this.factor1, this.factor2, this.numColor, boundary, true);
+            println("inside  :   DotsPatternTool" + cal4 % 3);
         }
  
         //04. line
         if (cal5 % 4 == 0) { // Corrected method call
             lineTool = new CoilLineTool(this.numPoints, this.factor1, this.factor2, 
                                         this.numColor, boundary);
-            println("line  :   CoilLineTool");
+            println("line  :   CoilLineTool" + cal5 % 4);
         } else if (cal5 % 4 == 1){
             lineTool = new ChainLineTool(this.numPoints, this.factor1, this.factor2, 
                                         this.numColor, boundary, 
                                         this.stroke, this.transp, this.radius);
-            println("line  :   ChainLineTool");
+            println("line  :   ChainLineTool" + cal5 % 4);
         } else if (cal5 % 4 == 2){
             lineTool = new HornLineTool(this.numPoints, this.factor1, this.factor2, 
                                         this.numColor, boundary,
                                         this.stroke, this.angle);
-            println("line  :   HornLineTool");
+            println("line  :   HornLineTool" +  cal5 % 4);
         } else {
             lineTool = new SpringLineTool(this.numPoints, this.factor1, this.factor2, 
                                         this.numColor, boundary);
-            println("line  :   SpringLineTool");       
+            println("line  :   SpringLineTool" + cal5 % 4);       
         }
 
         Style style = new Style(boundary, insidePatternTool, outsidePatternTool, lineTool, funTool);

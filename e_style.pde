@@ -14,9 +14,8 @@ class Style {
     }
 
     public void display() {
-        insidePatternTool.display();
         outsidePatternTool.display();
-        
+        insidePatternTool.display();
         funTool.display();
         lineTool.display();
         
