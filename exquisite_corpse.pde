@@ -149,7 +149,6 @@ void selectShape() {
 void next() {
     
     PretransformParametersExtractor ppe = new PretransformParametersExtractor();
-    
     if (globalStage == GlobalStage.HUMAN_DRAW_1) {
         currentPretransformParameters = ppe.extract(shapeDatabase, globalStage);
         PImage img_1 = get(125, 0, 875, 750);

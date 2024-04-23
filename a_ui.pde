@@ -241,5 +241,3 @@ void selectColor() {
             currentColor = color(0); // Black
     }
 }
-
-
