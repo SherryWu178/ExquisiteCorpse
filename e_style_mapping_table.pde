@@ -75,11 +75,29 @@ class StyleMappingTable {
         int cal4 = cal1 + cal2;
         int cal5 = cal3 + cal4;
 
-        if (cal1 % 2 == 0) { // Corrected method call
-            boundary = new Torso2();
+
+        if (globalStage == GlobalStage.COMPUTER_DRAW_2) {
+            if (cal1 % 4 == 0) { // Corrected method call
+                boundary = new Torso1();
+            } else if (cal1 % 4 == 1) { // Corrected method call
+                boundary = new Torso2();
+            } else if (cal1 % 4 == 2) { // Corrected method call
+                boundary = new Torso3();
+            } else {
+                boundary = new Torso4();
+            }
+        } else if (globalStage == GlobalStage.COMPUTER_DRAW_4) {
+            if (cal1 % 3 == 0) { // Corrected method call
+                boundary = new Feet1();
+            } else if (cal1 % 3 == 1) { // Corrected method call
+                boundary = new Feet2();
+            } else {
+                boundary = new Feet3();
+            }
         } else {
-            boundary = new Torso1();
+            throw new IllegalArgumentException("Invalid global stage");
         }
+        
         
         //01. outside
         if (cal2 % 3 == 0) { // Corrected method call
