@@ -53,19 +53,19 @@ void setup() {
 
 // use for testing
 void test() {
-    // Boundary feet_1 = new Torso1();
-    // Boundary feet_2 = new Torso2();
-    // Boundary feet_3 = new Torso3();
-    // Boundary feet_4 = new Torso4();
+    Boundary feet_1 = new Torso1();
+    Boundary feet_2 = new Torso2();
+    Boundary feet_3 = new Torso3();
+    Boundary feet_4 = new Torso4();
 
-    // stroke(0);
-    // feet_1.display(DisplayMode.MAIN);
-    // stroke(255, 255, 0);
-    // feet_2.display(DisplayMode.MAIN);
-    // stroke(255, 0, 0);
-    // feet_3.display(DisplayMode.MAIN);
-    // stroke(0, 0, 255);
-    // feet_4.display(DisplayMode.MAIN);
+    stroke(0);
+    feet_1.display(DisplayMode.MAIN);
+    stroke(255, 255, 0);
+    feet_2.display(DisplayMode.MAIN);
+    stroke(255, 0, 0);
+    feet_3.display(DisplayMode.MAIN);
+    stroke(0, 0, 255);
+    feet_4.display(DisplayMode.MAIN);
 }
 
 
@@ -114,7 +114,6 @@ void draw() {
             // radius = (c ^ 2 + d ^ 2) ^ 0.5;
             float radius = (float) Math.pow(Math.pow(c, 2) + Math.pow(d, 2), 0.5);
             Circle circle = new Circle(centerX, centerY, radius, currentColor, brushHead);
-            stroke(currentColor);
             circle.display();
         }
         
@@ -124,8 +123,6 @@ void draw() {
         }
         
         else if (shapeType == 2) {
-            stroke(0);
-            strokeWeight(10);
             float mx = constrain(mouseX, 120, 1000);
             float my = constrain(mouseY, 0, 750);
             if (mousePressed) {
@@ -142,14 +139,17 @@ void selectBrush() {
     // Check if mouse click occurred within ellipse region
     if (mouseX > 60 - 17.5 && mouseX < 60 + 17.5 && mouseY > 290 - 17.5 && mouseY < 290  + 17.5) {
         brushType = 0;  
+        rect(42.5, 290 - 17.5, 35, 35);
     }
     // Check if mouse click occurred within rect region
-    else if (mouseX > 45 && mouseX < 45 + 30 && mouseY > 340 && mouseY < 340 + 30) {
+    else if (mouseX > 60 - 17.5 && mouseX < 60 + 17.5 && mouseY > 340 - 17.5 && mouseY < 340 + 17.5) {
         brushType = 1;  
+        rect(45, 340 - 17.5, 35, 35);
     }
     // Check if mouse click occurred within triangle region
-    else if (mouseX > 45 && mouseX < 75 && mouseY > 380 && mouseY < 390 + 10) {
+    else if (mouseX > 60 - 17.5 && mouseX < 60 + 17.5 && mouseY > 390 - 17.5 && mouseY < 390 + 17.5) {
         brushType = 2;  
+        rect(45, 390 - 17.5, 35, 35);
     }
     
     println("Brush type: " + brushType);
@@ -159,14 +159,17 @@ void selectShape() {
     // Check if mouse click occurred within ellipse region
     if (mouseX > 60 - 17.5 && mouseX < 60 + 17.5 && mouseY > 560 - 17.5 && mouseY < 560 + 17.5) {
         shapeType = 0; // Set shapeType to ellipse
+        rect(60 - 20, 560 - 20, 40, 40);
     }
     // Check if mouse click occurred within rect region
     else if (mouseX > 45 && mouseX < 45 + 30 && mouseY > 610 && mouseY < 610 + 30) {
         shapeType = 1; // Set shapeType to rect
+        rect(40, 605, 40, 40);
     }
-    // Check if mouse click occurred within triangle region
+    // Check if mouse click occurred within free form region
     else if (mouseX > 45 && mouseX < 75 && mouseY > 670 && mouseY < 695) {
-        shapeType = 2; // Set shapeType to triangle
+        shapeType = 2; // Set shapeType to free form
+        rect(40, 665, 40, 40);
     }
     
     println("Shape type: " + shapeType);

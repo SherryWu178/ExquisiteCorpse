@@ -126,16 +126,16 @@ void drawThichnessSelection() {
 void drawbrush() { //palette
     fill(255);
     strokeWeight(1);
-    rect(-1, 249, 125, 251);
+    rect( -1, 249, 125, 251);
     
     stroke(0);
     strokeWeight(2);
     
-    //Draw brush ellipses
+    //Draw shape ellipses
     fill(0);
-    ellipse(60, 290, 10, 10);
-    ellipse(60, 340, 15, 15);
-    ellipse(60, 390, 20, 20);
+    ellipse(60, 290, 5, 5);
+    ellipse(60, 340, 10, 10);
+    ellipse(60, 390, 15, 15);
     
     fill(color(255,0,0));
     stroke(color(255,0,0));
@@ -155,7 +155,6 @@ void drawShapeSelections() { //palette
     //Draw shape ellipses
     fill(255);
     ellipse(60, 560, 35, 35); // Circle
-    
     fill(255);
     rect(45, 610, 30, 30); // Square
     
@@ -229,54 +228,37 @@ void selectColor() {
             rect(5, 5, 30, 30);
     } else if (mouseX >= 45 && mouseX <= 75 && mouseY >= 5 && mouseY <= 35) {
             currentColor = color(255, 13, 13); // Light Red
-            rect(45, 5, 30, 30);
     } else if (mouseX >= 85 && mouseX <= 115 && mouseY >= 5 && mouseY <= 35) {
             currentColor = color(240, 41, 157); // Pink
-            rect(85, 5, 30, 30);
     } else if (mouseX >= 5 && mouseX <= 35 && mouseY >= 45 && mouseY <= 75) {
             currentColor = color(236, 41, 240); // Light Purple
-            rect(5, 45, 30, 30);
     } else if (mouseX >= 45 && mouseX <= 75 && mouseY >= 45 && mouseY <= 75) {
             currentColor = color(169, 41, 240); // Purple
-            rect(45, 45, 30, 30);
     } else if (mouseX >= 85 && mouseX <= 115 && mouseY >= 45 && mouseY <= 75) {
             currentColor = color(116, 41, 240); // Dark Purple
-            rect(85, 45, 30, 30);
     } else if (mouseX >= 5 && mouseX <= 35 && mouseY >= 85 && mouseY <= 115) {
             currentColor = color(24, 22, 240); // Blue
-            rect(5, 85, 30, 30);
     } else if (mouseX >= 45 && mouseX <= 75 && mouseY >= 85 && mouseY <= 115) {
             currentColor = color(22, 194, 240); // Light Blue
-            rect(45, 85, 30, 30);
     } else if (mouseX >= 85 && mouseX <= 115 && mouseY >= 85 && mouseY <= 115) {
             currentColor = color(22, 240, 187); // Cyan
-            rect(85, 85, 30, 30);
     } else if (mouseX >= 5 && mouseX <= 35 && mouseY >= 125 && mouseY <= 155) {
             currentColor = color(51, 229, 52); // Green
-            rect(5, 125, 30, 30);
     } else if (mouseX >= 45 && mouseX <= 75 && mouseY >= 125 && mouseY <= 155) {
             currentColor = color(225, 245, 79); // Yellow Green
-            rect(45, 125, 30, 30);
     } else if (mouseX >= 85 && mouseX <= 115 && mouseY >= 125 && mouseY <= 155) {
             currentColor = color(255, 244, 31); // Yellow
-            rect(85, 125, 30, 30);
     } else if (mouseX >= 5 && mouseX <= 35 && mouseY >= 165 && mouseY <= 195) {
             currentColor = color(255, 157, 52); // Orange
-            rect(5, 165, 30, 30);
     } else if (mouseX >= 45 && mouseX <= 75 && mouseY >= 165 && mouseY <= 195) {
             currentColor = color(234, 210, 147); // Light Brown
-            rect(45, 165, 30, 30);
     } else if (mouseX >= 85 && mouseX <= 115 && mouseY >= 165 && mouseY <= 195) {
             currentColor = color(131, 114, 70); // Dark Brown
-            rect(85, 165, 30, 30);
     } else if (mouseX >= 5 && mouseX <= 35 && mouseY >= 205 && mouseY <= 235) {
             currentColor = color(255); // White
-            rect(5, 205, 30, 30);
     } else if (mouseX >= 45 && mouseX <= 75 && mouseY >= 205 && mouseY <= 235) {
             currentColor = color(175); // Light Gray
-            rect(45, 205, 30, 30);
     } else if (mouseX >= 85 && mouseX <= 115 && mouseY >= 205 && mouseY <= 235) {
             currentColor = color(0); // Black
-            rect(85, 205, 30, 30);
     }
 }

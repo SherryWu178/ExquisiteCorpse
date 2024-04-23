@@ -38,7 +38,6 @@ class SohyunLine implements Shape {
         strokeWeight(brushHead);
         CoordinateTransformer transformer = new CoordinateTransformer();
         transformer.transformSohyunLine(this.coordinatesList, mode);
-        print("I am displaying line\n");
     }
 
     @Override

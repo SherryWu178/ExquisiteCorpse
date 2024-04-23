@@ -66,9 +66,6 @@ class CoordinateTransformer {
             float[] point1 = transformedPoints.get(i);
             float[] point2 = transformedPoints.get(i + 1);
             line(point1[0], point1[1], point2[0], point2[1]);
-            print(second()); 
-            print("\n I am displaying segment\n");
-
         }
     }
 
