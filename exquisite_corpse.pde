@@ -85,6 +85,7 @@ void draw() {
     // strokeWeight(2);
     noFill();
     
+    drawingGuide();
     shapeDatabase.displaySidePanel(globalStage);
     
     // if (globalStage == GlobalStage.COMPUTER_DRAW_2) {

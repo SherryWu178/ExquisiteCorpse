@@ -1,3 +1,23 @@
+void drawingGuide() {
+    
+    if (globalStage == GlobalStage.HUMAN_DRAW_1) {
+        // to get variable
+        Boundary torso = new Torso1();
+        stroke(255, 0, 0);
+        circle(torso.neck1, 745, 5);
+        circle(torso.neck2, 745, 5);
+    } else if (globalStage == GlobalStage.HUMAN_DRAW_3) {
+        Boundary feet = new Feet1();
+        stroke(255, 0, 0);
+        circle(feet.torso1, 5, 5);
+        circle(feet.torso2, 5, 5);
+        circle(feet.leg1, 745, 5);
+        circle(feet.leg2, 745, 5);
+        circle(feet.leg3, 745, 5);
+        circle(feet.leg4, 745, 5);
+    }
+}
+
 void toolBar() {
     //Draw background of toolbar
     fill(255);
@@ -8,7 +28,7 @@ void toolBar() {
 
     drawNext();
     drawCurrentStage(); 
-    
+
     if (needPrompt == 1) {
         drawPrompt();
     }
