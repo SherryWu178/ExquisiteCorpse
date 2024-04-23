@@ -74,6 +74,8 @@ class PretransformParametersExtractor {
                 maxCurvature = curvature;
             }
         }
+        minCurvature = abs(curvatures[0]) % 300 + 1 ;
+        maxCurvature = abs(curvatures[1]) % 1000 + 2;
 
         // Calculate shape lengths
         float minL = polygonLengths.get(0);

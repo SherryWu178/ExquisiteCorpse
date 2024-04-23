@@ -8,7 +8,7 @@ List<float[]> currentCoordinatesList = new ArrayList<>();
 color currentColor = color(0);
 int shapeType = 2;
 int brushType = 0;
-int brushHead = 2;
+int brushHead = 10;
 int currentshapeCompleted = 0;
 int needPrompt = 1;
 GlobalStage globalStage = GlobalStage.HUMAN_DRAW_1;
@@ -81,9 +81,9 @@ void draw() {
     if (mouseX > - 1 && mouseX < 125 && mouseY > - 1 && mouseY < 750) {
         // println("Mouse click at toolbar");
     } else {
-        if (brushType == 0) brushHead = 5;
-        if (brushType == 1) brushHead = 10;
-        if (brushType == 2) brushHead = 16;
+        if (brushType == 0) brushHead = 10;
+        if (brushType == 1) brushHead = 15;
+        if (brushType == 2) brushHead = 20;
         if (brushType == 3) brushHead = 5;
 
         if (currentshapeCompleted == 1) {
@@ -107,7 +107,7 @@ void draw() {
         
         else if (shapeType == 2) {
             stroke(0);
-            strokeWeight(5);
+            strokeWeight(10);
             float mx = constrain(mouseX, 120, 1000);
             float my = constrain(mouseY, 0, 750);
             if (mousePressed) {
@@ -274,9 +274,9 @@ void mouseReleased() {
     if (mouseX > - 1 && mouseX < 125 && mouseY > - 1 && mouseY < 750) {
         // println("Mouse released at toolbar");
     } else {
-        if (brushType == 0) brushHead = 5;
-        if (brushType == 1) brushHead = 10;
-        if (brushType == 2) brushHead = 16;
+        if (brushType == 0) brushHead = 10;
+        if (brushType == 1) brushHead = 15;
+        if (brushType == 2) brushHead = 20;
         if (brushType == 3) brushHead = 5;
 
         println("brushHead" + brushHead);
