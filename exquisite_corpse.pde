@@ -52,12 +52,20 @@ void setup() {
 
 
 void draw() {
-    background(255);
+    if (globalStage == GlobalStage.FINAL_STAGE) {
+        background(150);
+    } else {
+        background(255);
+    }
+    
+
     shapeDatabase.displayMainCanvas(globalStage);
+
     rightPanel();
     toolBar();
-    stroke(0);
-    strokeWeight(2);
+
+    // stroke(0);
+    // strokeWeight(2);
     noFill();
     
     shapeDatabase.displaySidePanel(globalStage);
@@ -181,8 +189,9 @@ void next() {
 }
 
 void save() {
-    PImage img = get(400, 0, 200, 600);
-    img.save("final.png");
+    PImage img = get(400, 0, 250, 750);
+    String filename = "FINAL_" + str(millis())+ ".png";
+    img.save(filename);
 }
 
 void reset() {

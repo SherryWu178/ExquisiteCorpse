@@ -2,17 +2,16 @@ void toolBar() {
     //Draw background of toolbar
     fill(255);
     
-    // color selection
-    drawColorSelections();
-    
-    // drawThichnessSelection(); 
+    drawColorSelections();    
     drawShapeSelections();
     drawbrush(); 
+
     drawNext();
+    drawCurrentStage(); 
+    
     if (needPrompt == 1) {
         drawPrompt();
     }
-    drawCurrentStage(); 
 }
 
 void rightPanel() {
