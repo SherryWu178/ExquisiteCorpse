@@ -51,7 +51,7 @@ abstract class Boundary implements Tool {
         List<float[]> resizedCoordinatesList = new CoordinateTransformer().transformArray(displayMode, coordinatesList);
         beginShape();
         for (float[] coordinates : resizedCoordinatesList) {
-            add(new float[]{coordinates[0], coordinates[1]);
+            vertex(coordinates[0], coordinates[1]);
         }
         endShape(CLOSE);
     }
