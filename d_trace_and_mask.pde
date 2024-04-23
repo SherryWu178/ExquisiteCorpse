@@ -3,6 +3,16 @@ import java.util.List;
 
 
 abstract class Boundary implements Tool {
+    public final int neck1 = 507;
+    public final int neck2 = 623;
+    public final int torso1 = 337;
+    public final int torso2 = 714;
+    public final int leg1 = 439;
+    public final int leg2 = 539;
+    public final int leg3 = 765;
+    public final int leg4 = 861;
+    
+
     private List<float[]> coordinatesList = new ArrayList<>();
 
     public Boundary(List<float[]> coordinatesList) {
@@ -122,7 +132,6 @@ class Torso3 extends Boundary {
             add(new float[]{231, 206});
             add(new float[]{500, 146});
             add(new float[]{507, 0});
-            add(new float[]{623, 0});
         }});
     }
 }
