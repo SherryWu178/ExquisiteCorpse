@@ -60,28 +60,41 @@ abstract class Boundary implements Tool {
 class Torso1 extends Boundary {
     public Torso1() {
         super(new ArrayList<>() {{
-            add(new float[]{487, 0});
-            add(new float[]{487, 750});
-            add(new float[]{730, 750});
-            add(new float[]{730, 0});
+            add(new float[]{507, 0});
+            add(new float[]{507, 150});
+            add(new float[]{270, 140});
+            add(new float[]{270, 512});
+            add(new float[]{337, 507});
+            add(new float[]{337, 227});
+            add(new float[]{337, 750});
+            add(new float[]{714, 750});
+            add(new float[]{766, 230});
+            add(new float[]{736, 540});
+            add(new float[]{878, 521});
+            add(new float[]{813, 159});
+            add(new float[]{631, 148});
+            add(new float[]{623, 0});
         }});
     }
 }
 
+
+
+
 class Torso2 extends Boundary {
     public Torso2() {
         super(new ArrayList<>() {{
-            add(new float[]{487, 0});
+            add(new float[]{507, 0});
             add(new float[]{459, 162});
             add(new float[]{192, 336});
             add(new float[]{258, 428});
             add(new float[]{364, 393});
-            add(new float[]{371, 750});
-            add(new float[]{601, 744});//reduced the #of points
+            add(new float[]{337, 750});
+            add(new float[]{714, 750});//reduced the #of points
             add(new float[]{814, 410});
             add(new float[]{767, 410});
             add(new float[]{568, 232});
-            add(new float[]{558, 0});
+            add(new float[]{623, 0});
         }});
     }
 }
@@ -90,7 +103,7 @@ class Torso2 extends Boundary {
 class Torso3 extends Boundary {
     public Torso3() {
         super(new ArrayList<>() {{
-            add(new float[]{602, 2});
+            add(new float[]{623, 0});
             add(new float[]{600, 123});
             add(new float[]{817, 139});
             add(new float[]{846, 12});
@@ -100,19 +113,16 @@ class Torso3 extends Boundary {
             add(new float[]{866, 170});
             add(new float[]{664, 167});
             add(new float[]{750, 485});
-            add(new float[]{789, 746});
-            add(new float[]{182, 744});
-            add(new float[]{291, 263});
+            add(new float[]{714, 750});
+            add(new float[]{337, 750});
+            add(new float[]{450, 263});
+            add(new float[]{420, 233});
             add(new float[]{176, 257});
-            add(new float[]{65, 351});
-            add(new float[]{68, 217});
-            add(new float[]{93, 185});
-            add(new float[]{116, 251});
             add(new float[]{152, 208});
             add(new float[]{231, 206});
-            add(new float[]{344, 146});
-            add(new float[]{363, 7});
-            add(new float[]{602, 2});
+            add(new float[]{500, 146});
+            add(new float[]{507, 0});
+            add(new float[]{623, 0});
         }});
     }
 }
@@ -129,8 +139,8 @@ class Torso4 extends Boundary {
             add(new float[]{442, 538});
             add(new float[]{327, 191});
             add(new float[]{455, 192});
-            add(new float[]{507, 2});
-            add(new float[]{623, 2});
+            add(new float[]{507, 0});
+            add(new float[]{623, 0});
             add(new float[]{599, 189});
             add(new float[]{780, 185});
             add(new float[]{714, 750});
@@ -150,7 +160,7 @@ class Feet1 extends Boundary {
             add(new float[]{472, 658});
             add(new float[]{563, 469});
             add(new float[]{441, 261});
-            add(new float[]{543, 0});
+            add(new float[]{539, 0});
 
             add(new float[]{765, 0});
             add(new float[]{690, 271});
@@ -166,17 +176,17 @@ class Feet1 extends Boundary {
 class Feet2 extends Boundary {
     public Feet2() {
         super(new ArrayList<>() {{
-            add(new float[]{384, 0});
-            add(new float[]{477, 259});
-            add(new float[]{386, 694});
-            add(new float[]{548, 698});
-            add(new float[]{583, 264});
-            add(new float[]{529, 0});
+            add(new float[]{439, 0});
+            add(new float[]{527, 259});
+            add(new float[]{436, 694});
+            add(new float[]{598, 698});
+            add(new float[]{633, 264});
+            add(new float[]{539, 0});
 
-            add(new float[]{637, 0});
-            add(new float[]{782, 692});
-            add(new float[]{940, 683});
-            add(new float[]{728, 0});
+            add(new float[]{765, 0});
+            add(new float[]{832, 692});
+            add(new float[]{990, 683});
+            add(new float[]{861, 0});
         }});
     }
 }
@@ -185,21 +195,21 @@ class Feet2 extends Boundary {
 class Feet3 extends Boundary {
     public Feet3() {
         super(new ArrayList<>() {{
-            add(new float[]{531, 0});
-            add(new float[]{519, 359});
-            add(new float[]{343, 522});
-            add(new float[]{298, 480});
-            add(new float[]{337, 582});
-            add(new float[]{577, 357});
-            add(new float[]{609, 0});
+            add(new float[]{439, 0});
+            add(new float[]{419, 359});
+            add(new float[]{243, 522});
+            add(new float[]{198, 480});
+            add(new float[]{237, 582});
+            add(new float[]{477, 357});
+            add(new float[]{539, 0});
 
-            add(new float[]{721, 0});
-            add(new float[]{730, 349});
-            add(new float[]{888, 557});
-            add(new float[]{943, 462});
-            add(new float[]{892, 486});
-            add(new float[]{786, 337});
-            add(new float[]{815, 0});
+            add(new float[]{765, 0});
+            add(new float[]{630, 349});
+            add(new float[]{788, 557});
+            add(new float[]{843, 462});
+            add(new float[]{792, 486});
+            add(new float[]{686, 337});
+            add(new float[]{861, 0});
         }});
     }
 }

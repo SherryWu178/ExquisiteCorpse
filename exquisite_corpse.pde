@@ -48,6 +48,24 @@ void setup() {
     seed = (int)random(100);
     frameRate(10);
     ellipseMode(CENTER);
+
+}
+
+// use for testing
+void test() {
+    // Boundary feet_1 = new Torso1();
+    // Boundary feet_2 = new Torso2();
+    // Boundary feet_3 = new Torso3();
+    // Boundary feet_4 = new Torso4();
+
+    // stroke(0);
+    // feet_1.display(DisplayMode.MAIN);
+    // stroke(255, 255, 0);
+    // feet_2.display(DisplayMode.MAIN);
+    // stroke(255, 0, 0);
+    // feet_3.display(DisplayMode.MAIN);
+    // stroke(0, 0, 255);
+    // feet_4.display(DisplayMode.MAIN);
 }
 
 
@@ -57,7 +75,6 @@ void draw() {
     } else {
         background(255);
     }
-    
 
     shapeDatabase.displayMainCanvas(globalStage);
 
@@ -278,8 +295,6 @@ void mouseReleased() {
         if (brushType == 1) brushHead = 10;
         if (brushType == 2) brushHead = 16;
         if (brushType == 3) brushHead = 5;
-
-        println("brushHead" + brushHead);
         
         c = mouseX - a;
         d = mouseY - b;
