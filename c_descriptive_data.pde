@@ -49,18 +49,18 @@ class Description{
         points = positionOfPoints;
 
         // no random 
-        int minX = (int)bottomRight[0] + 1;
-        int minY = (int)bottomRight[1] + 1;
-        int maxX = (int)topLeft[0];
-        int maxY = (int)topLeft[1];
-        int meanX = (int)centerOfMass[0] + 1;
-        int meanY = (int)centerOfMass[1];
-        int stdX = (int)stdDev[0];
-        int stdY = (int)stdDev[1];
-        int minLength = (int)shapeLengths[0] + 1;
-        int maxLength = (int)shapeLengths[1] + 1;
-        int minCurvature = (int)curvatures[0] + 2;
-        int maxCurvature = (int)curvatures[1] + 2;
+        int minX = (int)bottomRight[0] + (int)random(10, 100);
+        int minY = (int)bottomRight[1] + (int)random(10, 30);
+        int maxX = (int)topLeft[0]+ (int)random(10, 300);
+        int maxY = (int)topLeft[1]+ (int)random(10, 300);
+        int meanX = (int)centerOfMass[0] + (int)random(10, 300);
+        int meanY = (int)centerOfMass[1]+ (int)random(10, 300);
+        int stdX = (int)stdDev[0]+ (int)random(10, 300);
+        int stdY = (int)stdDev[1]+ (int)random(10, 300);
+        int minLength = (int)shapeLengths[0] + (int)random(10, 100);
+        int maxLength = (int)shapeLengths[1] + (int)random(10, 300);
+        int minCurvature = (int)curvatures[0]+ (int)random(10, 300);
+        int maxCurvature = (int)curvatures[1]+ (int)random(10, 300); 
         num_color += 12; //insurance
         int coverage = (int)dist(max_size[0][0], max_size[0][1], max_size[1][0], max_size[1][1]) + 1;//insurance
         int num_points = points.length + 1; //insurance

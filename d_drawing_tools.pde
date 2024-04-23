@@ -39,7 +39,8 @@ class CoilLineTool extends LineTool {
         color[] colors = colorC.colorBySize(numColor, 1, factor1/5 + 1);
 
         //r size 
-        if (numPoints > 50) numPoints %= 50;
+        if (numPoints > 50) numPoints %= 30;
+        println("numPoints for coil" + numPoints);
 
         List<float[]> coordinatesList = boundary.getCoordinatesList();
           float[] p1;
@@ -62,11 +63,13 @@ class CoilLineTool extends LineTool {
         for (int i = 0; i < coordinatesList.size() -1; i++){  
             float r = lengths[i] / numPoints; 
             stroke(colors[i % numColor]);
+
             if (r > 10) strokeWeight(1);
-            else strokeWeight(i % 5);   
+            else strokeWeight(i % 5 + 1);   
 
             Coil coil = new Coil(coordinatesList.get(i)[0], coordinatesList.get(i)[1], 
-                                coordinatesList.get(i + 1)[0], coordinatesList.get(i+1)[1], r/2, r);   
+                                coordinatesList.get(i + 1)[0], coordinatesList.get(i+1)[1], r/2, r);  
+            println("we did coil , here"); 
             coil.display();
         }
     }
@@ -86,7 +89,7 @@ class SpringLineTool extends LineTool{
         color[] colors = colorC.colorBySize(numColor, 1, factor1/5 + 1);
 
         //r size 
-        if (numPoints > 50) numPoints %= 50;
+        if (numPoints > 50) numPoints %= 25;
 
         List<float[]> coordinatesList = boundary.getCoordinatesList();
           float[] p1;
@@ -136,8 +139,8 @@ class ChainLineTool extends LineTool {
         color[] colors = colorC.colorBySize(numColor, 1, factor1/5 + 1);
 
         //unit size 
-        if (numPoints > 50) numPoints %= 50;
-        if (numPoints < 10) numPoints *= 100;    
+        if (numPoints > 50) numPoints %= 25;
+        if (numPoints < 10) numPoints *= 30;    
 
         //normalized vectors;
         List<float[]> coordinatesList = boundary.getCoordinatesList();
@@ -170,7 +173,7 @@ class ChainLineTool extends LineTool {
             stroke(colors[i % numColor]);
             
             if (stroke % 2 == 0) strokeWeight(1);
-            else strokeWeight(i % 3);
+            else strokeWeight(i % 3 + 1);
 
             float unit = lengths[i] / numPoints;
             PVector position = new PVector(coordinatesList.get(i)[0], coordinatesList.get(i)[1]);
@@ -235,7 +238,7 @@ class HornLineTool extends LineTool{
         color[] colors = colorC.colorBySize(numColor, 1, factor1/5 + 1);
 
         //unit size 
-        if (numPoints > 50) numPoints %= 50;
+        if (numPoints > 50) numPoints %= 25;
         
         //normalized vectors;
         List<float[]> coordinatesList = boundary.getCoordinatesList();
@@ -261,7 +264,7 @@ class HornLineTool extends LineTool{
 
         //draw base
         for (int i = 0; i < lengths.length - 1; i++) {
-            strokeWeight(1);
+            strokeWeight(2);
             stroke(colors[i % numColor], 128); //transparency 128
             line(coordinatesList.get(i)[0], coordinatesList.get(i)[1], 
                 coordinatesList.get(i + 1)[0], coordinatesList.get(i + 1)[1]);
@@ -273,8 +276,8 @@ class HornLineTool extends LineTool{
             if (stroke % 2 == 0) strokeWeight(0);
             else strokeWeight(i % 5);
 
-            if (stroke % 2 == 0) count = numPoints % 50;
-            else count = numPoints % 25;
+            if (stroke % 2 == 0) count = numPoints % 25;
+            else count = numPoints % 8;
             float unit = lengths[i] / count;
 
             PVector position = new PVector(coordinatesList.get(i)[0], coordinatesList.get(i)[1]);
@@ -340,7 +343,7 @@ class EllipsePatternTool extends PatternTool {
     public void display() {
         randomSeed(seed);
         if (numPoints < 10) numPoints *= 2;
-        if (numPoints > 500) numPoints %= 300;
+        if (numPoints > 500) numPoints %= 200;
         int[][] points = new int[numPoints][2]; 
         
         int minX = 0; 
@@ -377,7 +380,7 @@ class EllipsePatternTool extends PatternTool {
             else opa = 1;
             fill(colors[i % numColor], opa);
 
-            if (stroke % 3 == 0) strokeWeight(i % 3);
+            if (stroke % 3 == 0) strokeWeight(i % 3 + 2);
             else strokeWeight(0);
 
             if (factor1 % 4 == 0) {
@@ -409,11 +412,11 @@ class DiagonalPatternTool extends PatternTool {
     @Override
     public void display() {
         randomSeed(seed);
-        if (numPoints % 2 == 0) numPoints *= 100;
-        else if (numPoints < 50) numPoints *= 100;
+        if (numPoints % 2 == 0) numPoints = numPoints * 20 % 300;
+        else if (numPoints < 50) numPoints *= 10;
 
         int[][] points = new int[numPoints][2]; 
-        
+    
         float a;
         float b;
         int minX = 0; 
@@ -436,8 +439,8 @@ class DiagonalPatternTool extends PatternTool {
         for (int i = 0; i < numPoints; i++) {
             if (boundary.contains(points[i]) == isInside) {
                 int length;
-                if (factor2 % 2 == 0) strokeWeight(0);
-                else strokeWeight(i/10);
+                if (factor2 % 2 == 0) strokeWeight(2);
+                else strokeWeight(i % 10 + 2);
                 
                 int ang = (int)random(360);
 
@@ -463,8 +466,8 @@ class DotsPatternTool extends PatternTool {
     @Override
     public void display() {
         randomSeed(seed);
-        if (numPoints % 2 == 0) numPoints *= 400;
-        else if (numPoints < 100) numPoints *= 100;
+        if (numPoints % 2 == 0) numPoints = numPoints * 20 % 300;
+        else if (numPoints < 50) numPoints *= 10;
         int[][] points = new int[numPoints][2]; 
         
         int minX = 0; 
@@ -487,7 +490,7 @@ class DotsPatternTool extends PatternTool {
             if (boundary.contains(points[i]) == isInside) {
                 fill(colors[i % numColor/2]);
                 noStroke();
-                ellipse(points[i][0], points[i][1], 3, 3); 
+                ellipse(points[i][0], points[i][1], 2, 2); 
             }  
         }
     }
@@ -521,7 +524,8 @@ class Noise1FunTool extends FunTool {
     @Override
     public void display() {
         randomSeed(seed);
-        if (numPoints < 500) numPoints *= 1000;
+        if (numPoints < 20) numPoints *= 50;
+        if (numPoints < 500) numPoints *= 10;
         int[][] points = new int[numPoints][2]; 
         
         int minX = 0; 
@@ -540,7 +544,7 @@ class Noise1FunTool extends FunTool {
         for (int i = 0; i < numPoints; i++) {
             fill(200, 3);
             noStroke();
-            ellipse(points[i][0], points[i][1], 3, 3); 
+            ellipse(points[i][0], points[i][1], 1, 1); 
         }
     }
 }
@@ -554,7 +558,8 @@ class Noise2FunTool extends FunTool {
     @Override
     public void display() {
         randomSeed(seed);
-        if (numPoints < 500) numPoints *= 1000;
+        if (numPoints < 20) numPoints *= 50;
+        if (numPoints < 500) numPoints *= 10;
         int[][] points = new int[numPoints][2]; 
         
         int minX = 0; 
