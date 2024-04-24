@@ -494,7 +494,7 @@ class DotsPatternTool extends PatternTool {
         if (numPoints % 2 == 0) numPoints2 = numPoints * 30  % 4000;
         else if (numPoints < 50) numPoints2 = numPoints * 30;
         int[][] points = new int[numPoints2][2]; 
-        println("new points number   " + numPoints2);
+        // println("new points number   " + numPoints2);
         
         int minX = 0; 
         int minY = 0; 

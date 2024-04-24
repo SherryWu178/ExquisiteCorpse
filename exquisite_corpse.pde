@@ -234,8 +234,23 @@ void next() {
 
 void save() {
     PImage img = get(400, 0, 250, 750);
-    String filename = "FINAL_" + str(millis())+ ".png";
-    img.save(filename);
+    String filename = "FULL_FINAL_" + str(millis())+ ".png";
+    // img.save(filename);
+
+    PImage firstImage= loadImage("HUMAN_DRAW_1.png");
+    PImage secondImage= loadImage("COMPUTER_DRAW_2.png");
+    PImage thirdImage= loadImage("HUMAN_DRAW_3.png");
+    PImage forthImage= loadImage("COMPUTER_DRAW_4.png");
+    PGraphics output = createGraphics(875, 750 * 4, JAVA2D);
+    output.beginDraw();
+    output.image(firstImage, 0, 0);
+    output.image(secondImage, 0, 750);
+    output.image(thirdImage, 0, 1500);
+    output.image(forthImage, 0, 2250);
+    output.endDraw();
+    output.save(filename);
+
+    
 }
 
 void reset() {
@@ -280,6 +295,9 @@ void mouseClicked() {
     
     if (mouseX > 1075 && mouseX < 1125 && mouseY > 659 && mouseY < 699) {
         println("Next");
+        strokeWeight(5);
+        stroke(255, 0, 0);
+        rect(1075, 659, 50, 30);
         next();
     }
     
@@ -287,6 +305,9 @@ void mouseClicked() {
         if (globalStage == GlobalStage.FINAL_STAGE) {
             println("Save");
             save();
+            strokeWeight(5);
+            stroke(255, 0, 0);
+            rect(1075, 700, 50, 30);
         }
     }
 }

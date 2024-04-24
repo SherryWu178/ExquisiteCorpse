@@ -41,12 +41,63 @@ void rightPanel() {
     rect(1000, -1, 200, 750);
     
     fill(255);
-    rect(1000, 0, 200, 150); // WINDOW1
-    rect(1000, 150, 200, 150); // WINDOW2
-    rect(1000, 300, 200, 150); // WINDOW3
-    rect(1000, 450, 200, 150); // WINDOW4
+    if (globalStage == GlobalStage.HUMAN_DRAW_1) {
+        fill(100);
+        rect(1000, 150, 200, 150); // WINDOW2
+        rect(1000, 300, 200, 150); // WINDOW3
+        rect(1000, 450, 200, 150); // WINDOW4
+        
+        fill(255);
+        strokeWeight(3);
+        rect(1000, 0, 200, 150); // WINDOW1
+        strokeWeight(1);
+
+    } else if (globalStage == GlobalStage.COMPUTER_DRAW_2) {
+        fill(100);
+        
+        rect(1000, 300, 200, 150); // WINDOW3
+        rect(1000, 450, 200, 150); // WINDOW4
+
+        fill(255);
+
+        rect(1000, 0, 200, 150); // WINDOW1
+
+        strokeWeight(3);
+        rect(1000, 150, 200, 150); // WINDOW2
+        strokeWeight(1);
+        
+    } else if (globalStage == GlobalStage.HUMAN_DRAW_3) {
+        fill(100);
+        rect(1000, 450, 200, 150); // WINDOW4
+
+        fill(255);
+
+        rect(1000, 0, 200, 150); // WINDOW1
+        rect(1000, 150, 200, 150); // WINDOW2
+
+        strokeWeight(3);
+        rect(1000, 300, 200, 150); // WINDOW3
+        strokeWeight(1);
+
+    } else if (globalStage == GlobalStage.COMPUTER_DRAW_4) {
+        rect(1000, 0, 200, 150); // WINDOW1
+        rect(1000, 150, 200, 150); // WINDOW2
+        rect(1000, 300, 200, 150); // WINDOW3
+
+        strokeWeight(3);
+        rect(1000, 450, 200, 150); // WINDOW4
+        strokeWeight(1);
+
+    } else {
+        rect(1000, 0, 200, 150); // WINDOW1
+        rect(1000, 150, 200, 150); // WINDOW2
+        rect(1000, 300, 200, 150); // WINDOW3
+        rect(1000, 450, 200, 150); // WINDOW4
+    }
+
+
     fill(20);
-    rect(1000, 600, 200, 150); // WINDOW4
+    rect(1000, 600, 200, 150); // Bottom
     
 }
 
@@ -74,38 +125,44 @@ void drawNext() {
 }
 
 void drawCurrentStage() {
+
     String displayText = "";
     if (globalStage == GlobalStage.HUMAN_DRAW_1) {
         displayText = "Stage 1";
+        text(displayText, 1010, 30);
     } else if (globalStage == GlobalStage.COMPUTER_DRAW_2) {
         displayText = "Stage 2";
+        text(displayText, 1010, 180);
     } else if (globalStage == GlobalStage.HUMAN_DRAW_3) {
         displayText = "Stage 3";
+        text(displayText, 1010, 330);
     } else if (globalStage == GlobalStage.COMPUTER_DRAW_4) {
         displayText = "Stage 4";
+        text(displayText, 1010, 480);
     } else if (globalStage == GlobalStage.FINAL_STAGE) {
         displayText = "Final Display";
+        text(displayText, 150, 30);
     }
-    fill(0);
-    text(displayText, 10, 730);
+    // fill(0);
+    // text(displayText, 10, 730);
 }
 
 void drawPrompt() {
     String displayText = "";
     if (globalStage == GlobalStage.HUMAN_DRAW_1) {
-        displayText = "It is your turn now! Draw a shape and click Next to proceed.";
+        displayText = "Stage 1: It is your turn now! Draw the head and neck and click \"Next\" to proceed.";
     } else if (globalStage == GlobalStage.COMPUTER_DRAW_2) {
-        // displayText = "Computer has drawn this. Click Next to proceed.";
+        displayText = "Stage 2";
     } else if (globalStage == GlobalStage.HUMAN_DRAW_3) {
-        displayText = "It is your turn again! Draw a shape and click Next to proceed.";
+        displayText = "Stage 3: It is your turn again! Draw the glute and thighs and click \"Next\" to proceed.";
     } else if (globalStage == GlobalStage.COMPUTER_DRAW_4) {
-        // displayText = "And now we are done! Click Next to see the final display.";
+        displayText = "Stage 4";
     } else if (globalStage == GlobalStage.FINAL_STAGE) {
         // displayText = "Final Display";
     }
     fill(0);
     textSize(15);  
-    text(displayText, 600, 20); 
+    text(displayText, 130, 20); 
 }
     
 
