@@ -69,6 +69,16 @@ class CoordinateTransformer {
         }
     }
 
+    public void transformBrush(List<float[]> points, DisplayMode displayMode){
+        ArrayList<float[]> transformedPoints = transformArray(displayMode, points);
+        for (int i = 0; i < transformedPoints.size() - 1; i++) {
+            float[] point1 = transformedPoints.get(i);
+            float[] point2 = transformedPoints.get(i + 1);
+            ellipse(point1[0], point1[1], 10, 10);
+        }
+    }
+
+
     public void transformRectangle(float x, float y, float length, float width, DisplayMode displayMode){
         float[] point1 = {x, y};
         float[] point2 = {x + length, y};

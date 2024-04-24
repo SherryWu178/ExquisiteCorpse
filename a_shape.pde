@@ -2,7 +2,7 @@ interface Shape {
     void display();
     void display(DisplayMode mode);
     color getColor();
-    void setColor(color c);
+    // void setColor(color c);
     float[] getPosition();
     float getLength();
 }
@@ -45,10 +45,10 @@ class SohyunLine implements Shape {
         return shapeColor;
     }
 
-    @Override
-    public void setColor(color newColor) {
-        this.shapeColor = newColor;
-    }
+    // @Override
+    // public void setColor(color newColor) {
+    //     this.shapeColor = newColor;
+    // }
 
     @Override
     public float[] getPosition() {
@@ -77,6 +77,71 @@ class SohyunLine implements Shape {
     }
 }
 
+class Brush implements Shape {
+    private List<float[]> coordinatesList;
+    private PImage image;
+
+    public Brush(List<float[]> coordinatesList, PImage image) {
+        this.coordinatesList = coordinatesList;
+        this.image = image;
+    }
+
+    @Override
+    public void display() {
+        DisplayMode mode = DisplayMode.MAIN;
+        noFill();
+        List<float[]> transformedCoordinates = new CoordinateTransformer().transformArray(mode, this.coordinatesList);
+        for (int i = 0; i < transformedCoordinates.size(); i++) {
+            float[] start = transformedCoordinates.get(i);
+            image(this.image, start[0], start[1]);
+        }
+    }
+
+    public void display(DisplayMode mode) {
+        noFill();
+        CoordinateTransformer transformer = new CoordinateTransformer();
+        transformer.transformBrush(this.coordinatesList, mode);
+    }
+
+    @Override
+    public color getColor() {
+        return color(0, 0, 0);
+    }
+
+    // @Override
+    // public void setColor(color newColor) {
+    //     this.shapeColor = newColor;
+    // }
+
+    @Override
+    public float[] getPosition() {
+        float sumX = 0;
+        float sumY = 0;
+        for (float[] coordinate : coordinatesList) {
+            sumX += coordinate[0];
+            sumY += coordinate[1];
+        }
+        return new float[] {sumX / coordinatesList.size(), sumY / coordinatesList.size()};
+    }
+
+    @Override
+    public float getLength() {
+        if (coordinatesList.isEmpty()) {
+            return 0; // If there are no points, the length is zero
+        }
+
+        float[] startPoint = coordinatesList.get(0);
+        float[] endPoint = coordinatesList.get(coordinatesList.size() - 1);
+
+        float dx = endPoint[0] - startPoint[0];
+        float dy = endPoint[1] - startPoint[1];
+
+        return sqrt(dx * dx + dy * dy);
+    }
+}
+
+
+
 interface SherryPolygon extends Shape {
     // Getter and setter methods for centerX and centerY
     float getCenterX();
@@ -84,6 +149,7 @@ interface SherryPolygon extends Shape {
     float[] getPosition();
     float getLength();
 }
+
 
 class Rectangle implements SherryPolygon {
     private float x;
@@ -126,10 +192,10 @@ class Rectangle implements SherryPolygon {
         return shapeColor;
     }
     
-    @Override
-    public void setColor(color newColor) {
-        this.shapeColor = newColor;
-    }
+    // @Override
+    // public void setColor(color newColor) {
+    //     this.shapeColor = newColor;
+    // }
 
     @Override
     public float getCenterX() {
@@ -188,10 +254,10 @@ class Circle implements SherryPolygon {
         return shapeColor;
     }
     
-    @Override
-    public void setColor(color newColor) {
-        this.shapeColor = newColor;
-    }
+    // @Override
+    // public void setColor(color newColor) {
+    //     this.shapeColor = newColor;
+    // }
 
     @Override
     public float getCenterX() {

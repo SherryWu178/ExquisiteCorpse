@@ -74,8 +74,18 @@ class PretransformParametersExtractor {
                 maxCurvature = curvature;
             }
         }
-        minCurvature = abs(curvatures[0]) % 300 + 1 ;
-        maxCurvature = abs(curvatures[1]) % 1000 + 2;
+        if (curvatures.length >= 2) {
+            minCurvature = abs(curvatures[0]) % 300 + 1;
+            maxCurvature = abs(curvatures[1]) % 1000 + 2;
+        } else if (curvatures.length == 1) {
+            // Handle the case when there's only one curvature value
+            minCurvature = abs(curvatures[0]) % 300 + 1;
+            maxCurvature = abs(curvatures[0]) % 1000 + 2;
+        } else {
+            // Handle the case when there are no curvature values
+            minCurvature = 5;
+            maxCurvature = 10;
+        }
 
         // Calculate shape lengths
         float minL = polygonLengths.get(0);
@@ -111,6 +121,7 @@ class PretransformParametersExtractor {
     //FUNCTION FOR CALCULATING CURVATURES
     public float[] calculateCurvatures(ArrayList<float[]> points) {
         float[] curvatures = new float[points.size()];
+  
         for (int i = 0; i < points.size(); i++) {
             float[] point1 = points.get((i - 1 + points.size()) % points.size());
             float[] point2 = points.get(i);

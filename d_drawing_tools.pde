@@ -32,15 +32,14 @@ class CoilLineTool extends LineTool {
         super(numPoints, factor1, factor2, numColor, boundary);
     }
 
-    public void display(DisplayMode mode) {
+    public void display() {
         randomSeed(seed);
         //color random generator
         Color colorC = new Color(numColor);
-        color[] colors = colorC.colorBySize(numColor, 1, factor1/5 + 1);
-
+        color[] colors = colorC.colorBySize(numColor, factor1, factor2);
         //r size 
         if (numPoints > 50) numPoints %= 30;
-        println("numPoints for coil" + numPoints);
+
 
         List<float[]> coordinatesList = boundary.getCoordinatesList();
           float[] p1;
@@ -65,11 +64,11 @@ class CoilLineTool extends LineTool {
             stroke(colors[i % numColor]);
 
             if (r > 10) strokeWeight(1);
-            else strokeWeight(i % 5 + 1);   
+            else strokeWeight(i % 30 + 1);   
 
             Coil coil = new Coil(coordinatesList.get(i)[0], coordinatesList.get(i)[1], 
                                 coordinatesList.get(i + 1)[0], coordinatesList.get(i+1)[1], r/2, r);  
-            println("we did coil , here"); 
+            
             coil.display();
         }
     }
@@ -86,7 +85,7 @@ class SpringLineTool extends LineTool{
         randomSeed(seed);
         //color random generator
         Color colorC = new Color(numColor);
-        color[] colors = colorC.colorBySize(numColor, 1, factor1/5 + 1);
+        color[] colors = colorC.colorBySize(numColor, factor1, factor2);
 
         //r size 
         if (numPoints > 50) numPoints %= 25;
@@ -118,6 +117,31 @@ class SpringLineTool extends LineTool{
     }
 }
 
+class CurveLineTool extends LineTool{
+    public CurveLineTool(int numPoints, int factor1, int factor2, 
+                        int numColor, Boundary boundary){
+        super(numPoints, factor1, factor2, numColor, boundary);
+    }
+
+    @Override
+    public void display() {
+        randomSeed(seed);
+        //color random generator
+        Color colorC = new Color(numColor);
+        color[] colors = colorC.colorBySize(numColor, factor1, factor2);
+
+        List<float[]> coordinatesList = boundary.getCoordinatesList();
+        beginShape();
+        stroke(colors[factor1 % numColor]);
+        strokeWeight(numPoints % 100 +1);
+
+        for (int i = 0; i <coordinatesList.size(); i++) {
+            curveVertex(coordinatesList.get(i)[0], coordinatesList.get(i)[1]);
+        }
+        endShape();
+    }
+}
+
 class ChainLineTool extends LineTool {
     private int stroke;
     private int transp;
@@ -136,7 +160,7 @@ class ChainLineTool extends LineTool {
         randomSeed(seed);
         //color random generator
         Color colorC = new Color(numColor);
-        color[] colors = colorC.colorBySize(numColor, 1, factor1/5 + 1);
+        color[] colors = colorC.colorBySize(numColor, factor1, factor2);
 
         //unit size 
         if (numPoints > 50) numPoints %= 25;
@@ -235,7 +259,7 @@ class HornLineTool extends LineTool{
 
         //color random generator
         Color colorC = new Color(numColor);
-        color[] colors = colorC.colorBySize(numColor, 1, factor1/5 + 1);
+        color[] colors = colorC.colorBySize(numColor, factor1, factor2);
 
         //unit size 
         if (numPoints > 50) numPoints %= 25;
@@ -342,19 +366,20 @@ class EllipsePatternTool extends PatternTool {
     @Override
     public void display() {
         randomSeed(seed);
-        if (numPoints < 10) numPoints *= 2;
-        if (numPoints > 500) numPoints %= 200;
-        int[][] points = new int[numPoints][2]; 
+        int numPoints2= numPoints;
+        if (numPoints < 10) numPoints2 *= 5;
+        if (numPoints > 500) numPoints2 %= 1000;
+        int[][] points = new int[numPoints2][2]; 
         
         int minX = 0; 
         int minY = 0; 
 
         //color random generator
         Color colorC = new Color(numColor);
-        color[] colors = colorC.colorBySize(numColor, 1, 2);
+        color[] colors = colorC.colorBySize(numColor, factor1, factor2);
         
         // Position the points randomly, split by Sherry
-        for (int i = 0; i < numPoints; i++) {
+        for (int i = 0; i < numPoints2; i++) {
             int x = (int)random(minX, width); 
             int y = (int)random(minY, height); 
             points[i][0] = x; 
@@ -362,60 +387,55 @@ class EllipsePatternTool extends PatternTool {
         }
         
         // Display the points 
-        for (int i = 0; i < numPoints; i++) {
-            fill(colors[i % numColor]);
-            noStroke();
+        for (int i = 0; i < numPoints2; i++) {
+            //fill(colors[i % numColor]);
+            //noStroke();
             if (boundary.contains(points[i]) == isInside) {
-                ellipse(points[i][0], points[i][1], random(0, width/5), random(0, height/5)); 
+                pushMatrix();
+                int opa;
+                float radiusW;
+                float radiusH;
+                if (transp % 5 == 0) opa = 0;
+                else opa = 100;
+                stroke(colors[i % numColor]);
+                fill(colors[i % numColor], opa);
+
+                if (stroke % 3 == 0) strokeWeight(i % 3 + 2);
+                else strokeWeight(1);
+
+                if (factor1 % 4 == 0) {
+                    rotate(0);
+                } else {
+                    rotate(radians(angle * i % 360));
+                }
+                //fill(color(255, 230, 100));
+                radiusW = i * factor1 % 150 + 1;
+                radiusH = i * factor2 % 130 + 1;
+
+                ellipse(points[i][0], points[i][1], radiusW, radiusH); 
+                popMatrix();
+        
+            //ellipse(points[i][0], points[i][1], random(0, width/5), random(0, height/5)); 
             }
-
-        }
-
-        for (int i = 0; i < numPoints; i++) {
-            pushMatrix();
-            int opa;
-            float radiusW;
-            float radiusH;
-            if (transp % 3 == 0) opa = 0;
-            else opa = 1;
-            fill(colors[i % numColor], opa);
-
-            if (stroke % 3 == 0) strokeWeight(i % 3 + 2);
-            else strokeWeight(0);
-
-            if (factor1 % 4 == 0) {
-                rotate(0);
-            } else {
-                rotate(radians(angle * i % 360));
-            }
-
-            if (factor2 % 2 == 0) {
-                radiusW = random(0, width/5);
-                radiusH = random(0, height/5);
-            } else {
-                radiusW = 20;
-                radiusH = 50;
-            }
-
-            ellipse(points[i][0], points[i][1], radiusW, radiusH); 
-            popMatrix();
         }
     }
 }
 
 class DiagonalPatternTool extends PatternTool {
     public DiagonalPatternTool(int numPoints, int factor1, int factor2, int numColor, 
-                                Boundary boundary, boolean isInside) {
+                                Boundary boundary, boolean isInside, int angle) {
         super(numPoints, factor1, factor2, numColor, boundary, isInside);
+        this.angle = angle;
     }
 
     @Override
     public void display() {
         randomSeed(seed);
-        if (numPoints % 2 == 0) numPoints = numPoints * 20 % 300;
-        else if (numPoints < 50) numPoints *= 10;
+        int numPoints2= numPoints;
+        if (numPoints % 2 == 0) numPoints2 = numPoints * 523 % 5000;
+        else if (numPoints < 10) numPoints2 *= 50;
 
-        int[][] points = new int[numPoints][2]; 
+        int[][] points = new int[numPoints2][2]; 
     
         float a;
         float b;
@@ -424,11 +444,11 @@ class DiagonalPatternTool extends PatternTool {
 
         //color random generator
         Color colorC = new Color(numColor);
-        color[] colors = colorC.colorBySize(numColor, 1, factor1/30 + 1);
+        color[] colors = colorC.colorBySize(numColor, factor1, factor2);
 
         
         // Position the points randomly, split by Sherry
-        for (int i = 0; i < numPoints; i++) {
+        for (int i = 0; i < numPoints2; i++) {
             int x = (int)random(minX, width);
             int y = (int)random(minY, height);   
             points[i][0] = x; 
@@ -436,24 +456,28 @@ class DiagonalPatternTool extends PatternTool {
         }
         
         // Display the points 
-        for (int i = 0; i < numPoints; i++) {
+        for (int i = 0; i < numPoints2; i++) {
             if (boundary.contains(points[i]) == isInside) {
-                int length;
-                if (factor2 % 2 == 0) strokeWeight(2);
-                else strokeWeight(i % 10 + 2);
                 
-                int ang = (int)random(360);
+                if (factor2 % 2 == 0) strokeWeight(i * factor2 % 5);
+                else strokeWeight(i * factor2 % 30 + 2);
 
-                if (factor2 % 5 == 0) length = (int)random(10, factor2);
-                else length = i % factor2 + 10;
+                stroke(colors[i % numColor]);
+                fill(colors[i * numPoints % numColor]);
+
+                int length;
+                if (factor2 % 2 == 0) length = i * factor1 % 500;
+                else length = 4;
+
+                int ang = i * angle % 360;//abs((int)random(360));
                 
                 a = points[i][0] + cos(radians(ang))*length;
                 b = points[i][1] + sin(radians(ang))*length;
     
                 line(points[i][0], points[i][1], a, b);
-            }
-            
+            }   
         }
+       
     }
 }
 
@@ -466,31 +490,34 @@ class DotsPatternTool extends PatternTool {
     @Override
     public void display() {
         randomSeed(seed);
-        if (numPoints % 2 == 0) numPoints = numPoints * 20 % 300;
-        else if (numPoints < 50) numPoints *= 10;
-        int[][] points = new int[numPoints][2]; 
+        int numPoints2= numPoints;
+        if (numPoints % 2 == 0) numPoints2 = numPoints * 30  % 4000;
+        else if (numPoints < 50) numPoints2 = numPoints * 30;
+        int[][] points = new int[numPoints2][2]; 
+        println("new points number   " + numPoints2);
         
         int minX = 0; 
         int minY = 0; 
 
         //color random generator
         Color colorC = new Color(numColor);
-        color[] colors = colorC.colorBySize(numColor, 1, 1);
+        color[] colors = colorC.colorBySize(numColor, factor1, factor2);
 
         // Position the points randomly, split by Sherry
-        for (int i = 0; i < numPoints; i++) {
-            int x = (int)random(minX, width); 
+        for (int i = 0; i < numPoints2; i++) {
+            int x = (int)random(100, width-100); 
             int y = (int)random(minY, height); 
             points[i][0] = x; 
             points[i][1] = y; 
         }
         
         // Display the points 
-        for (int i = 0; i < numPoints; i++) {
+        for (int i = 0; i < numPoints2; i++) {
             if (boundary.contains(points[i]) == isInside) {
-                fill(colors[i % numColor/2]);
+
+                fill(colors[i % numColor]);
                 noStroke();
-                ellipse(points[i][0], points[i][1], 2, 2); 
+                ellipse(points[i][0], points[i][1], 5, 5); 
             }  
         }
     }
@@ -605,15 +632,22 @@ class Color {
     public color[] colorBySize(int numColor, int factor1, int factor2) {
         color[] colors = new color[numColor]; 
         
-        int minSize = 5/factor1; 
-        int maxSize = 255/factor2;
+        int minSize;
+        int maxSize;
+        if (factor1 == 0) {minSize = 100; maxSize = 250;
+        } else {
+            minSize = min(100 % factor1, factor2%255); 
+            maxSize = max(100, factor2%255);
+        }
         
         for (int i = 0; i < numColor; i++) {
             int r = (int)random(minSize, maxSize); 
             int g = (int)random(minSize, maxSize); 
             int b = (int)random(minSize, maxSize); 
             colors[i] = color(r, g, b);
+            
         }
+       
         return colors;
     }
 }

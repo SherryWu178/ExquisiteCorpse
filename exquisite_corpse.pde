@@ -16,6 +16,7 @@ ShapeDatabase shapeDatabase = new ShapeDatabase();
 PretransformParameters currentPretransformParameters;
 Computer computer = new Computer();
 int seed;
+PImage imgBrush;
 
 enum GlobalStage {
     HUMAN_DRAW_1,
@@ -46,8 +47,14 @@ void setup() {
     
     smooth();
     seed = (int)random(100);
-    frameRate(10);
+    frameRate(30);
     ellipseMode(CENTER);
+    try {
+        imgBrush = loadImage("pattern.jpg"); 
+    } catch (NullPointerException e) {
+        println("No image: " + e.getMessage());
+    }
+    imgBrush.resize(30, 30);
 
 }
 
@@ -83,7 +90,7 @@ void draw() {
 
     // stroke(0);
     // strokeWeight(2);
-    noFill();
+    noFill(); 
     
     drawingGuide();
     shapeDatabase.displaySidePanel(globalStage);
@@ -102,7 +109,6 @@ void draw() {
         if (brushType == 0) brushHead = 10;
         if (brushType == 1) brushHead = 15;
         if (brushType == 2) brushHead = 20;
-        if (brushType == 3) brushHead = 5;
 
         if (currentshapeCompleted == 1) {
             return;
@@ -132,6 +138,17 @@ void draw() {
                 line.display();
             }        
         }
+
+        else if (shapeType == 3) {
+            float mx = constrain(mouseX, 120, 1000);
+            float my = constrain(mouseY, 0, 750);
+            if (mousePressed) {
+                currentCoordinatesList.add(new float[] {mx, my});
+
+                Brush bLine = new Brush(currentCoordinatesList, imgBrush);
+                bLine.display();
+            }        
+        }
     }
 }
 
@@ -150,7 +167,8 @@ void selectBrush() {
     else if (mouseX > 60 - 17.5 && mouseX < 60 + 17.5 && mouseY > 390 - 17.5 && mouseY < 390 + 17.5) {
         brushType = 2;  
         rect(45, 390 - 17.5, 35, 35);
-    }
+    } 
+
     
     println("Brush type: " + brushType);
 }
@@ -170,6 +188,11 @@ void selectShape() {
     else if (mouseX > 45 && mouseX < 75 && mouseY > 670 && mouseY < 695) {
         shapeType = 2; // Set shapeType to free form
         rect(40, 665, 40, 40);
+    }
+    //brush type test
+    else if (mouseX > 60 - 17.5 && mouseX < 60 + 17.5 && mouseY > 440 - 17.5 && mouseY < 440 + 17.5) {
+        shapeType = 3;  
+        rect(45, 440 - 17.5, 35, 35);
     }
     
     println("Shape type: " + shapeType);
@@ -322,6 +345,12 @@ void mouseReleased() {
         else if (shapeType == 2) { 
             SohyunLine line = new SohyunLine(currentCoordinatesList, currentColor, brushHead);
             shapeDatabase.addShape(line, globalStage);
+            currentCoordinatesList = new ArrayList<>();
+        } 
+        
+        else if (shapeType == 3) { 
+            Brush bPoints = new Brush(currentCoordinatesList, imgBrush);
+            shapeDatabase.addShape(bPoints, globalStage);
             currentCoordinatesList = new ArrayList<>();
         }
         
