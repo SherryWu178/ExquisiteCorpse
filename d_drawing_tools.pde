@@ -353,7 +353,7 @@ class KochLineTool extends LineTool{
         for (int i = 1; i < coordinatesList.size(); i++){
             stroke(colors[i % numColor]);
             PVector new_position = new PVector(coordinatesList.get(i)[0], coordinatesList.get(i)[1]);
-            drawKoch(position, new_position, numPoints % 4);
+            drawKoch(position, new_position, numPoints % 4 + 1);
             position = new_position; 
         }
     }
