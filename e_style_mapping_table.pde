@@ -148,29 +148,40 @@ class StyleMappingTable {
         }
        
         //04. line
-        if (cal5 % 5 == 0) { // Corrected method call
+        if (cal5 % 6 == 0) { // Corrected method call
             lineTool = new CoilLineTool(this.numPoints, this.factor1, this.factor2, 
                                         this.numColor, boundary);
             println("Coil" );
-        } else if (cal5 % 5 == 1){
+        } else if (cal5 % 6 == 1){
             lineTool = new ChainLineTool(this.numPoints, this.factor1, this.factor2, 
                                         this.numColor, boundary, 
                                         this.stroke, this.transp, this.radius);
             println("Chain" );
-        } else if (cal5 % 5 == 2){
+        } else if (cal5 % 6 == 2){
             lineTool = new HornLineTool(this.numPoints, this.factor1, this.factor2, 
                                         this.numColor, boundary,
                                         this.stroke, this.angle);
             println("Horn" );
-        } else if (cal5 % 5 == 3){
+        } else if (cal5 % 6 == 3){
             lineTool = new SpringLineTool(this.numPoints, this.factor1, this.factor2, 
                                         this.numColor, boundary);
             println("Spring" );       
-        } else {
+        } else if (cal5 % 6 == 4) {
             lineTool = new CurveLineTool(this.numPoints, this.factor1, this.factor2, 
                                         this.numColor, boundary);
            println("Curve" ); 
+        } else {
+            lineTool = new KochLineTool(this.numPoints, this.factor1, this.factor2, 
+                                        this.numColor, boundary,
+                                        this.stroke, this.angle);
+            println("Koch" );
         }
+
+
+        // lineTool = new KochLineTool(this.numPoints, this.factor1, this.factor2, 
+        //                                 this.numColor, boundary,
+        //                                 this.stroke, this.angle); 
+
 
         Style style = new Style(boundary, insidePatternTool, outsidePatternTool, lineTool, funTool);
         

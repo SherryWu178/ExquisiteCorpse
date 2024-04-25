@@ -325,6 +325,41 @@ class HornLineTool extends LineTool{
 }
 
 
+class KochLineTool extends LineTool{
+    public int stroke;
+    public int angle;
+    
+    public KochLineTool(int numPoints, int factor1, int factor2, 
+                        int numColor, Boundary boundary, 
+                        int stroke, int angle) {
+        super(numPoints, factor1, factor2, numColor, boundary);
+        this.stroke = stroke;
+        this.angle = angle;
+    }
+
+    @Override
+    public void display() {
+        randomSeed(seed);
+        //color random generator
+        Color colorC = new Color(numColor);
+        color[] colors = colorC.colorBySize(numColor, factor1, factor2);
+
+        //unit size 
+        
+        //normalized vectors;
+        List<float[]> coordinatesList = boundary.getCoordinatesList();
+        strokeWeight( numColor % 5 + 5);
+        PVector position = new PVector(coordinatesList.get(0)[0], coordinatesList.get(0)[1]);
+        for (int i = 1; i < coordinatesList.size(); i++){
+            stroke(colors[i % numColor]);
+            PVector new_position = new PVector(coordinatesList.get(i)[0], coordinatesList.get(i)[1]);
+            drawKoch(position, new_position, numPoints % 4 + 1);
+            position = new_position; 
+        }
+    }
+}
+
+
 class PatternTool implements Tool {
     public Boundary boundary;
     public int numPoints;
@@ -494,7 +529,11 @@ class DotsPatternTool extends PatternTool {
         if (numPoints % 2 == 0) numPoints2 = numPoints * 312  % 5000;
         else if (numPoints < 50) numPoints2 = numPoints * 30;
         int[][] points = new int[numPoints2][2]; 
+<<<<<<< HEAD
 
+=======
+        // println("new points number   " + numPoints2);
+>>>>>>> 4e8cab8ee174fa6720bc53c429690d98dd424b9e
         
         int minX = 0; 
         int minY = 0; 
