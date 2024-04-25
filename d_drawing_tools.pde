@@ -36,7 +36,7 @@ class CoilLineTool extends LineTool {
         randomSeed(seed);
         //color random generator
         Color colorC = new Color(numColor);
-        color[] colors = colorC.colorBySize(numColor, factor1, factor2);
+        color[] colors = colorC.colorBySize(numColor, 3, factor2);
         //r size 
         if (numPoints > 50) numPoints %= 30;
 
@@ -61,7 +61,7 @@ class CoilLineTool extends LineTool {
 
         for (int i = 0; i < coordinatesList.size() -1; i++){  
             float r = lengths[i] / numPoints % 50; 
-            stroke(colors[i % numColor]);
+            stroke(colors[(int)(i * r % numColor)]);
 
             if (r > 10) strokeWeight(5);
             else strokeWeight(i % 10 + 1);   
@@ -85,7 +85,7 @@ class SpringLineTool extends LineTool{
         randomSeed(seed);
         //color random generator
         Color colorC = new Color(numColor);
-        color[] colors = colorC.colorBySize(numColor, factor1, factor2);
+        color[] colors = colorC.colorBySize(numColor, 3, factor2);
 
         //r size 
         if (numPoints > 50) numPoints %= 25;
@@ -107,7 +107,7 @@ class SpringLineTool extends LineTool{
 
         for (int i = 0; i < coordinatesList.size() -1; i++){ 
             float r = lengths[i]%random(1, 50);
-            stroke(colors[i % numColor]);
+            stroke(colors[(int)(i * r % numColor)]);
             strokeWeight(5); 
 
             Coil coil = new Coil(coordinatesList.get(i)[0], coordinatesList.get(i)[1], 
@@ -133,7 +133,7 @@ class CurveLineTool extends LineTool{
         List<float[]> coordinatesList = boundary.getCoordinatesList();
         beginShape();
         stroke(colors[factor1 % numColor]);
-        strokeWeight(numPoints % 100 +1);
+        strokeWeight(numPoints % 25 +1);
 
         for (int i = 0; i <coordinatesList.size(); i++) {
             curveVertex(coordinatesList.get(i)[0], coordinatesList.get(i)[1]);
@@ -160,7 +160,7 @@ class ChainLineTool extends LineTool {
         randomSeed(seed);
         //color random generator
         Color colorC = new Color(numColor);
-        color[] colors = colorC.colorBySize(numColor, factor1, factor2);
+        color[] colors = colorC.colorBySize(numColor, 3, factor2);
 
         //unit size 
         if (numPoints > 50) numPoints %= 25;
@@ -208,7 +208,7 @@ class ChainLineTool extends LineTool {
                 int opa;
                 if (transp % 3 == 0) opa = 1;
                 else opa = 0;
-                fill(colors[j % numColor], opa);
+                fill(colors[j * i % numColor], opa);
 
                 //factor2
                 if (factor2 % 3 == 0) { //divide by point number
@@ -226,7 +226,7 @@ class ChainLineTool extends LineTool {
                             radius * j % 50 , radius * j % 50);
                 
                 } else { //divide by length
-                    unit = radius % 50;
+                    unit = radius * j % 50;
                     float overlap = 0.5;
         
                     PVector currentPoint = PVector.add(position, 
@@ -234,7 +234,7 @@ class ChainLineTool extends LineTool {
                     float distanceFromStart = PVector.dist(position, currentPoint); 
                     if(distanceFromStart > lengths[i]) break; 
                     
-                    ellipse(currentPoint.x, currentPoint.y, radius % 300, radius % 300 );
+                    ellipse(currentPoint.x, currentPoint.y, radius % 100, radius % 100 );
                 } 
             }
         }
@@ -259,7 +259,7 @@ class HornLineTool extends LineTool{
 
         //color random generator
         Color colorC = new Color(numColor);
-        color[] colors = colorC.colorBySize(numColor, factor1, factor2);
+        color[] colors = colorC.colorBySize(numColor, 3, factor2);
 
         //unit size 
         if (numPoints > 50) numPoints %= 25;
@@ -289,7 +289,7 @@ class HornLineTool extends LineTool{
         //draw base
         for (int i = 0; i < lengths.length - 1; i++) {
             strokeWeight(5);
-            stroke(colors[i % numColor], 128); //transparency 128
+            stroke(colors[255%numColor], 150); //transparency 128
             line(coordinatesList.get(i)[0], coordinatesList.get(i)[1], 
                 coordinatesList.get(i + 1)[0], coordinatesList.get(i + 1)[1]);
         } 
@@ -306,9 +306,10 @@ class HornLineTool extends LineTool{
 
             PVector position = new PVector(coordinatesList.get(i)[0], coordinatesList.get(i)[1]);
             PVector direction = vec[i];
+            println(count);
             
             for (int j = 0; j < count; j++) {
-                stroke(colors[j % numColor]);
+                stroke(colors[j * 23 % numColor]);
                 PVector currentPoint = PVector.add(position, PVector.mult(direction, j * unit));
                 float ang = PVector.angleBetween(direction, currentPoint);
                 
@@ -342,7 +343,7 @@ class KochLineTool extends LineTool{
         randomSeed(seed);
         //color random generator
         Color colorC = new Color(numColor);
-        color[] colors = colorC.colorBySize(numColor, factor1, factor2);
+        color[] colors = colorC.colorBySize(numColor, 3, factor2);
 
         //unit size 
         
@@ -467,7 +468,7 @@ class DiagonalPatternTool extends PatternTool {
     public void display() {
         randomSeed(seed);
         int numPoints2= numPoints;
-        if (numPoints % 2 == 0) numPoints2 = numPoints * 523 % 10000;
+        if (numPoints % 2 == 0) numPoints2 = numPoints * 523 % 5231;
         else if (numPoints < 10) numPoints2 *= 50;
 
         int[][] points = new int[numPoints2][2]; 
@@ -526,7 +527,7 @@ class DotsPatternTool extends PatternTool {
     public void display() {
         randomSeed(seed);
         int numPoints2= numPoints;
-        if (numPoints % 2 == 0) numPoints2 = numPoints * 312  % 5000;
+        if (numPoints % 2 == 0) numPoints2 = numPoints * 312  % 7134;
         else if (numPoints < 50) numPoints2 = numPoints * 30;
         int[][] points = new int[numPoints2][2]; 
         
@@ -549,7 +550,7 @@ class DotsPatternTool extends PatternTool {
         for (int i = 0; i < numPoints2; i++) {
             if (boundary.contains(points[i]) == isInside) {
 
-                fill(colors[i % numColor]);
+                fill(colors[i*130 % numColor]);
                 noStroke();
                 ellipse(points[i][0], points[i][1], 5, 5); 
             }  
@@ -668,10 +669,13 @@ class Color {
         
         int minSize;
         int maxSize;
-        if (factor1 %3 == 0) {minSize = 0; maxSize = 200;
+        if (factor1 % 3 == 0 || factor1 % 5 == 2) {minSize = 0; maxSize = 200; //more vivid
+        } else if (factor1 % 5 == 1 || factor1 % 5 == 3 ){
+            minSize = 100 % factor2; 
+            maxSize = 210; 
         } else {
-            minSize = 100 % factor1; 
-            maxSize = 100; 
+            minSize = 100 ; //more grey
+            maxSize = 150; 
         }
         
         for (int i = 0; i < numColor; i++) {

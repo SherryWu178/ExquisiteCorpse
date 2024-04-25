@@ -146,7 +146,6 @@ class StyleMappingTable {
             insidePatternTool = new DotsPatternTool(this.numPoints, this.factor1, this.factor2, this.numColor, boundary, true);
             println("Inside Dots" );
         }
-       
         //04. line
         if (cal5 % 6 == 0) { // Corrected method call
             lineTool = new CoilLineTool(this.numPoints, this.factor1, this.factor2, 
