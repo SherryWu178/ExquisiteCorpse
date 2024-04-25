@@ -163,6 +163,10 @@ void drawPrompt() {
     fill(0);
     textSize(15);  
     text(displayText, 130, 20); 
+
+
+    String instructionText = "D for delete; R for start over";
+    text(instructionText, 810, 20);  
 }
     
 

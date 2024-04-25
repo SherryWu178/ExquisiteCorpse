@@ -104,6 +104,7 @@ void draw() {
 // }
     
     if (mouseX > - 1 && mouseX < 125 && mouseY > - 1 && mouseY < 750) {
+        currentshapeCompleted = 1;
         // println("Mouse click at toolbar");
     } else {
         if (brushType == 0) brushHead = 10;
@@ -260,6 +261,7 @@ void reset() {
     shapeDatabase = new ShapeDatabase();
     currentPretransformParameters = null;
     shapeType = 2; 
+    needPrompt = 1;
     seed = (int)random(100);
 }
 

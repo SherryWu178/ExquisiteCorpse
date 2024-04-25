@@ -180,7 +180,8 @@ class StyleMappingTable {
 
         // lineTool = new KochLineTool(this.numPoints, this.factor1, this.factor2, 
         //                                 this.numColor, boundary,
-        //                                 this.stroke, this.angle);
+        //                                 this.stroke, this.angle); 
+
 
         Style style = new Style(boundary, insidePatternTool, outsidePatternTool, lineTool, funTool);
         
