@@ -60,11 +60,11 @@ class CoilLineTool extends LineTool {
           }
 
         for (int i = 0; i < coordinatesList.size() -1; i++){  
-            float r = lengths[i] / numPoints; 
+            float r = lengths[i] / numPoints % 50; 
             stroke(colors[i % numColor]);
 
-            if (r > 10) strokeWeight(1);
-            else strokeWeight(i % 30 + 1);   
+            if (r > 10) strokeWeight(5);
+            else strokeWeight(i % 10 + 1);   
 
             Coil coil = new Coil(coordinatesList.get(i)[0], coordinatesList.get(i)[1], 
                                 coordinatesList.get(i + 1)[0], coordinatesList.get(i+1)[1], r/2, r);  
@@ -106,9 +106,9 @@ class SpringLineTool extends LineTool{
           }
 
         for (int i = 0; i < coordinatesList.size() -1; i++){ 
-            float r = lengths[i]/random(1, 10);
+            float r = lengths[i]%random(1, 50);
             stroke(colors[i % numColor]);
-            strokeWeight(1); 
+            strokeWeight(5); 
 
             Coil coil = new Coil(coordinatesList.get(i)[0], coordinatesList.get(i)[1], 
                                 coordinatesList.get(i + 1)[0], coordinatesList.get(i+1)[1], r * 2 / 3, r / 2);   
@@ -196,7 +196,7 @@ class ChainLineTool extends LineTool {
         for (int i = 0; i < lengths.length; i++){  
             stroke(colors[i % numColor]);
             
-            if (stroke % 2 == 0) strokeWeight(1);
+            if (stroke % 2 == 0) strokeWeight(2);
             else strokeWeight(i % 3 + 1);
 
             float unit = lengths[i] / numPoints;
@@ -206,8 +206,8 @@ class ChainLineTool extends LineTool {
             for (int j = 0; j < numPoints; j++) {
                 //opacity 
                 int opa;
-                if (transp % 3 == 0) opa = 0;
-                else opa = 1;
+                if (transp % 3 == 0) opa = 1;
+                else opa = 0;
                 fill(colors[j % numColor], opa);
 
                 //factor2
@@ -288,7 +288,7 @@ class HornLineTool extends LineTool{
 
         //draw base
         for (int i = 0; i < lengths.length - 1; i++) {
-            strokeWeight(2);
+            strokeWeight(5);
             stroke(colors[i % numColor], 128); //transparency 128
             line(coordinatesList.get(i)[0], coordinatesList.get(i)[1], 
                 coordinatesList.get(i + 1)[0], coordinatesList.get(i + 1)[1]);
@@ -297,7 +297,7 @@ class HornLineTool extends LineTool{
         //draw horn
         for (int i = 0; i < lengths.length; i++){   
             int count;
-            if (stroke % 2 == 0) strokeWeight(0);
+            if (stroke % 2 == 0) strokeWeight(10);
             else strokeWeight(i % 5);
 
             if (stroke % 2 == 0) count = numPoints % 25;
@@ -432,7 +432,7 @@ class DiagonalPatternTool extends PatternTool {
     public void display() {
         randomSeed(seed);
         int numPoints2= numPoints;
-        if (numPoints % 2 == 0) numPoints2 = numPoints * 523 % 5000;
+        if (numPoints % 2 == 0) numPoints2 = numPoints * 523 % 10000;
         else if (numPoints < 10) numPoints2 *= 50;
 
         int[][] points = new int[numPoints2][2]; 
@@ -491,10 +491,10 @@ class DotsPatternTool extends PatternTool {
     public void display() {
         randomSeed(seed);
         int numPoints2= numPoints;
-        if (numPoints % 2 == 0) numPoints2 = numPoints * 30  % 4000;
+        if (numPoints % 2 == 0) numPoints2 = numPoints * 312  % 5000;
         else if (numPoints < 50) numPoints2 = numPoints * 30;
         int[][] points = new int[numPoints2][2]; 
-        println("new points number   " + numPoints2);
+
         
         int minX = 0; 
         int minY = 0; 
@@ -634,10 +634,10 @@ class Color {
         
         int minSize;
         int maxSize;
-        if (factor1 == 0) {minSize = 100; maxSize = 250;
+        if (factor1 %3 == 0) {minSize = 0; maxSize = 200;
         } else {
-            minSize = min(100 % factor1, factor2%255); 
-            maxSize = max(100, factor2%255);
+            minSize = 100 % factor1; 
+            maxSize = 100; 
         }
         
         for (int i = 0; i < numColor; i++) {
